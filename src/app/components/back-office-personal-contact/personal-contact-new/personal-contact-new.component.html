@@ -1,0 +1,57 @@
+<div class="form-container">
+    <h2 class="form-title">Novo Contacto Pessoal</h2>
+    <form [formGroup]="personalContactForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Nome do Contacto</label>
+                <input type="text" id="name" formControlName="name" placeholder="Digite o nome do contacto">
+                @if(personalContactForm.get('name')?.invalid &&
+                (personalContactForm.get('name')?.dirty || personalContactForm.get('name')?.touched))
+                {
+                <div class="error-message">Nome inválido</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="isPrimary">Contacto Principal</label>
+                <select id="isPrimary" formControlName="isPrimary">
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+                @if(personalContactForm.get('isPrimary')?.invalid &&
+                (personalContactForm.get('isPrimary')?.dirty || personalContactForm.get('isPrimary')?.touched))
+                {
+                <div class="error-message">Opção inválida</div>
+                }
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="notes">Notas</label>
+                <textarea type="text" id="notes" formControlName="notes" placeholder="Digite aqui as notas do contacto">
+                </textarea>
+                @if(personalContactForm.get('notes')?.invalid &&
+                (personalContactForm.get('notes')?.dirty || personalContactForm.get('notes')?.touched))
+                {
+                <div class="error-message">Notas inválidas</div>
+                }
+            </div>
+        </div>
+
+        @if(errorMessage != null)
+        {
+        <div class="error-message">
+            {{errorMessage}}
+        </div>
+        }
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Salvar</button>
+            <a [routerLink]="['/main-page','personal-contact-list']" class="btn-reset">Cancelar</a>
+        </div>
+    </form>
+</div>

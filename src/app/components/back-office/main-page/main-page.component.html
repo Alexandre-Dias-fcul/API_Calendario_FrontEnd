@@ -10,7 +10,8 @@
                         <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
                 <li><a [routerLink]="['/main-page','appointment-list']">
                         <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a><i class="fa-solid fa-id-card"></i><span>Contactos</span></a></li>
+                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
                 }
                 @else if(role === 'Manager')
                 {
@@ -18,7 +19,8 @@
                         <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
                 <li><a [routerLink]="['/main-page','appointment-list']">
                         <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a><i class="fa-solid fa-id-card"></i><span>Contactos</span></a></li>
+                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
                 <li><a [routerLink]="['/main-page','agent-list']">
                         <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
                 <li><a [routerLink]="['/main-page','staff-list']">
@@ -30,7 +32,8 @@
                         <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
                 <li><a [routerLink]="['/main-page','appointment-list']">
                         <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a><i class="fa-solid fa-id-card"></i><span>Contactos</span></a></li>
+                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
                 <li><a [routerLink]="['/main-page','agent-list']">
                         <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
                 <li><a [routerLink]="['/main-page','staff-list']">
@@ -40,9 +43,8 @@
                 {
                 <li><a [routerLink]="['/main-page','appointment-list']">
                         <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a>
-                        <i class="fa-solid fa-id-card"></i><span>Contactos</span>
-                    </a></li>
+                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
 
                 }@else if(role === 'Admin')
                 {
@@ -50,7 +52,8 @@
                         <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
                 <li><a [routerLink]="['/main-page','appointment-list']">
                         <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a><i class="fa-solid fa-id-card"></i><span>Contactos</span></a></li>
+                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
                 <li><a [routerLink]="['/main-page','agent-list']">
                         <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
                 <li><a [routerLink]="['/main-page','staff-list']">

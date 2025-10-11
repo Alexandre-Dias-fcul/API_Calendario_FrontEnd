@@ -6,12 +6,13 @@ import { account } from '../../models/account';
 import { userAll } from '../../models/userAll';
 import { address } from '../../models/address';
 import { contact } from '../../models/contact';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  urlUser = 'https://localhost:7212/api/User';
+  urlUser = `${environment.apiUrl}/User`;
 
   constructor(private http: HttpClient) {
 

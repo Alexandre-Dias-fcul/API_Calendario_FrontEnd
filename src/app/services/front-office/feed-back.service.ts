@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { feedBack } from '../../models/feedBack';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedBackService {
 
-  urlFeedBack = 'https://localhost:7212/api/FeedBack';
+  urlFeedBack = `${environment.apiUrl}/FeedBack`;
 
   constructor(private http: HttpClient) {
 
