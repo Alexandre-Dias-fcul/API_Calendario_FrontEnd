@@ -1,0 +1,39 @@
+<div class="table-header">
+    <a [routerLink]="['/main-page','personal-contact-new']" class="add-user-link">Novo Contacto</a>
+    <input type="text" class="search-bar" placeholder="Pesquisar...">
+</div>
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Contacto Principal</th>
+            <th>Notas</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let personalContact of agentPersonalContacts.personalContacts">
+            <td>{{ personalContact.name }}</td>
+            <td>{{ personalContact.isPrimary }}</td>
+            <td>{{ personalContact.notes}}</td>
+            <td>
+                <a [routerLink]="['/main-page','personal-contact-edit', personalContact.id]">
+                    <i class="fas fa-edit edit-icon"></i></a>
+                <a (click)="deletePersonalContact(personalContact.id)">
+                    <i class="fas fa-trash delete-icon"></i></a>
+        </tr>
+    </tbody>
+</table>
+@if(errorMessage != null)
+{
+<div class="error-message">
+    {{ errorMessage }}
+</div>
+}
+<div class="pagination">
+    <button class="pagination-btn prev-btn" disabled>&laquo; Anterior</button>
+    <button class="pagination-btn">1</button>
+    <button class="pagination-btn">2</button>
+    <button class="pagination-btn">3</button>
+    <button class="pagination-btn next-btn">Próximo &raquo;</button>
+</div>

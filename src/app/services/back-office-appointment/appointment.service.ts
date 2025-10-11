@@ -4,13 +4,14 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { appointment } from '../../models/appointment';
 import { participant } from '../../models/participant';
 import { appointmentWithParticipants } from '../../models/appointmentWithParticipants';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
 
-  urlAppointment = 'https://localhost:7212/api/Appointment';
+  urlAppointment = `${environment.apiUrl}/Appointment`;
   constructor(private http: HttpClient) { }
 
   getAllAppointments(): Observable<appointment[]> {

@@ -7,6 +7,7 @@ import { contact } from '../../models/contact';
 import { catchError, Observable, throwError } from 'rxjs';
 import { staffAll } from '../../models/staffAll';
 import { staffParticipant } from '../../models/staffParticipant';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import { staffParticipant } from '../../models/staffParticipant';
 export class StaffService {
 
 
-  urlStaff: string = 'https://localhost:7212/api/Staff';
+  urlStaff: string = `${environment.apiUrl}/Staff`;
 
   constructor(private http: HttpClient) {
 

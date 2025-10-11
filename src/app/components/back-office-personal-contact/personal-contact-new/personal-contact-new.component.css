@@ -1,0 +1,173 @@
+.form-container {
+    background-color: #2c3e50;
+    /* Fundo escuro */
+    color: white;
+    /* Texto branco */
+    padding: 2rem;
+    /* Espaçamento interno */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra leve */
+    max-width: 800px;
+    /* Largura máxima */
+    margin: 2rem auto;
+    /* Centraliza o formulário */
+}
+
+.form-title {
+    font-size: 1.8rem;
+    /* Tamanho do título */
+    font-weight: bold;
+    /* Negrito */
+    margin-bottom: 1.5rem;
+    /* Espaço abaixo do título */
+    text-align: center;
+    /* Centraliza o título */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    /* Espaço entre os campos */
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    /* Espaçamento entre os campos */
+}
+
+.form-row .form-group {
+    flex: 1;
+    /* Faz com que os campos ocupem o mesmo espaço */
+}
+
+.form-group label {
+    display: block;
+    /* Exibe o rótulo em uma linha separada */
+    font-weight: bold;
+    /* Negrito */
+    margin-bottom: 0.5rem;
+    /* Espaço abaixo do rótulo */
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    /* Largura total */
+    padding: 0.8rem;
+    /* Espaçamento interno */
+    border: none;
+    /* Remove bordas padrão */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    font-size: 1rem;
+    /* Tamanho do texto */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Sombra leve */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    /* Remove o contorno padrão */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    /* Sombra ao focar */
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    /* Espaça os botões */
+}
+
+.btn-submit {
+    background-color: white;
+    /* Fundo branco */
+    color: #3498db;
+    /* Texto na cor do header */
+    border: none;
+    /* Remove bordas padrão */
+    padding: 0.8rem 1.5rem;
+    /* Espaçamento interno */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    font-size: 1rem;
+    /* Tamanho do texto */
+    cursor: pointer;
+    /* Mostra o cursor de clique */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-reset {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    /* Remove o sublinhado */
+    background-color: white;
+    /* Fundo branco */
+    color: #e74c3c;
+    /* Vermelho */
+    border: none;
+    /* Remove bordas padrão */
+    padding: 0.8rem 1.5rem;
+    /* Espaçamento interno */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    font-size: 1rem;
+    /* Tamanho do texto */
+    cursor: pointer;
+    /* Mostra o cursor de clique */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Transição suave */
+    /* Transição suave */
+}
+
+.btn-submit:hover {
+    background-color: #2980b9;
+    /* Azul mais escuro ao passar o mouse */
+    color: white;
+    /* Texto branco */
+    transform: scale(1.05);
+    /* Leve aumento ao passar o mouse */
+}
+
+.btn-reset:hover {
+    background-color: #e74c3c;
+    /* Vermelho ao passar o mouse */
+    color: white;
+    /* Texto branco */
+    transform: scale(1.05);
+    /* Leve aumento ao passar o mouse */
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 16px;
+    margin: 10px 0;
+
+    color: #b71c1c;
+    /* vermelho forte */
+    background-color: #fdecea;
+    /* vermelho bem clarinho */
+    border: 1px solid #f5c2c2;
+    /* borda suave */
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* leve sombra */
+}
+
+.error-message::before {
+    content: "⚠️";
+    /* Ícone de alerta */
+    font-size: 18px;
+}

@@ -9,12 +9,14 @@ import { agentAll } from '../../models/agentAll';
 import { agentListing } from '../../models/agentListing';
 import { agentSupervisor } from '../../models/agentSupervisor';
 import { agentParticipant } from '../../models/agentParticipant';
+import { environment } from '../../environments/environment';
+import { agentPersonalContact } from '../../models/agentPersonalContact';
 @Injectable({
   providedIn: 'root'
 })
 export class AgentService {
 
-  urlAgent: string = 'https://localhost:7212/api/Agent';
+  urlAgent: string = `${environment.apiUrl}/Agent`;
   constructor(private http: HttpClient) { }
 
   getAllAgents(): Observable<agent[]> {
@@ -78,6 +80,17 @@ export class AgentService {
         return throwError(() => Error('Erro ao obter agent com agents.'));
       })
     );
+  }
+
+  getByIdWithPersonalContacts(id: number): Observable<agentPersonalContact> {
+    return this.http.get<agentPersonalContact>(`${this.urlAgent}/GetByIdWithPersonalContacts/${id}`).pipe(
+      catchError((error) => {
+
+        console.error('Erro na chamada getByIdWithPersonalContacs:', error);
+
+        return throwError(() => Error('Erro ao obter agente com personal contacts.'))
+      })
+    )
   }
 
   getByIdWithParticipants(id: number): Observable<agentParticipant> {

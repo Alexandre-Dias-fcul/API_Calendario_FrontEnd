@@ -42,6 +42,9 @@ import { UserEditAccountComponent } from './components/back-office-user/user-edi
 import { StaffEditAccountComponent } from './components/back-office-staff/staff-edit-account/staff-edit-account.component';
 import { DetailListingComponent } from './components/front-office/detail-listing/detail-listing.component';
 import { FavoritesComponent } from './components/front-office/favorites/favorites.component';
+import { PersonalContactNewComponent } from './components/back-office-personal-contact/personal-contact-new/personal-contact-new.component';
+import { PersonalContactListComponent } from './components/back-office-personal-contact/personal-contact-list/personal-contact-list.component';
+import { PersonalContactEditComponent } from './components/back-office-personal-contact/personal-contact-edit/personal-contact-edit.component';
 
 export const routes: Routes = [
   {
@@ -102,7 +105,10 @@ export const routes: Routes = [
         { path: 'user-edit/:id', component: UserEditComponent },
         { path: 'user-new-account/:id', component: UserNewAccountComponent },
         { path: 'user-new-account/:id/:continue', component: UserNewAccountComponent },
-        { path: 'user-edit-account/:id', component: UserEditAccountComponent }
+        { path: 'user-edit-account/:id', component: UserEditAccountComponent },
+        { path: 'personal-contact-new', component: PersonalContactNewComponent },
+        { path: 'personal-contact-list', component: PersonalContactListComponent },
+        { path: 'personal-contact-edit/:id', component: PersonalContactEditComponent }
 
       ]
   }
