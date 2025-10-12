@@ -1,136 +1,149 @@
 <div class="main-container">
-    <aside>
-        <div class="logo-container">
-            <!--   <img src="logo.png" alt="Sintra imoveis" class="logo">-->
-        </div>
-        <nav>
-            <ul>@if(role === 'Agent')
-                {
-                <li><a [routerLink]="['/main-page','listing-list']">
-                        <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
-                <li><a [routerLink]="['/main-page','appointment-list']">
-                        <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a [routerLink]="['/main-page','personal-contact-list']">
-                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
-                }
-                @else if(role === 'Manager')
-                {
-                <li><a [routerLink]="['/main-page','listing-list']">
-                        <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
-                <li><a [routerLink]="['/main-page','appointment-list']">
-                        <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a [routerLink]="['/main-page','personal-contact-list']">
-                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
-                <li><a [routerLink]="['/main-page','agent-list']">
-                        <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
-                <li><a [routerLink]="['/main-page','staff-list']">
-                        <i class="fa-solid fa-user-tie"></i><span>Administrativos</span></a></li>
-                }
-                @else if(role === 'Broker')
-                {
-                <li><a [routerLink]="['/main-page','listing-list']">
-                        <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
-                <li><a [routerLink]="['/main-page','appointment-list']">
-                        <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a [routerLink]="['/main-page','personal-contact-list']">
-                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
-                <li><a [routerLink]="['/main-page','agent-list']">
-                        <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
-                <li><a [routerLink]="['/main-page','staff-list']">
-                        <i class="fa-solid fa-user-tie"></i><span>Administrativos</span></a></li>
-                }
-                @else if(role === 'Staff')
-                {
-                <li><a [routerLink]="['/main-page','appointment-list']">
-                        <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a [routerLink]="['/main-page','personal-contact-list']">
-                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
-
-                }@else if(role === 'Admin')
-                {
-                <li><a [routerLink]="['/main-page','listing-list']">
-                        <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
-                <li><a [routerLink]="['/main-page','appointment-list']">
-                        <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
-                <li><a [routerLink]="['/main-page','personal-contact-list']">
-                        <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a></li>
-                <li><a [routerLink]="['/main-page','agent-list']">
-                        <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
-                <li><a [routerLink]="['/main-page','staff-list']">
-                        <i class="fa-solid fa-user-tie"></i><span>Administrativos</span></a></li>
-                <li><a [routerLink]="['/main-page','user-list']">
-                        <i class="fa-solid fa-users"></i><span>Utilizadores</span></a></li>
-                }
-
-            </ul>
-        </nav>
-    </aside>
-    <div class="secondary-container">
-        <header>
-            <div class="header-actions">
-                <div class="logout">
-                    <h4 (click)="logout()">Logout</h4>
+        <aside>
+                <div class="logo-container">
+                        <!--   <img src="logo.png" alt="Sintra imoveis" class="logo">-->
                 </div>
-                <div class="user-info">
-                    @if(role === 'Agent' || role ==='Manager' || role ==='Broker' || role === 'Admin')
-                    {
-                    <a class="user-info-link">
-                        <i class="fas fa-user-circle"></i>
-                        <span class="user-info-name">{{ employee.name.firstName }}</span>
-                    </a>
-                    }
-                    @else if( role === 'Staff')
-                    {
-                    <a class="user-info-link">
-                        <i class="fas fa-user-circle"></i>
-                        <span class="user-info-name">{{ employee.name.firstName }}</span>
-                    </a>
-                    }
+                <nav>
+                        <ul>@if(role === 'Agent')
+                                {
+                                <li><a [routerLink]="['/main-page','listing-list']">
+                                                <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
+                                <li><a [routerLink]="['/main-page','appointment-list']">
+                                                <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
+                                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                                                <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a>
+                                </li>
+                                }
+                                @else if(role === 'Manager')
+                                {
+                                <li><a [routerLink]="['/main-page','listing-list']">
+                                                <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
+                                <li><a [routerLink]="['/main-page','appointment-list']">
+                                                <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
+                                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                                                <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a>
+                                </li>
+                                <li><a [routerLink]="['/main-page','agent-list']">
+                                                <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
+                                <li><a [routerLink]="['/main-page','staff-list']">
+                                                <i class="fa-solid fa-user-tie"></i><span>Administrativos</span></a>
+                                </li>
+                                }
+                                @else if(role === 'Broker')
+                                {
+                                <li><a [routerLink]="['/main-page','listing-list']">
+                                                <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
+                                <li><a [routerLink]="['/main-page','appointment-list']">
+                                                <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
+                                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                                                <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a>
+                                </li>
+                                <li><a [routerLink]="['/main-page','agent-list']">
+                                                <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
+                                <li><a [routerLink]="['/main-page','staff-list']">
+                                                <i class="fa-solid fa-user-tie"></i><span>Administrativos</span></a>
+                                </li>
+                                }
+                                @else if(role === 'Staff')
+                                {
+                                <li><a [routerLink]="['/main-page','appointment-list']">
+                                                <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
+                                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                                                <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a>
+                                </li>
 
+                                }@else if(role === 'Admin')
+                                {
+                                <li><a [routerLink]="['/main-page','listing-list']">
+                                                <i class="fa-solid fa-house"></i><span>Imóveis</span></a></li>
+                                <li><a [routerLink]="['/main-page','appointment-list']">
+                                                <i class="fa-solid fa-handshake"></i><span>Reuniões</span></a></li>
+                                <li><a [routerLink]="['/main-page','personal-contact-list']">
+                                                <i class="fa-solid fa-id-card"></i><span>Contactos Pessoais</span></a>
+                                </li>
+                                <li><a [routerLink]="['/main-page','agent-list']">
+                                                <i class="fa-solid fa-user-secret"></i><span>Agentes</span></a></li>
+                                <li><a [routerLink]="['/main-page','staff-list']">
+                                                <i class="fa-solid fa-user-tie"></i><span>Administrativos</span></a>
+                                </li>
+                                <li><a [routerLink]="['/main-page','user-list']">
+                                                <i class="fa-solid fa-users"></i><span>Utilizadores</span></a></li>
+                                }
+
+                        </ul>
+                </nav>
+        </aside>
+        <div class="secondary-container">
+                <div class="center-container">
+                        <header>
+                                <div class="header-actions">
+                                        <div class="logout">
+                                                <h4 (click)="logout()">Logout</h4>
+                                        </div>
+                                        <div class="user-info">
+                                                @if(role === 'Agent' || role ==='Manager' || role ==='Broker' || role
+                                                === 'Admin')
+                                                {
+                                                <a class="user-info-link">
+                                                        <i class="fas fa-user-circle"></i>
+                                                        <span class="user-info-name">{{ employee.name.firstName
+                                                                }}</span>
+                                                </a>
+                                                }
+                                                @else if( role === 'Staff')
+                                                {
+                                                <a class="user-info-link">
+                                                        <i class="fas fa-user-circle"></i>
+                                                        <span class="user-info-name">{{ employee.name.firstName
+                                                                }}</span>
+                                                </a>
+                                                }
+
+                                        </div>
+                                </div>
+                        </header>
+                        <main>
+                                @if(role === 'Agent')
+                                {
+                                <h1 class="page-title">Bem-vindo Agente</h1>
+                                }
+                                @else if(role === 'Manager')
+                                {
+                                <h1 class="page-title">Bem-vindo Gestor</h1>
+                                }
+                                @else if(role === 'Broker')
+                                {
+                                <h1 class="page-title">Bem-vindo Corretor</h1>
+                                }
+                                @else if(role === 'Staff')
+                                {
+                                <h1 class="page-title">Bem-vindo Administrativo</h1>
+                                }
+                                @else if(role === 'Admin')
+                                {
+                                <h1 class="page-title">Bem-vindo Administrador</h1>
+                                }
+                                <div class="table-container">
+                                        <router-outlet></router-outlet>
+                                </div>
+                        </main>
+                        @if(errorMessage != null)
+                        {
+                        <div class="error-message">
+                                {{ errorMessage }}
+                        </div>
+                        }
                 </div>
-            </div>
-        </header>
-        <main>
-            @if(role === 'Agent')
-            {
-            <h1 class="page-title">Bem-vindo Agente</h1>
-            }
-            @else if(role === 'Manager')
-            {
-            <h1 class="page-title">Bem-vindo Gestor</h1>
-            }
-            @else if(role === 'Broker')
-            {
-            <h1 class="page-title">Bem-vindo Corretor</h1>
-            }
-            @else if(role === 'Staff')
-            {
-            <h1 class="page-title">Bem-vindo Administrativo</h1>
-            }
-            @else if(role === 'Admin')
-            {
-            <h1 class="page-title">Bem-vindo Administrador</h1>
-            }
-            <div class="table-container">
-                <router-outlet></router-outlet>
-            </div>
-        </main>
-        @if(errorMessage != null)
-        {
-        <div class="error-message">
-            {{ errorMessage }}
-        </div>
-        }
 
-        <footer class="footer">
-            <div class="footer-content">
-                <p>&copy; 2025 Layout Profissional. Todos os direitos reservados.</p>
-                <ul class="footer-links">
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos de Uso</a></li>
-                    <li><a href="#">Contato</a></li>
-                </ul>
-            </div>
-        </footer>
-    </div>
+                <footer class="footer">
+                        <div class="footer-content">
+                                <p>&copy; 2025 Layout Profissional. Todos os direitos reservados.</p>
+                                <ul class="footer-links">
+                                        <li><a href="#">Política de Privacidade</a></li>
+                                        <li><a href="#">Termos de Uso</a></li>
+                                        <li><a href="#">Contato</a></li>
+                                </ul>
+                        </div>
+                </footer>
+        </div>
 </div>

@@ -1,5 +1,8 @@
 <div class="table-header">
-    <a [routerLink]="['/main-page','appointment-new']" class="add-user-link">Nova Reunião</a>
+    <div class="table-links">
+        <a [routerLink]="['/main-page','appointment-new']" class="add-user-link">Nova Reunião</a>
+        <a [routerLink]="['/main-page','calendar']" class="calendar-link">Calendário</a>
+    </div>
     <input type="text" class="search-bar" placeholder="Pesquisar...">
 </div>
 <table class="user-table">

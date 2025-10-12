@@ -45,6 +45,7 @@ import { FavoritesComponent } from './components/front-office/favorites/favorite
 import { PersonalContactNewComponent } from './components/back-office-personal-contact/personal-contact-new/personal-contact-new.component';
 import { PersonalContactListComponent } from './components/back-office-personal-contact/personal-contact-list/personal-contact-list.component';
 import { PersonalContactEditComponent } from './components/back-office-personal-contact/personal-contact-edit/personal-contact-edit.component';
+import { CalendarComponent } from './components/back-office-appointment/calendar/calendar.component';
 
 export const routes: Routes = [
   {
@@ -108,7 +109,8 @@ export const routes: Routes = [
         { path: 'user-edit-account/:id', component: UserEditAccountComponent },
         { path: 'personal-contact-new', component: PersonalContactNewComponent },
         { path: 'personal-contact-list', component: PersonalContactListComponent },
-        { path: 'personal-contact-edit/:id', component: PersonalContactEditComponent }
+        { path: 'personal-contact-edit/:id', component: PersonalContactEditComponent },
+        { path: 'calendar', component: CalendarComponent }
 
       ]
   }
