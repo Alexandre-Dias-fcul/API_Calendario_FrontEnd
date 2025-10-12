@@ -115,11 +115,19 @@ main {
 
 .secondary-container {
     width: calc(100% - 250px);
+    height: 100vh;
     transition: width 0.5s ease;
     float: right;
     /* Alinha o conteúdo à direita da barra lateral */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 
+.center-container {
+    overflow: auto;
+}
 
 header {
     background-color: #3498db;
