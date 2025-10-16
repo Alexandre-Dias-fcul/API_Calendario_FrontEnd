@@ -42,6 +42,17 @@ export class AppointmentService {
       );
   }
 
+  getAppointmentBetweenToDates(startDate: String, endDate: String): Observable<appointmentWithParticipants[]> {
+    return this.http
+      .get<appointmentWithParticipants[]>(`${this.urlAppointment}/GetBetweenToDates/${startDate}/${endDate}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada getAppointmentBetweenToDates', error);
+          return throwError(() => new Error('Erro ao obter lista de appointments.'));
+        })
+      )
+  }
+
   addAppointment(appointment: appointment): Observable<appointment> {
     return this.http.post<appointment>(this.urlAppointment, appointment, {
       headers: { 'Content-Type': 'application/json' }

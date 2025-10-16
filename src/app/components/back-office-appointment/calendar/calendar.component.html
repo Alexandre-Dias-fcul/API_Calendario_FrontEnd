@@ -1,11 +1,18 @@
-<div>
-    <button type="button" (click)="decrement()">-</button>
-    <button type="button" (click)="increment()">+</button>
-    <div>{{arrayOfWeek[0].getFullYear()}}</div>
-    <div>{{months[arrayOfWeek[0].getMonth()]}}</div>
+<div class="calendar-header">
+    <button type="button" class="nav-btn" (click)="decrement()">
+        <i class="chevron left"></i>
+    </button>
+
+    <div class="calendar-title">
+        <span class="month">{{ months[arrayOfWeek[0].getMonth()] }}</span>
+        <span class="year">{{ arrayOfWeek[0].getFullYear() }}</span>
+    </div>
+
+    <button type="button" class="nav-btn" (click)="increment()">
+        <i class="chevron right"></i>
+    </button>
 </div>
 <table>
-    <caption>Calendário Semanal</caption>
     <thead>
         <tr>
             <th>Hora</th>
@@ -17,245 +24,32 @@
         </tr>
     </thead>
     <tbody>
+        @for(hour of hours; track hour)
+        {
         <tr>
-            <td class="hour">00:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td class="hour">{{ hour }}</td>
+            <td>{{ calendar[1][hour].title.substring(0,20)}}
+                {{ calendar[1][hour].hourStart.substring(0,5) }} {{ calendar[1][hour].hourEnd.substring(0,5) }}
+            </td>
+            <td>{{ calendar[2][hour].title.substring(0,20)}}
+                {{ calendar[2][hour].hourStart.substring(0,5) }} {{ calendar[2][hour].hourEnd.substring(0,5) }}
+            </td>
+            <td>{{ calendar[3][hour].title.substring(0,20)}}
+                {{ calendar[3][hour].hourStart.substring(0,5) }} {{calendar[3][hour].hourEnd.substring(0,5) }}
+            </td>
+            <td>{{ calendar[4][hour].title.substring(0,20)}}
+                {{ calendar[4][hour].hourStart.substring(0,5) }} {{calendar[4][hour].hourEnd.substring(0,5) }}
+            </td>
+            <td>{{ calendar[5][hour].title.substring(0,20)}}
+                {{ calendar[5][hour].hourStart.substring(0,5) }} {{calendar[5][hour].hourEnd.substring(0,5) }}
+            </td>
+            <td>{{ calendar[6][hour].title.substring(0,20)}}
+                {{ calendar[6][hour].hourStart.substring(0,5) }} {{calendar[6][hour].hourEnd.substring(0,5) }}
+            </td>
+            <td>{{ calendar[0][hour].title.substring(0,20)}}
+                {{ calendar[0][hour].hourStart.substring(0,5) }} {{ calendar[0][hour].hourEnd.substring(0,5) }}
+            </td>
         </tr>
-        <tr>
-            <td class="hour">01:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">02:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">03:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">04:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">05:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">06:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">07:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">08:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">09:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">10:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">11:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">12:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">13:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">14:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">15:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">16:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">17:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">18:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">19:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">20:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">21:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">22:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td class="hour">23:00</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        }
     </tbody>
 </table>
