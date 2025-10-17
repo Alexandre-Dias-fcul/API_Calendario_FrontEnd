@@ -39,7 +39,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="isActive">Activo</label>
-                <select id="isActive" name="isActive" formControlName="isActive">
+                <select id="isActive" formControlName="isActive">
                     <option value="true">Sim</option>
                     <option value="false">Não</option>
                 </select>
@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <label for="role">Função</label>
-                <select id="role" name="role" formControlName="role">
+                <select id="role" formControlName="role" (change)="changeSupervisor($event)">
                     <option value='0'>Agente</option>
                     <option value='1'>Gestor</option>
                     <option value='2'>Corretor</option>
@@ -79,7 +79,7 @@
 
             <div class="form-group">
                 <label for="gender">Género</label>
-                <select id="gender" name="gender" formControlName="gender">
+                <select id="gender" formControlName="gender">
                     <option value="Masculino">Masculino</option>
                     <option value="Feminino">Feminino</option>
                 </select>
@@ -140,13 +140,17 @@
 
             <div class="form-group">
                 <label for="supervisorEmail">Supervisor Email</label>
-                <input type="text" id="supervisorEmail" formControlName="supervisorEmail"
-                    placeholder="Digite o email do supervisor">
+                <select id="supervisorEmail" formControlName="supervisorEmail">
+                    @for(supervisor of possibleSupervisors; track supervisor.id ){
+                    <option [value]='supervisor.entityLink?.account?.email'>
+                        {{supervisor.entityLink?.account?.email}}
+                    </option>
+                    }
+                </select>
                 @if(agentForm.get('supervisorEmail')?.invalid &&
                 (agentForm.get('supervisorEmail')?.dirty || agentForm.get('supervisorEmail')?.touched))
                 {
-                <div class="error-message">ID inválido</div>
-                }
+                <div class="error-message">Opção inválida</div> }
             </div>
         </div>
 

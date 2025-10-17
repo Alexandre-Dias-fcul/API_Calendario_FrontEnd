@@ -4,7 +4,8 @@ import { appointment } from '../../../models/appointment';
 import { appointmentWithParticipants } from '../../../models/appointmentWithParticipants';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AgentService } from '../../../services/back-office/agent.service';
 
 @Component({
   selector: 'app-calendar',
@@ -32,18 +33,26 @@ export class CalendarComponent {
 
   errorMessage: string | null = null;
 
-  id: number;
+  idLogin: number;
+
+  idAgent: number;
+
+  role: string | null;
 
   constructor(private appointmentService: AppointmentService,
     private authorization: AuthorizationService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private agentService: AgentService) {
 
-    const role = this.authorization.getRole();
+    this.role = this.authorization.getRole();
 
-    this.id = Number(this.authorization.getId());
+    this.idLogin = Number(this.authorization.getId());
 
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager'
-      && role !== 'Broker' && role !== 'Admin') || !this.id) {
+    this.idAgent = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!this.role || (this.role !== 'Staff' && this.role !== 'Agent' && this.role !== 'Manager'
+      && this.role !== 'Broker' && this.role !== 'Admin') || !this.idLogin) {
 
       this.router.navigate(['/front-page', 'login']);
 
@@ -102,17 +111,63 @@ export class CalendarComponent {
 
   public fillCalendar() {
 
-    this.appointments = this.appointments.filter((appointment) =>
-      (appointment.participants.find(participant => (participant.employeeId === this.id))));
+    if (!this.idAgent) {
 
-    this.calendar = this.getCalendar();
+      this.appointments = this.appointments.filter((appointment) =>
+        (appointment.participants.find(participant => (participant.employeeId === this.idLogin))));
 
-    this.appointments.forEach((appointment) => {
+      this.calendar = this.getCalendar();
 
-      this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
+      this.appointments.forEach((appointment) => {
 
-    });
+        this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
+
+      });
+
+    }
+    else if (this.role === 'Staff') {
+
+      this.appointments = this.appointments.filter((appointment) =>
+        (appointment.participants.find(participant => (participant.employeeId === this.idAgent))));
+
+      this.calendar = this.getCalendar();
+
+      this.appointments.forEach((appointment) => {
+
+        this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
+
+      });
+
+    }
+    else {
+      this.agentService.getAgentById(this.idAgent).subscribe({
+        next: (response) => {
+
+          if (response.supervisorId === this.idLogin) {
+
+            this.appointments = this.appointments.filter((appointment) =>
+              (appointment.participants.find(participant => (participant.employeeId === this.idAgent))));
+
+            this.calendar = this.getCalendar();
+
+            this.appointments.forEach((appointment) => {
+
+              this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
+
+            });
+          }
+
+        },
+        error: (error) => {
+
+          console.error('Erro ao obter agent:', error);
+          this.errorMessage = error;
+        }
+      })
+
+    }
   }
+
 
   public getHours() {
     const array = [];

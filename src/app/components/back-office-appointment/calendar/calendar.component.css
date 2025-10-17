@@ -17,7 +17,6 @@ thead {
 th,
 td {
     border: 1px solid #e2e8f0;
-    ;
     text-align: center;
     padding: 8px;
 }
@@ -28,8 +27,8 @@ th {
 }
 
 td {
-    width: 80px;
-    height: 40px;
+    width: 100px;
+    height: 50px;
     font-size: 13px;
     transition: background 0.2s;
 }
@@ -37,6 +36,58 @@ td {
 td:hover {
     background: #e2e8f0;
     cursor: pointer;
+}
+
+td.appointment-cell {
+    background-color: #f9fafb;
+    /* fundo leve */
+    border: 1px solid #e5e7eb;
+    /* borda sutil */
+    border-radius: 8px;
+    /* cantos arredondados */
+    padding: 8px 12px;
+    /* espaço interno */
+    text-align: left;
+    /* texto alinhado à esquerda */
+    vertical-align: middle;
+    /* centraliza verticalmente */
+    font-family: "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    color: #111827;
+    /* cor do texto */
+    transition: all 0.2s ease;
+    /* animação suave */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    /* leve sombra */
+}
+
+/* quando o usuário passa o mouse */
+td.appointment-cell:hover {
+    background-color: #eef2ff;
+    /* muda o fundo */
+    transform: scale(1.02);
+    /* pequeno destaque */
+    cursor: pointer;
+}
+
+/* título do evento */
+.appointment-title {
+    display: block;
+    font-weight: 600;
+    color: #1e3a8a;
+    /* azul escuro */
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* corta texto longo */
+}
+
+/* horário do evento */
+.appointment-time {
+    font-size: 13px;
+    color: #4b5563;
+    /* cinza médio */
 }
 
 .hour {

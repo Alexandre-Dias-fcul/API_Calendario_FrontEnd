@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { AgentService } from '../../../services/back-office/agent.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
+import { agentAll } from '../../../models/agentAll';
 
 @Component({
   selector: 'app-agent-new',
@@ -17,6 +18,7 @@ export class AgentNewComponent {
   agentForm: FormGroup;
   id: number | null = null;
   errorMessage: string | null = null;
+  possibleSupervisors: agentAll[] = [];
 
   constructor(private fb: FormBuilder,
     private authorization: AuthorizationService,
@@ -120,6 +122,43 @@ export class AgentNewComponent {
         }
       });
     }
+
+  }
+
+  choseSupervisor(event: Event) {
+
+    const value = Number((event.target as HTMLSelectElement).value);
+
+    let agents: agent[] = [];
+
+    this.possibleSupervisors = [];
+
+    this.agentService.getAllAgents().subscribe(
+
+      {
+        next: (response) => {
+
+          agents = response;
+          agents = agents.filter((agent) => (agent.role > value));
+          agents.forEach((agent) => this.agentService.getByIdWithAll(agent.id).subscribe({
+            next: (data) => {
+              this.possibleSupervisors.push(data);
+              this.possibleSupervisors = this.possibleSupervisors.filter((agent) => (agent.entityLink?.account !== null
+                && agent.entityLink?.account !== undefined));
+
+            }, error: (error) => {
+
+              console.error('Erro ao obter agente:', error);
+              this.errorMessage = error;
+            }
+          }));
+        }
+        , error: (error) => {
+          console.error('Erro ao obter agentes:', error);
+          this.errorMessage = error;
+        }
+      }
+    )
 
   }
 
