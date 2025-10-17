@@ -49,6 +49,7 @@ export class AgentEditComponent {
   };
 
   errorMessage: string | null = null;
+  possibleSupervisors: agentAll[] = [];
 
 
   constructor(private fb: FormBuilder,
@@ -134,6 +135,9 @@ export class AgentEditComponent {
           photoFileName: data.photoFileName,
           role: data.role
         });
+
+        this.choseSupervisor(data.role);
+
       }, error: (error) => {
         console.error('Erro ao obter Agent', error);
         this.errorMessage = error;
@@ -142,6 +146,46 @@ export class AgentEditComponent {
 
   }
 
+  changeSupervisor(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    const role = Number(value);
+    this.choseSupervisor(role);
+  }
+
+  choseSupervisor(role: number) {
+
+    let agents: agent[] = [];
+
+    this.possibleSupervisors = [];
+
+    this.agentService.getAllAgents().subscribe(
+
+      {
+        next: (response) => {
+
+          agents = response;
+          agents = agents.filter((agent) => (agent.role > role && agent.id != this.agent.id));
+          agents.forEach((agent) => this.agentService.getByIdWithAll(agent.id).subscribe({
+            next: (data) => {
+              this.possibleSupervisors.push(data);
+              this.possibleSupervisors = this.possibleSupervisors.filter((agent) => (agent.entityLink?.account !== null
+                && agent.entityLink?.account !== undefined));
+
+            }, error: (error) => {
+
+              console.error('Erro ao obter agente:', error);
+              this.errorMessage = error;
+            }
+          }));
+        }
+        , error: (error) => {
+          console.error('Erro ao obter agentes:', error);
+          this.errorMessage = error;
+        }
+      }
+    )
+
+  }
 
   onSubmit() {
 

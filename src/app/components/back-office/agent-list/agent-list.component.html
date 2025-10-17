@@ -1,5 +1,10 @@
 <div class="table-header">
+
+    @if(this.role === 'Manager' || this.role === 'Broker' || this.role === 'Admin')
+    {
     <a [routerLink]="['/main-page','agent-new']" class="add-user-link">Novo Agente</a>
+    }
+
     <input type="text" class="search-bar" placeholder="Pesquisar...">
 </div>
 <table class="user-table">
@@ -25,13 +30,26 @@
             <td>{{ 'Administrador' }}</td>
             }
             <td>
+                @if(this.role === 'Manager' || this.role === 'Broker' || this.role === 'Admin')
+                {
                 <a [routerLink]="['/main-page','agent-edit',agent.id]"><i class="fas fa-edit edit-icon"></i></a>
                 <a (click)="deleteAgent(agent.id)"><i class="fas fa-trash delete-icon"></i></a>
-                @if(agent.supervisorId == id){
 
-                <a [routerLink]="['/main-page','agent-reassign',agent.id]"><i
-                        class="fa-solid fa-check reassign-icon"></i></a>
+                @if(agent.supervisorId == id)
+                {
+
+                <a [routerLink]="['/main-page','agent-reassign',agent.id]">
+                    <i class="fa-solid fa-check reassign-icon"></i></a>
+                <a [routerLink]="['/main-page','calendar',agent.id]">
+                    <i class="fa-solid fa-calendar-days calendar-icon"></i></a>
                 }
+                }
+                @else if(this.role ==="Staff")
+                {
+                <a [routerLink]="['/main-page','calendar',agent.id]">
+                    <i class="fa-solid fa-calendar-days calendar-icon"></i></a>
+                }
+
             </td>
         </tr>
     </tbody>

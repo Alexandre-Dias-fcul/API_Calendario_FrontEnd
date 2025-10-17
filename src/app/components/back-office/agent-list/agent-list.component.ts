@@ -16,16 +16,17 @@ export class AgentListComponent {
   agents: agent[] = [];
   id: number;
   errorMessage: string | null = null;
+  role: string | null;
 
   constructor(private agentService: AgentService,
     private authorization: AuthorizationService,
     private router: Router) {
 
-    const role = this.authorization.getRole();
+    this.role = this.authorization.getRole();
 
     this.id = Number(this.authorization.getId());
 
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
+    if (!this.role || (this.role !== 'Staff' && this.role !== 'Manager' && this.role !== 'Broker' && this.role !== 'Admin')) {
 
       this.router.navigate(['/front-page', 'login']);
 

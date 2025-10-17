@@ -46,6 +46,7 @@ import { PersonalContactNewComponent } from './components/back-office-personal-c
 import { PersonalContactListComponent } from './components/back-office-personal-contact/personal-contact-list/personal-contact-list.component';
 import { PersonalContactEditComponent } from './components/back-office-personal-contact/personal-contact-edit/personal-contact-edit.component';
 import { CalendarComponent } from './components/back-office-appointment/calendar/calendar.component';
+import { Component } from '@angular/core';
 
 export const routes: Routes = [
   {
@@ -110,7 +111,8 @@ export const routes: Routes = [
         { path: 'personal-contact-new', component: PersonalContactNewComponent },
         { path: 'personal-contact-list', component: PersonalContactListComponent },
         { path: 'personal-contact-edit/:id', component: PersonalContactEditComponent },
-        { path: 'calendar', component: CalendarComponent }
+        { path: 'calendar', component: CalendarComponent },
+        { path: 'calendar/:id', component: CalendarComponent }
 
       ]
   }
