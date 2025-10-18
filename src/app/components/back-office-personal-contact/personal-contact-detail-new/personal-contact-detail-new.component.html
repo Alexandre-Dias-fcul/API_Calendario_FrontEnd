@@ -1,1 +1,40 @@
-<p>personal-contact-detail-new works!</p>
+<div class="form-container">
+    <h2 class="form-title">Novo Personal Contacto</h2>
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="contactType">Tipo de Contacto</label>
+                <select type="text" id="contactType" formControlName="contactType">
+                    <option value="0">Telefone</option>
+                    <option value="1">Email</option>
+                </select>
+                @if(contactForm.get('contactType')?.invalid &&
+                (contactForm.get('contactType')?.dirty || contactForm.get('contactType')?.touched))
+                {
+                <div class="error-message">Contacto inválido</div>
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="value">Valor</label>
+                <input type="text" id="value" formControlName="value" />
+                @if(contactForm.get('value')?.invalid &&
+                (contactForm.get('value')?.dirty || contactForm.get('value')?.touched))
+                {
+                <div class="error-message">Valor inválido</div>
+                }
+            </div>
+        </div>
+        @if(errorMessage != null )
+        {
+        <div class="error-message">
+            {{ errorMessage }}
+        </div>
+        }
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Salvar</button>
+            <a [routerLink]="['/main-page/personal-contact-list']" class="btn-reset">Cancelar</a>
+        </div>
+    </form>
+</div>

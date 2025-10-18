@@ -1,1 +1,38 @@
-<p>personal-contact-detail-list works!</p>
+<div class="table-header">
+    <div class="header-links">
+        <a [routerLink]="['/main-page','personal-contact-new',personalContact.id]" class="return-link">Voltar</a>
+        <a [routerLink]="['/main-page','personal-contact-detail-new']" class="new-contact-link">Novo Contacto</a>
+    </div>
+    <input type="text" class="search-bar" placeholder="Pesquisar...">
+</div>
+<table class="contact-table">
+    <thead>
+        <tr>
+            <th>Tipo de Contacto</th>
+            <th>Contacto</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let contact of personalContact.personalContactDetails">
+            @if(contact.contactType === 0) {
+            <td>Telefone</td>
+            } @else if(contact.contactType === 1) {
+            <td>Email</td>
+            }
+            <td>{{ contact.value}}</td>
+            <td>
+                <a [routerLink]="['/main-page','personal-contact-new',personalContact.id,contact.id]">
+                    <i class="fas fa-edit edit-icon"></i>
+                </a>
+                <a (click)="deleteContact(contact.id)"><i class="fas fa-trash delete-icon"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+@if(errorMessage != null)
+{
+<div class="error-message">
+    {{errorMessage}}
+</div>
+}
