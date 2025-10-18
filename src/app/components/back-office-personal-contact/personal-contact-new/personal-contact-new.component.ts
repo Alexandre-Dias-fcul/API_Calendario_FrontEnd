@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { PersonalContactService } from '../../../services/back-office-personal-contact/personal-contact.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { personalContact } from '../../../models/personalContact';
 
 @Component({
@@ -17,10 +17,13 @@ export class PersonalContactNewComponent {
 
   errorMessage: string | null = null;
 
+  id: number;
+
   constructor(private fb: FormBuilder,
     private authorization: AuthorizationService,
     private router: Router,
-    private personalContactService: PersonalContactService
+    private personalContactService: PersonalContactService,
+    private route: ActivatedRoute
   ) {
 
     this.personalContactForm = this.fb.group({
@@ -31,11 +34,32 @@ export class PersonalContactNewComponent {
 
     const role = this.authorization.getRole();
 
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+
     if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
 
       this.router.navigate(['/front-page', 'login']);
 
       return;
+    }
+
+    if (this.id) {
+      this.personalContactService.getPersonalContactById(this.id).subscribe({
+
+        next: (response) => {
+          this.personalContactForm.patchValue({
+            name: response.name,
+            isPrimary: response.isPrimary,
+            notes: response.notes
+          });
+        },
+        error: (error) => {
+
+          console.error('Erro ao obter personal-contact:', error);
+
+          this.errorMessage = error;
+        }
+      });
     }
   }
 
@@ -45,24 +69,47 @@ export class PersonalContactNewComponent {
       const personalContactData: personalContact = this.personalContactForm.value as personalContact;
 
       personalContactData.name = this.personalContactForm.get('name')?.value;
-      personalContactData.isPrimary = this.personalContactForm.get('isPrimary')?.value == 'true';
+      personalContactData.isPrimary = Boolean(this.personalContactForm.get('isPrimary')?.value);
       personalContactData.notes = this.personalContactForm.get('notes')?.value;
 
-      this.personalContactService.addPersonalContact(personalContactData).subscribe({
-        next: () => {
 
-          this.personalContactForm.reset();
+      if (this.id) {
+        personalContactData.id = this.id;
 
-          this.router.navigate(['/main-page', 'personal-contact-list']);
-        },
-        error: (error) => {
+        this.personalContactService.updatePersonalContact(personalContactData).subscribe({
 
-          console.error('Erro ao criar personal contact:', error);
+          next: (response) => {
+            this.personalContactForm.reset();
+            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id]);
+          }
+          , error: (error) => {
+            console.error('Erro ao alterar personal contact:', error);
+            this.errorMessage = error;
+          }
+        });
+      }
+      else {
+        this.personalContactService.addPersonalContact(personalContactData).subscribe({
+          next: (response) => {
 
-          this.errorMessage = error;
-        }
-      });
+            this.personalContactForm.reset();
 
+            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id]);
+          },
+          error: (error) => {
+
+            console.error('Erro ao criar personal contact:', error);
+
+            this.errorMessage = error;
+          }
+        });
+      }
+
+
+    }
+    else {
+      console.log('Formulário inválido');
+      this.errorMessage = 'Formulário inválido.';
     }
   }
 }

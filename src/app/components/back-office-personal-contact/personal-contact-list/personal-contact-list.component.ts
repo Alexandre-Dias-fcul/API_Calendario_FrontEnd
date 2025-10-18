@@ -71,7 +71,7 @@ export class PersonalContactListComponent {
 
         this.errorMessage = error;
       }
-    })
+    });
   }
 
   deletePersonalContact(idPersonalContact: number) {

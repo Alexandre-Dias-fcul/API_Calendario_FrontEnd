@@ -17,7 +17,7 @@
             <td>{{ personalContact.isPrimary }}</td>
             <td>{{ personalContact.notes}}</td>
             <td>
-                <a [routerLink]="['/main-page','personal-contact-edit', personalContact.id]">
+                <a [routerLink]="['/main-page','personal-contact-new', personalContact.id]">
                     <i class="fas fa-edit edit-icon"></i></a>
                 <a (click)="deletePersonalContact(personalContact.id)">
                     <i class="fas fa-trash delete-icon"></i></a>

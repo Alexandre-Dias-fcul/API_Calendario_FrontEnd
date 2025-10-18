@@ -44,9 +44,8 @@ import { DetailListingComponent } from './components/front-office/detail-listing
 import { FavoritesComponent } from './components/front-office/favorites/favorites.component';
 import { PersonalContactNewComponent } from './components/back-office-personal-contact/personal-contact-new/personal-contact-new.component';
 import { PersonalContactListComponent } from './components/back-office-personal-contact/personal-contact-list/personal-contact-list.component';
-import { PersonalContactEditComponent } from './components/back-office-personal-contact/personal-contact-edit/personal-contact-edit.component';
 import { CalendarComponent } from './components/back-office-appointment/calendar/calendar.component';
-import { Component } from '@angular/core';
+import { PersonalContactDetailNewComponent } from './components/back-office-personal-contact/personal-contact-detail-new/personal-contact-detail-new.component';
 
 export const routes: Routes = [
   {
@@ -109,8 +108,11 @@ export const routes: Routes = [
         { path: 'user-new-account/:id/:continue', component: UserNewAccountComponent },
         { path: 'user-edit-account/:id', component: UserEditAccountComponent },
         { path: 'personal-contact-new', component: PersonalContactNewComponent },
+        { path: 'personal-contact-new/:id', component: PersonalContactNewComponent },
         { path: 'personal-contact-list', component: PersonalContactListComponent },
-        { path: 'personal-contact-edit/:id', component: PersonalContactEditComponent },
+        { path: 'personal-contact-detail-new/:idPersonal', component: PersonalContactDetailNewComponent },
+        { path: 'personal-contact-detail-new/:idPersonalContact/:idDetail', component: PersonalContactDetailNewComponent },
+        { path: 'personal-contact-detail-list/:id', component: PersonalContactListComponent },
         { path: 'calendar', component: CalendarComponent },
         { path: 'calendar/:id', component: CalendarComponent }
 
