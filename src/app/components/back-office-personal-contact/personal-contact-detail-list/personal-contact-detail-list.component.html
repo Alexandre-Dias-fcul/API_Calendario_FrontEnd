@@ -1,7 +1,8 @@
 <div class="table-header">
     <div class="header-links">
         <a [routerLink]="['/main-page','personal-contact-new',personalContact.id]" class="return-link">Voltar</a>
-        <a [routerLink]="['/main-page','personal-contact-detail-new']" class="new-contact-link">Novo Contacto</a>
+        <a [routerLink]="['/main-page','personal-contact-detail-new',personalContact.id]" class="new-contact-link">Novo
+            Contacto</a>
     </div>
     <input type="text" class="search-bar" placeholder="Pesquisar...">
 </div>
@@ -14,18 +15,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let contact of personalContact.personalContactDetails">
-            @if(contact.contactType === 0) {
+        <tr *ngFor="let contactDetail of personalContact.personalContactDetails">
+            @if(contactDetail.contactType === 0) {
             <td>Telefone</td>
-            } @else if(contact.contactType === 1) {
+            } @else if(contactDetail.contactType === 1) {
             <td>Email</td>
             }
-            <td>{{ contact.value}}</td>
+            <td>{{ contactDetail.value}}</td>
             <td>
-                <a [routerLink]="['/main-page','personal-contact-new',personalContact.id,contact.id]">
+                <a [routerLink]="['/main-page','personal-contact-detail-new2',personalContact.id,contactDetail.id]">
                     <i class="fas fa-edit edit-icon"></i>
                 </a>
-                <a (click)="deleteContact(contact.id)"><i class="fas fa-trash delete-icon"></i></a>
+                <a (click)="deleteContact(contactDetail.id)"><i class="fas fa-trash delete-icon"></i></a>
             </td>
         </tr>
     </tbody>

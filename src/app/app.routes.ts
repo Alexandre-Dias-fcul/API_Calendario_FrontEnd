@@ -46,6 +46,7 @@ import { PersonalContactNewComponent } from './components/back-office-personal-c
 import { PersonalContactListComponent } from './components/back-office-personal-contact/personal-contact-list/personal-contact-list.component';
 import { CalendarComponent } from './components/back-office-appointment/calendar/calendar.component';
 import { PersonalContactDetailNewComponent } from './components/back-office-personal-contact/personal-contact-detail-new/personal-contact-detail-new.component';
+import { PersonalContactDetailListComponent } from './components/back-office-personal-contact/personal-contact-detail-list/personal-contact-detail-list.component';
 
 export const routes: Routes = [
   {
@@ -109,10 +110,12 @@ export const routes: Routes = [
         { path: 'user-edit-account/:id', component: UserEditAccountComponent },
         { path: 'personal-contact-new', component: PersonalContactNewComponent },
         { path: 'personal-contact-new/:id', component: PersonalContactNewComponent },
+        { path: 'personal-contact-new/:id/:continue', component: PersonalContactNewComponent },
         { path: 'personal-contact-list', component: PersonalContactListComponent },
-        { path: 'personal-contact-detail-new/:idPersonal', component: PersonalContactDetailNewComponent },
-        { path: 'personal-contact-detail-new/:idPersonalContact/:idDetail', component: PersonalContactDetailNewComponent },
-        { path: 'personal-contact-detail-list/:id', component: PersonalContactListComponent },
+        { path: 'personal-contact-detail-new/:idPersonalContact', component: PersonalContactDetailNewComponent },
+        { path: 'personal-contact-detail-new/:idPersonalContact/:continue', component: PersonalContactDetailNewComponent },
+        { path: 'personal-contact-detail-new2/:idPersonalContact/:idDetail', component: PersonalContactDetailNewComponent },
+        { path: 'personal-contact-detail-list/:id', component: PersonalContactDetailListComponent },
         { path: 'calendar', component: CalendarComponent },
         { path: 'calendar/:id', component: CalendarComponent }
 

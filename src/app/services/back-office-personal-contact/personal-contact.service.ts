@@ -76,19 +76,21 @@ export class PersonalContactService {
     );
   }
 
-  addDetail(idPersonalContact: number): Observable<personalContactDetail> {
-    return this.http.post<personalContactDetail>(`${this.urlPersonalContact}/AddDetail/${idPersonalContact}`, {
-      headers: { 'Content-Type': 'application/json' }
-    }).pipe(
-      catchError((error) => {
-        console.error('Erro na chamada addDetail', error);
-        return throwError(() => new Error('Erro ao adicionar detalhe ao personal contact'));
-      })
-    )
+  addDetail(idPersonalContact: number, personalContactDetail: personalContactDetail): Observable<personalContactDetail> {
+    return this.http.post<personalContactDetail>(`${this.urlPersonalContact}/AddDetail/${idPersonalContact}`, personalContactDetail,
+      {
+        headers: { 'Content-Type': 'application/json' }
+      }).pipe(
+        catchError((error) => {
+          console.error('Erro na chamada addDetail', error);
+          return throwError(() => new Error('Erro ao adicionar detalhe do personal contact'));
+        })
+      )
   }
 
-  updateDetail(idPersonalContact: number, idPersonalContactDetail: number): Observable<personalContactDetail> {
-    return this.http.put<personalContactDetail>(`${this.urlPersonalContact}/UpdateDetail/${idPersonalContact}/${idPersonalContactDetail}`, {
+  updateDetail(idPersonalContact: number, personalContactDetail: personalContactDetail): Observable<personalContactDetail> {
+    return this.http.put<personalContactDetail>(`${this.urlPersonalContact}/UpdateDetail/${idPersonalContact}/${personalContactDetail.id}`
+      , personalContactDetail, {
       headers: { 'Content-Type': 'application/json' }
     }).pipe(
       catchError((error) => {
