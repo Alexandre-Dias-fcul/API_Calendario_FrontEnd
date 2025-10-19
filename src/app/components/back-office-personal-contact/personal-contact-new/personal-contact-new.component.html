@@ -51,6 +51,12 @@
 
         <div class="form-actions">
             <button type="submit" class="btn-submit">Salvar</button>
+
+            @if(id && continue==="continua")
+            {
+            <a [routerLink]="['/main-page','personal-contact-detail-list',id]" class="btn-action-list">Ver Contactos</a>
+            }
+
             <a [routerLink]="['/main-page','personal-contact-list']" class="btn-reset">Cancelar</a>
         </div>
     </form>

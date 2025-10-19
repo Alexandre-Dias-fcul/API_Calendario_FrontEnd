@@ -17,6 +17,7 @@ export class PersonalContactDetailNewComponent {
   errorMessage: string | null = null;
   idPersonalContact: number;
   idDetail: number;
+  continue: string | null;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -34,7 +35,9 @@ export class PersonalContactDetailNewComponent {
 
     this.idPersonalContact = Number(this.route.snapshot.paramMap.get('idPersonalContact'));
 
-    this.idDetail = Number(this.route.snapshot.paramMap.get('IdDetail'));
+    this.idDetail = Number(this.route.snapshot.paramMap.get('idDetail'));
+
+    this.continue = this.route.snapshot.paramMap.get('continue');
 
     if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
 
@@ -43,17 +46,16 @@ export class PersonalContactDetailNewComponent {
       return;
     }
 
-    if (this.idPersonalContact && this.idDetail) {
+    if (this.idPersonalContact && this.idDetail && !this.continue) {
 
       this.personalContactService.getPersonalContactWithDetail(this.idPersonalContact).subscribe({
 
         next: (response) => {
           const contact = response.personalContactDetails.find(detail => detail.id === this.idDetail);
-
           this.contactForm.patchValue({
             contactType: contact?.contactType,
             value: contact?.value,
-          })
+          });
         },
         error: (error) => {
           console.error('Erro ao obter contact detail:', error);
@@ -88,16 +90,16 @@ export class PersonalContactDetailNewComponent {
         value: value,
       };
 
-      if (this.idPersonalContact && this.idDetail) {
+      if (this.idPersonalContact && this.idDetail && !this.continue) {
 
-        this.personalContactService.updateDetail(this.idPersonalContact, this.idDetail).subscribe({
+        this.personalContactService.updateDetail(this.idPersonalContact, contactData).subscribe({
 
-          next: (response) => {
+          next: () => {
             this.contactForm.reset();
-            this.router.navigate(['/main-page/personal-contact-list-detail', this.idPersonalContact])
+            this.router.navigate(['/main-page/personal-contact-detail-list', this.idPersonalContact]);
           },
           error: (error) => {
-            console.error('Erro ao obter Personal contact detail:', error);
+            console.error('Erro ao alterar personal contact detail:', error);
             this.errorMessage = error;
           }
         });
@@ -105,14 +107,20 @@ export class PersonalContactDetailNewComponent {
       }
       else {
 
-        this.personalContactService.addDetail(this.idPersonalContact).subscribe({
+        this.personalContactService.addDetail(this.idPersonalContact, contactData).subscribe({
 
-          next: (response) => {
+          next: () => {
             this.contactForm.reset();
-            this.router.navigate(['/main-page/personal-contact-list-detail', this.idPersonalContact])
+            if (this.continue === "continua") {
+              this.router.navigate(['/main-page/personal-contact-list']);
+            }
+            else {
+              this.router.navigate(['/main-page/personal-contact-detail-list', this.idPersonalContact]);
+            }
+
           },
           error: (error) => {
-            console.error('Erro ao obter Personal contact detail:', error);
+            console.error('Erro ao adicionar personal contact detail:', error);
             this.errorMessage = error;
           }
         });

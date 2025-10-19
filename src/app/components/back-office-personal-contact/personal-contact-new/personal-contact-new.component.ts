@@ -19,6 +19,8 @@ export class PersonalContactNewComponent {
 
   id: number;
 
+  continue: string | null;
+
   constructor(private fb: FormBuilder,
     private authorization: AuthorizationService,
     private router: Router,
@@ -35,6 +37,8 @@ export class PersonalContactNewComponent {
     const role = this.authorization.getRole();
 
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.continue = this.route.snapshot.paramMap.get('continue');
 
     if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
 
@@ -69,7 +73,7 @@ export class PersonalContactNewComponent {
       const personalContactData: personalContact = this.personalContactForm.value as personalContact;
 
       personalContactData.name = this.personalContactForm.get('name')?.value;
-      personalContactData.isPrimary = Boolean(this.personalContactForm.get('isPrimary')?.value);
+      personalContactData.isPrimary = this.personalContactForm.get('isPrimary')?.value === 'true';
       personalContactData.notes = this.personalContactForm.get('notes')?.value;
 
 
@@ -80,7 +84,13 @@ export class PersonalContactNewComponent {
 
           next: (response) => {
             this.personalContactForm.reset();
-            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id]);
+
+            if (this.continue) {
+              this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id, "continua"]);
+            }
+            else {
+              this.router.navigate(['/main-page', 'personal-contact-list']);
+            }
           }
           , error: (error) => {
             console.error('Erro ao alterar personal contact:', error);
@@ -94,7 +104,7 @@ export class PersonalContactNewComponent {
 
             this.personalContactForm.reset();
 
-            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id]);
+            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id, "continua"]);
           },
           error: (error) => {
 

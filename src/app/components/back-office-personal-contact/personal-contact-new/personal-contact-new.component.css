@@ -125,6 +125,20 @@
     /* Transição suave */
 }
 
+.btn-action-list {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+
 .btn-submit:hover {
     background-color: #2980b9;
     /* Azul mais escuro ao passar o mouse */
