@@ -8,6 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { staffAll } from '../../models/staffAll';
 import { staffParticipant } from '../../models/staffParticipant';
 import { environment } from '../../environments/environment';
+import { staffPersonalContact } from '../../models/staffPersonalContact';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,17 @@ export class StaffService {
         return throwError(() => new Error('Erro ao obter staff.'));
       })
     );
+  }
+
+  getByIdWithPersonalContacts(id: number): Observable<staffPersonalContact> {
+    return this.http.get<staffPersonalContact>(`${this.urlStaff}/GetByIdWithPersonalContacs/${id}`).pipe(
+      catchError((error) => {
+
+        console.error('Erro na chamada getByIdWithPersonalContacs:', error);
+
+        return throwError(() => Error('Erro ao obter staff com personal contacts.'))
+      })
+    )
   }
 
   addStaff(staff: staff): Observable<staff> {

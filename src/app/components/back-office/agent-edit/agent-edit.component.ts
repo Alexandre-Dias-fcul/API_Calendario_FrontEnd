@@ -3,7 +3,6 @@ import { AgentService } from '../../../services/back-office/agent.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { agentAll } from '../../../models/agentAll';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { agent } from '../../../models/agent';
 @Component({
   selector: 'app-agent-edit',

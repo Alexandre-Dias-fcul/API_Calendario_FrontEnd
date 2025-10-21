@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { appointment } from '../../../models/appointment';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 
 @Component({
   selector: 'app-appointment-edit',

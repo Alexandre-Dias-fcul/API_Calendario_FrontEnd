@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { agentPersonalContact } from '../../../models/agentPersonalContact';
 import { CommonModule } from '@angular/common';
 import { PersonalContactService } from '../../../services/back-office-personal-contact/personal-contact.service';
+import { StaffService } from '../../../services/back-office-staff/staff.service';
+import { staffPersonalContact } from '../../../models/staffPersonalContact';
 
 @Component({
   selector: 'app-personal-contact-list',
@@ -14,7 +16,7 @@ import { PersonalContactService } from '../../../services/back-office-personal-c
 })
 export class PersonalContactListComponent {
 
-  agentPersonalContacts: agentPersonalContact = {
+  employeePersonalContacts: agentPersonalContact | staffPersonalContact = {
     id: 0,
     name: {
       firstName: '',
@@ -39,24 +41,44 @@ export class PersonalContactListComponent {
   constructor(
     private authorization: AuthorizationService,
     private agentService: AgentService,
-    private personalContactService: PersonalContactService
+    private personalContactService: PersonalContactService,
+    private staffService: StaffService
 
   ) {
 
+    const role = this.authorization.getRole();
     const id = Number(this.authorization.getId());
 
-    this.agentService.getByIdWithPersonalContacts(id).subscribe({
+    if (role === 'Staff') {
 
-      next: (response) => {
+      this.staffService.getByIdWithPersonalContacts(id).subscribe({
 
-        this.agentPersonalContacts = response;
-      },
-      error: (error) => {
-        console.error('Erro ao obter agentWithPersonalContacts');
+        next: (response) => {
 
-        this.errorMessage = error;
-      }
-    });
+          this.employeePersonalContacts = response;
+        },
+        error: (error) => {
+          console.error('Erro ao obter employeeWithPersonalContacts');
+
+          this.errorMessage = error;
+        }
+      })
+    }
+    else {
+      this.agentService.getByIdWithPersonalContacts(id).subscribe({
+
+        next: (response) => {
+
+          this.employeePersonalContacts = response;
+        },
+        error: (error) => {
+          console.error('Erro ao obter employeeWithPersonalContacts');
+
+          this.errorMessage = error;
+        }
+      });
+    }
+
   }
 
   deletePersonalContact(idPersonalContact: number) {
