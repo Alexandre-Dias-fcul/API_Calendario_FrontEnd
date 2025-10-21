@@ -18,7 +18,6 @@ export class StaffNewAccountComponent {
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder,
-    private authorization: AuthorizationService,
     private router: Router,
     private route: ActivatedRoute,
     private staffService: StaffService) {
@@ -27,14 +26,11 @@ export class StaffNewAccountComponent {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-    const role = this.authorization.getRole();
-
     this.staffId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.continue = Number(this.route.snapshot.paramMap.get('continue'));
 
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-      this.router.navigate(['/front-page', 'login']);
+    if (!this.staffId) {
       return;
     }
   }

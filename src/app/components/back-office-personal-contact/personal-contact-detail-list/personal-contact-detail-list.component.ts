@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { personalContactWithDetail } from '../../../models/personalContactWithDetail';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { PersonalContactService } from '../../../services/back-office-personal-contact/personal-contact.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -25,21 +24,11 @@ export class PersonalContactDetailListComponent {
   id: number;
   errorMessage: string | null = null;
 
-  constructor(private authorization: AuthorizationService,
-    private router: Router,
+  constructor(
     private route: ActivatedRoute,
     private personalContactService: PersonalContactService) {
 
-    const role = this.authorization.getRole();
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     this.personalContactService.getPersonalContactWithDetail(this.id).subscribe({
 

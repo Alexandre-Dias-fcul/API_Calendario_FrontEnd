@@ -21,7 +21,6 @@ export class AgentNewComponent {
   possibleSupervisors: agentAll[] = [];
 
   constructor(private fb: FormBuilder,
-    private authorization: AuthorizationService,
     private agentService: AgentService,
     private router: Router,
     private route: ActivatedRoute) {
@@ -48,15 +47,6 @@ export class AgentNewComponent {
       ])
     }
     );
-
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 

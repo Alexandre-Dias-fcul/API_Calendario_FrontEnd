@@ -45,14 +45,7 @@ export class StaffNewComponent {
     });
 
 
-    const role = this.authorization.getRole();
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-      this.router.navigate(['/front-page', 'login']);
-      return;
-    }
 
     if (this.id) {
 

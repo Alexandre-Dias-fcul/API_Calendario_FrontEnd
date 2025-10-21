@@ -48,24 +48,18 @@ export class AgentEditAccountComponent {
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private agentService: AgentService,
-    private authorization: AuthorizationService
+    private agentService: AgentService
   ) {
     this.accountForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
+    const agentId = Number(this.route.snapshot.paramMap.get('id'));
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
+    if (!agentId) {
       return;
     }
-
-    const agentId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.agentService.getByIdWithAll(agentId).subscribe(
       (response: agentAll) => {

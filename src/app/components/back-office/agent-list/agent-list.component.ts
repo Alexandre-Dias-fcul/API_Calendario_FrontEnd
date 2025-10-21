@@ -19,26 +19,11 @@ export class AgentListComponent {
   role: string | null;
 
   constructor(private agentService: AgentService,
-    private authorization: AuthorizationService,
-    private router: Router) {
+    private authorization: AuthorizationService) {
 
     this.role = this.authorization.getRole();
 
     this.id = Number(this.authorization.getId());
-
-    if (!this.role || (this.role !== 'Staff' && this.role !== 'Manager' && this.role !== 'Broker' && this.role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
-    if (!this.id) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     this.agentService.getAllAgents().subscribe({
 

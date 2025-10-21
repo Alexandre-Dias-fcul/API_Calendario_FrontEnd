@@ -30,12 +30,7 @@ export class AgentNewContactComponent {
 
     this.agentId = Number(this.route.snapshot.paramMap.get('id'));
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
+    if (!this.agentId) {
       return;
     }
 

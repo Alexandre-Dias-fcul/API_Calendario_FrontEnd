@@ -43,18 +43,6 @@ export class MainPageComponent {
 
     this.id = Number(this.authorization.getId());
 
-    if (!this.role || (this.role !== 'Agent' && this.role !== 'Manager' && this.role !== 'Broker'
-      && this.role !== 'Staff' && this.role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
-    if (!this.id) {
-      this.router.navigate(['/front-page', 'login']);
-    }
-
     this.agentService.getAgentById(this.id).subscribe({
       next: (data) => {
         if (data != null) {

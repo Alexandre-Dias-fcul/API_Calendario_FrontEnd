@@ -51,14 +51,6 @@ export class CalendarComponent {
 
     this.idAgent = Number(this.route.snapshot.paramMap.get('id'));
 
-    if (!this.role || (this.role !== 'Staff' && this.role !== 'Agent' && this.role !== 'Manager'
-      && this.role !== 'Broker' && this.role !== 'Admin') || !this.idLogin) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
     this.getBetweenToDates(this.arrayOfWeek[0].toISOString(), this.arrayOfWeek[6].toISOString());
   }
 

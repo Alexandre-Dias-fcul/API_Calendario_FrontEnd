@@ -67,7 +67,6 @@ export class DetailListingComponent {
   errorMessage: string | null = null;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
     private listingService: ListingService,
     private agentService: AgentService,
     private authorization: AuthorizationService,

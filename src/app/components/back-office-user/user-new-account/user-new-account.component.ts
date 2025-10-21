@@ -32,16 +32,11 @@ export class UserNewAccountComponent {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-    const role = this.authorization.getRole();
-
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.continue = Number(this.route.snapshot.paramMap.get('continue'));
 
-    if (!role || (role != 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
+    if (this.userId) {
       return;
     }
 

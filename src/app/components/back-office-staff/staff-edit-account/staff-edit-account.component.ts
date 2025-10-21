@@ -50,27 +50,16 @@ export class StaffEditAccountComponent {
   constructor(private fb: FormBuilder,
     private staffService: StaffService,
     private router: Router,
-    private route: ActivatedRoute,
-    private authorization: AuthorizationService
+    private route: ActivatedRoute
   ) {
     this.accountForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     })
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-      this.router.navigate(['/main-page', 'login']);
-
-      return;
-    }
-
     const staffId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!staffId) {
-      this.router.navigate(['/front-page', 'login']);
-
       return;
     }
 

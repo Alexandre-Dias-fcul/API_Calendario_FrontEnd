@@ -34,15 +34,6 @@ export class AppointmentNewComponent {
     }, { validators: this.hoursValidator('hourStart', 'hourEnd') }
     );
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
   }
 
   onSubmit() {

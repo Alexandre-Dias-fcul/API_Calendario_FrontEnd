@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
@@ -22,7 +21,6 @@ export class ParticipantNewComponent {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private authorization: AuthorizationService,
     private fb: FormBuilder,
     private agentService: AgentService,
     private staffService: StaffService,
@@ -33,20 +31,10 @@ export class ParticipantNewComponent {
       type: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager'
-      && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     this.idAppointment = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.idAppointment) {
-      this.router.navigate(['/main-page/appointment-list']);
       return;
     }
 

@@ -38,28 +38,15 @@ export class AppointmentListComponent {
 
   errorMessage: string | null = null;
 
-  constructor(private authorization: AuthorizationService,
-    private router: Router,
+  constructor(
+    private authorization: AuthorizationService,
     private agentService: AgentService,
     private staffService: StaffService,
     private appointmentService: AppointmentService) {
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager'
-      && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
-    const id = Number(authorization.getId());
+    const id = Number(this.authorization.getId());
 
     if (!id) {
-
-      this.router.navigate(['/front-page', 'login']);
-
       return;
     }
 

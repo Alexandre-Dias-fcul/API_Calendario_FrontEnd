@@ -22,7 +22,6 @@ export class PersonalContactNewComponent {
   continue: string | null;
 
   constructor(private fb: FormBuilder,
-    private authorization: AuthorizationService,
     private router: Router,
     private personalContactService: PersonalContactService,
     private route: ActivatedRoute
@@ -34,18 +33,9 @@ export class PersonalContactNewComponent {
       notes: ['']
     })
 
-    const role = this.authorization.getRole();
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.continue = this.route.snapshot.paramMap.get('continue');
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     if (this.id) {
       this.personalContactService.getPersonalContactById(this.id).subscribe({

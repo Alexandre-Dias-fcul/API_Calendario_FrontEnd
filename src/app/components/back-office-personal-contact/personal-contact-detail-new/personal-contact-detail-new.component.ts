@@ -22,8 +22,7 @@ export class PersonalContactDetailNewComponent {
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private personalContactService: PersonalContactService,
-    private authorization: AuthorizationService
+    private personalContactService: PersonalContactService
   ) {
 
     this.contactForm = this.fb.group({
@@ -31,20 +30,12 @@ export class PersonalContactDetailNewComponent {
       value: ['', [Validators.required]]
     });
 
-    const role = this.authorization.getRole();
-
     this.idPersonalContact = Number(this.route.snapshot.paramMap.get('idPersonalContact'));
 
     this.idDetail = Number(this.route.snapshot.paramMap.get('idDetail'));
 
     this.continue = this.route.snapshot.paramMap.get('continue');
 
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     if (this.idPersonalContact && this.idDetail && !this.continue) {
 
