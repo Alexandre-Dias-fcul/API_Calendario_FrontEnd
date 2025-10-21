@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { agent } from '../../../models/agent';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { CommonModule } from '@angular/common';

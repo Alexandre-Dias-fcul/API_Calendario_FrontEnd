@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { PersonalContactService } from '../../../services/back-office-personal-contact/personal-contact.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { personalContact } from '../../../models/personalContact';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { agentParticipant } from '../../../models/agentParticipant';
 import { AgentService } from '../../../services/back-office/agent.service';

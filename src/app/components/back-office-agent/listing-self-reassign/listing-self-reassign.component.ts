@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { ListingService } from '../../../services/back-office-agent/listing.service';
 
 @Component({

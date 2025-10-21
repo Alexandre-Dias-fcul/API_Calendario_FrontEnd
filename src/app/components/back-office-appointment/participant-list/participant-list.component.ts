@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { appointmentWithParticipants } from '../../../models/appointmentWithParticipants';
 import { CommonModule } from '@angular/common';
 import { StaffService } from '../../../services/back-office-staff/staff.service';
-import { participant } from '../../../models/participant';
+
 
 
 @Component({

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AgentService } from '../../../services/back-office/agent.service';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { agentAll } from '../../../models/agentAll';
 
 @Component({

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../services/front-office/user.service';
 

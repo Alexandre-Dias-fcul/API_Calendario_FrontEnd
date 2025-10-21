@@ -3,7 +3,6 @@ import { agentAll } from '../../../models/agentAll';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AgentService } from '../../../services/back-office/agent.service';
-import { AuthorizationService } from '../../../services/back-office/authorization.service';
 
 
 
