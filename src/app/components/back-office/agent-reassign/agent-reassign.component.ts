@@ -35,27 +35,14 @@ export class AgentReassignComponent {
 
   errorMessage: string | null = null;
 
-  constructor(private authorization: AuthorizationService,
+  constructor(
     private agentService: AgentService,
     private route: ActivatedRoute,
-    private router: Router
   ) {
-
-    const role = this.authorization.getRole();
 
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
     if (!this.id) {
-
-      this.router.navigate(['/front-page', 'login']);
-
       return;
     }
 

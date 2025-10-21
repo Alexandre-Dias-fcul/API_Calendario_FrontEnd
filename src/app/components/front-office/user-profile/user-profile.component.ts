@@ -32,14 +32,8 @@ export class UserProfileComponent {
   constructor(private userService: UserService,
     private authorization: AuthorizationService
   ) {
-    const role = this.authorization.getRole();
 
     const id = this.authorization.getId();
-
-    if (!role || (role !== 'User') || !id) {
-
-      return;
-    }
 
     this.userService.getUserById(Number(id)).subscribe(
       {

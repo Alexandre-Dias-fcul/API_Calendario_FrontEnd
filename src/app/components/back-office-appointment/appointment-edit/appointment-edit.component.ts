@@ -33,7 +33,6 @@ export class AppointmentEditComponent {
   constructor(private fb: FormBuilder,
     private appointmentService: AppointmentService,
     private router: Router,
-    private authorization: AuthorizationService,
     private route: ActivatedRoute
   ) {
 
@@ -48,19 +47,9 @@ export class AppointmentEditComponent {
       }, { validators: this.hoursValidator('hourStart', 'hourEnd') }
     );
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.id) {
-      this.router.navigate(['/main-page/appointment-list']);
       return;
     }
 

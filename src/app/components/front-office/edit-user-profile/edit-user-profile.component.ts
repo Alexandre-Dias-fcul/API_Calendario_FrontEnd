@@ -35,17 +35,7 @@ export class EditUserProfileComponent {
       photoFileName: ['']
     });
 
-    const role = this.authorization.getRole();
-
     this.id = Number(this.authorization.getId());
-
-    if (!role || role !== 'User' || !this.id) {
-
-      this.router.navigate(['/front-page', 'login-user']);
-      return;
-
-    }
-
 
     this.userService.getUserById(this.id).subscribe(
       {

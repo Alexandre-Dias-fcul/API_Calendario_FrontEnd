@@ -23,27 +23,11 @@ export class ListingListComponent {
   errorMessage: string | null = null;
 
   constructor(private listingService: ListingService,
-    private authorization: AuthorizationService,
-    private router: Router) {
+    private authorization: AuthorizationService) {
 
     this.role = this.authorization.getRole();
 
-    if (!this.role || (this.role !== 'Agent' && this.role !== 'Manager' && this.role !== 'Broker'
-      && this.role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
-    this.id = Number(authorization.getId());
-
-    if (!this.id) {
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
+    this.id = Number(this.authorization.getId());
 
     this.listingService.getAllListings().subscribe(
       {

@@ -53,7 +53,6 @@ export class AgentEditComponent {
 
 
   constructor(private fb: FormBuilder,
-    private authorization: AuthorizationService,
     private agentService: AgentService,
     private route: ActivatedRoute,
     private router: Router) {
@@ -81,20 +80,9 @@ export class AgentEditComponent {
     }
     );
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.id) {
-      this.router.navigate(['/front-page', 'login']);
-
       return;
     }
 

@@ -21,7 +21,6 @@ export class ListingReassignBetweenAgentsComponent {
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
-    private authorization: AuthorizationService,
     private router: Router,
     private listingService: ListingService,
     private agentService: AgentService
@@ -37,14 +36,10 @@ export class ListingReassignBetweenAgentsComponent {
 
     this.idListing = Number(this.route.snapshot.paramMap.get('idListing'));
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
+    if (!this.idAgent || !this.idListing) {
       return;
     }
+
   }
 
   onSubmit() {

@@ -17,7 +17,6 @@ export class AgentNewAddressComponent {
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder,
-    private authorization: AuthorizationService,
     private agentService: AgentService,
     private route: ActivatedRoute,
     private router: Router
@@ -31,15 +30,9 @@ export class AgentNewAddressComponent {
 
     this.agentId = Number(this.route.snapshot.paramMap.get('id'));
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
+    if (!this.agentId) {
       return;
     }
-
   }
 
   onSubmit() {

@@ -16,18 +16,8 @@ export class StaffListComponent {
   errorMessage: string | null = null;
 
   constructor(
-    private authorization: AuthorizationService,
-    private router: Router,
     private staffService: StaffService
   ) {
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     this.staffService.getAllStaff().subscribe({
       next: (data) => {

@@ -52,8 +52,7 @@ export class AgentEditAddressComponent {
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private agentService: AgentService,
-    private authorization: AuthorizationService
+    private agentService: AgentService
   ) {
     this.addressForm = this.fb.group({
       street: ['', [Validators.required]],
@@ -66,12 +65,7 @@ export class AgentEditAddressComponent {
 
     this.addressId = Number(this.route.snapshot.paramMap.get('idAddress'));
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
+    if (!agentId || !this.addressId) {
       return;
     }
 

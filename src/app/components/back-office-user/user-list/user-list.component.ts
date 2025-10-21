@@ -17,16 +17,9 @@ export class UserListComponent {
   users: user[] = [];
   errorMessage: string | null = null;
 
-  constructor(private authorization: AuthorizationService,
-    private router: Router,
+  constructor(
     private userService: UserService
   ) {
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Admin')) {
-      this.router.navigate(['/front-page', 'login']);
-      return;
-    }
 
     this.userService.getAllUsers().subscribe({
 

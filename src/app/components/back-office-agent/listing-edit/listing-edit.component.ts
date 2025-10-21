@@ -38,7 +38,6 @@ export class ListingEditComponent {
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder,
-    private authorization: AuthorizationService,
     private router: Router,
     private route: ActivatedRoute,
     private listingService: ListingService
@@ -60,19 +59,9 @@ export class ListingEditComponent {
       }
     );
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Agent' && role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.id) {
-      this.router.navigate(['/main-page/listing-list']);
       return;
     }
 

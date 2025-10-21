@@ -18,7 +18,7 @@ export class UserNewComponent {
 
   errorMessage: string | null = null;
 
-  constructor(private authorization: AuthorizationService,
+  constructor(
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
@@ -37,15 +37,7 @@ export class UserNewComponent {
       photoFileName: ['']
     })
 
-    const role = this.authorization.getRole();
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if (!role || (role !== 'Admin')) {
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
 
     if (this.id) {
       this.userService.getUserById(this.id).subscribe({

@@ -33,28 +33,16 @@ export class ParticipantListComponent {
 
   errorMessage: string | null = null;
 
-  constructor(private authorization: AuthorizationService,
-    private router: Router,
+  constructor(
     private route: ActivatedRoute,
     private appointmentService: AppointmentService,
     private agentService: AgentService,
     private staffService: StaffService
   ) {
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Staff' && role !== 'Agent' && role !== 'Manager'
-      && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
-      return;
-    }
-
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!id) {
-      this.router.navigate(['/main-page/appointment-list']);
       return;
     }
 
