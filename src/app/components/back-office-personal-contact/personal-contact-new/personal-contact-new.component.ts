@@ -18,8 +18,6 @@ export class PersonalContactNewComponent {
 
   id: number;
 
-  continue: string | null;
-
   constructor(private fb: FormBuilder,
     private router: Router,
     private personalContactService: PersonalContactService,
@@ -33,8 +31,6 @@ export class PersonalContactNewComponent {
     })
 
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.continue = this.route.snapshot.paramMap.get('continue');
 
     if (this.id) {
       this.personalContactService.getPersonalContactById(this.id).subscribe({
@@ -71,15 +67,11 @@ export class PersonalContactNewComponent {
 
         this.personalContactService.updatePersonalContact(personalContactData).subscribe({
 
-          next: (response) => {
+          next: () => {
+
             this.personalContactForm.reset();
 
-            if (this.continue) {
-              this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id, "continua"]);
-            }
-            else {
-              this.router.navigate(['/main-page', 'personal-contact-list']);
-            }
+            this.router.navigate(['/main-page', 'personal-contact-list']);
           }
           , error: (error) => {
             console.error('Erro ao alterar personal contact:', error);
@@ -93,7 +85,7 @@ export class PersonalContactNewComponent {
 
             this.personalContactForm.reset();
 
-            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id, "continua"]);
+            this.router.navigate(['/main-page', 'personal-contact-detail-new', response.id, 1]);
           },
           error: (error) => {
 

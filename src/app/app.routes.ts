@@ -113,7 +113,6 @@ export const routes: Routes = [
         { path: 'user-edit-account/:id', component: UserEditAccountComponent, canActivate: [canActivateAdmin] },
         { path: 'personal-contact-new', component: PersonalContactNewComponent, canActivate: [canActivateEmployee] },
         { path: 'personal-contact-new/:id', component: PersonalContactNewComponent, canActivate: [canActivateEmployee] },
-        { path: 'personal-contact-new/:id/:continue', component: PersonalContactNewComponent, canActivate: [canActivateEmployee] },
         { path: 'personal-contact-list', component: PersonalContactListComponent, canActivate: [canActivateEmployee] },
         { path: 'personal-contact-detail-new/:idPersonalContact', component: PersonalContactDetailNewComponent, canActivate: [canActivateEmployee] },
         { path: 'personal-contact-detail-new/:idPersonalContact/:continue', component: PersonalContactDetailNewComponent, canActivate: [canActivateEmployee] },

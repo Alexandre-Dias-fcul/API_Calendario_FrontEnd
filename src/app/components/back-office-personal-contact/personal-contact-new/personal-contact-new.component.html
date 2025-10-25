@@ -52,7 +52,7 @@
         <div class="form-actions">
             <button type="submit" class="btn-submit">Salvar</button>
 
-            @if(id && continue==="continua")
+            @if(id)
             {
             <a [routerLink]="['/main-page','personal-contact-detail-list',id]" class="btn-action-list">Ver Contactos</a>
             }

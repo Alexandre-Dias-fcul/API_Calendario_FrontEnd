@@ -16,7 +16,7 @@ export class PersonalContactDetailNewComponent {
   errorMessage: string | null = null;
   idPersonalContact: number;
   idDetail: number;
-  continue: string | null;
+  continue: number | null;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -33,10 +33,9 @@ export class PersonalContactDetailNewComponent {
 
     this.idDetail = Number(this.route.snapshot.paramMap.get('idDetail'));
 
-    this.continue = this.route.snapshot.paramMap.get('continue');
+    this.continue = Number(this.route.snapshot.paramMap.get('continue'));
 
-
-    if (this.idPersonalContact && this.idDetail && !this.continue) {
+    if (this.idPersonalContact && this.idDetail) {
 
       this.personalContactService.getPersonalContactWithDetail(this.idPersonalContact).subscribe({
 
@@ -80,7 +79,7 @@ export class PersonalContactDetailNewComponent {
         value: value,
       };
 
-      if (this.idPersonalContact && this.idDetail && !this.continue) {
+      if (this.idPersonalContact && this.idDetail) {
 
         this.personalContactService.updateDetail(this.idPersonalContact, contactData).subscribe({
 
@@ -100,8 +99,10 @@ export class PersonalContactDetailNewComponent {
         this.personalContactService.addDetail(this.idPersonalContact, contactData).subscribe({
 
           next: () => {
+
             this.contactForm.reset();
-            if (this.continue === "continua") {
+
+            if (this.continue) {
               this.router.navigate(['/main-page/personal-contact-list']);
             }
             else {
