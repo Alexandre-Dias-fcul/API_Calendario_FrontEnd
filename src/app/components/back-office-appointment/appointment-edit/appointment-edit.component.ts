@@ -63,7 +63,7 @@ export class AppointmentEditComponent {
           description: data.description,
           date: this.toDateInputString(data.date),
           hourStart: data.hourStart?.slice(0, 5),
-          hourEnd: data.hourStart?.slice(0, 5),
+          hourEnd: data.hourEnd?.slice(0, 5),
           status: String(data.status)
         });
 

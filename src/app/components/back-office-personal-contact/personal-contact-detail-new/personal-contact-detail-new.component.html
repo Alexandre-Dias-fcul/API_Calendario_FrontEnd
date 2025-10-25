@@ -34,10 +34,11 @@
 
         <div class="form-actions">
             <button type="submit" class="btn-submit">Salvar</button>
-            @if(continue === "continua")
+            @if(continue)
             {
-            <a [routerLink]="['/main-page/personal-contact-new',idPersonalContact,continue]"
-                class="btn-reset">Cancelar</a>
+            <a [routerLink]="['/main-page/personal-contact-new',idPersonalContact]" class="btn-reset">Cancelar</a>
+
+
             }
             @else
             {
