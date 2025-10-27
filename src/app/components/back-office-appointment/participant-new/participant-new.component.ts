@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators, ValidatorFn } from '@angular/forms';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
 import { StaffService } from '../../../services/back-office-staff/staff.service';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
+import { appointment } from '../../../models/appointment';
 
 @Component({
   selector: 'app-participant-new',
@@ -27,14 +29,21 @@ export class ParticipantNewComponent {
     private appointmentService: AppointmentService
   ) {
 
-    this.participantForm = this.fb.group({
-      type: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-    });
-
     this.idAppointment = Number(this.route.snapshot.paramMap.get('id'));
 
-    if (!this.idAppointment) {
+    this.participantForm = this.fb.group(
+      {
+        type: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+      }
+    );
+
+    if (this.idAppointment) {
+      this.participantForm.setAsyncValidators(
+        this.conflictsValidator('type', 'email', this.idAppointment)
+      );
+    }
+    else {
       return;
     }
 
@@ -104,4 +113,70 @@ export class ParticipantNewComponent {
     }
   }
 
+
+  private conflictsValidator(
+    typeField: string,
+    emailField: string,
+    idAppointment: number
+  ): AsyncValidatorFn {
+    return (formGroup: AbstractControl): Observable<ValidationErrors | null> => {
+      const type = formGroup.get(typeField)?.value;
+      const email = formGroup.get(emailField)?.value;
+
+      if (type === 'Agent' && formGroup.get(emailField)?.valid) {
+
+        return this.agentService.getAgentByEmail(email).pipe(
+          switchMap(agent =>
+            this.appointmentService.getAppointmentById(idAppointment).pipe(
+              switchMap(appointment =>
+                this.appointmentService.getAppointmentIntersections(
+                  appointment.date.toString(),
+                  appointment.hourStart,
+                  appointment.hourEnd
+                )
+              ),
+              map(intersections => {
+                const hasConflict = intersections.some(app =>
+                  app.participants.some(p => p.employeeId === agent.id)
+                );
+
+                return hasConflict ? { invalidConflicts: true } : null;
+              })
+            )
+          ),
+          catchError(error => {
+            console.error('Erro ao validar conflitos:', error);
+            return of(null);
+          })
+        );
+
+      } else if (type === 'Staff' && formGroup.get(emailField)?.valid) {
+        return this.staffService.getStaffByEmail(email).pipe(
+          switchMap(staff =>
+            this.appointmentService.getAppointmentById(idAppointment).pipe(
+              switchMap(appointment =>
+                this.appointmentService.getAppointmentIntersections(
+                  appointment.date.toISOString(),
+                  appointment.hourStart,
+                  appointment.hourEnd
+                )
+              ),
+              map(intersections => {
+                const hasConflict = intersections.some(app =>
+                  app.participants.some(p => p.employeeId === staff.id)
+                );
+                return hasConflict ? { invalidConflicts: true } : null;
+              })
+            )
+          ),
+          catchError(error => {
+            console.error('Erro ao validar conflitos:', error);
+            return of(null);
+          })
+        );
+      }
+
+      return of(null);
+    };
+  }
 }
