@@ -53,6 +53,17 @@ export class AppointmentService {
       )
   }
 
+  getAppointmentIntersections(date: string, hourStart: string, hourEnd: string): Observable<appointmentWithParticipants[]> {
+    return this.http
+      .get<appointmentWithParticipants[]>(`${this.urlAppointment}/GetAppointmentIntersections/${date}/${hourStart}/${hourEnd}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada getAppointmentIntersections', error);
+          return throwError(() => new Error('Erro ao obter lista de intersecções.'));
+        })
+      )
+  }
+
   addAppointment(appointment: appointment): Observable<appointment> {
     return this.http.post<appointment>(this.urlAppointment, appointment, {
       headers: { 'Content-Type': 'application/json' }

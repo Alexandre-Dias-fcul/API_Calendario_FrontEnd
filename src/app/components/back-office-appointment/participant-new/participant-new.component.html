@@ -25,6 +25,9 @@
                 }
             </div>
         </div>
+        @if(participantForm.hasError('invalidConflicts')) {
+        <div class="error-message">Erro: O participante já tem reunião marcada para este horário.</div>
+        }
         @if(errorMessage != null)
         {
         <div class="error-message">
