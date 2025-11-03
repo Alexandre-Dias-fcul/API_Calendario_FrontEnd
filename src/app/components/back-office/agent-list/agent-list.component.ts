@@ -4,6 +4,7 @@ import { agent } from '../../../models/agent';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { CommonModule } from '@angular/common';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
+import { pagination } from '../../../models/pagination';
 
 @Component({
   selector: 'app-agent-list',
@@ -13,7 +14,14 @@ import { AuthorizationService } from '../../../services/back-office/authorizatio
 })
 export class AgentListComponent {
 
-  agents: agent[] = [];
+  pagination: pagination<agent> = {
+    items: [],
+    pageNumber: 1,
+    pageSize: 5,
+    totalCount: 0,
+    totalPages: 0
+  };
+
   id: number;
   errorMessage: string | null = null;
   role: string | null;
@@ -25,10 +33,10 @@ export class AgentListComponent {
 
     this.id = Number(this.authorization.getId());
 
-    this.agentService.getAllAgents().subscribe({
+    this.agentService.getAllAgentsPagination(1, 5, "").subscribe({
 
       next: (data) => {
-        this.agents = data;
+        this.pagination = data;
       },
       error: (error) => {
         console.error('Error fetching agents:', error);
