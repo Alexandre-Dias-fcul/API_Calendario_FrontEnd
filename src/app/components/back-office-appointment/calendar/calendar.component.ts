@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { addDays, getDay, startOfISOWeek, subDays } from 'date-fns';
-import { appointment } from '../../../models/appointment';
 import { appointmentWithParticipants } from '../../../models/appointmentWithParticipants';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgentService } from '../../../services/back-office/agent.service';
+import { CalendarCell } from '../calendar-cell/calendar-cell';
 
 @Component({
   selector: 'app-calendar',
-  imports: [],
+  imports: [CalendarCell],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })
@@ -39,11 +39,17 @@ export class CalendarComponent {
 
   role: string | null;
 
+  boxVisible = false;
+
+  position: { x: number, y: number } | null = null;
+
+  selectedAppointments: appointmentWithParticipants[] = [];
+
   constructor(private appointmentService: AppointmentService,
     private authorization: AuthorizationService,
-    private router: Router,
     private route: ActivatedRoute,
-    private agentService: AgentService) {
+    private agentService: AgentService,
+    private el: ElementRef) {
 
     this.role = this.authorization.getRole();
 
@@ -69,9 +75,9 @@ export class CalendarComponent {
   }
 
   public getArrayOfWeek() {
-    const array = [this.monday];
+    const array = [];
 
-    for (let i = 1; i < 7; i++) {
+    for (let i = -1; i < 6; i++) {
       array.push(addDays(this.monday, i));
     }
 
@@ -79,22 +85,13 @@ export class CalendarComponent {
   }
 
   public getCalendar() {
-    const array: appointment[][] = [];
 
-    const appointment: appointment =
-    {
-      id: 0,
-      title: '',
-      description: '',
-      date: new Date(),
-      hourStart: '',
-      hourEnd: '',
-      status: 0
-    }
+    const array: appointmentWithParticipants[][][] = [];
+
     for (let i = 0; i < 7; i++) {
       array[i] = [];
       for (let j = 0; j < 24; j++) {
-        array[i][j] = appointment;
+        array[i][j] = [];
       }
     }
 
@@ -112,8 +109,14 @@ export class CalendarComponent {
 
       this.appointments.forEach((appointment) => {
 
-        this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
-
+        if (Number(appointment.hourStart.substring(0, 2)) === Number(appointment.hourEnd.substring(0, 2))) {
+          this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))].push(appointment);
+        }
+        else if (Number(appointment.hourStart.substring(0, 2)) < Number(appointment.hourEnd.substring(0, 2))) {
+          for (let i = Number(appointment.hourStart.substring(0, 2)); i < Number(appointment.hourEnd.substring(0, 2)); i++) {
+            this.calendar[getDay(appointment.date)][i].push(appointment);
+          }
+        }
       });
 
     }
@@ -126,8 +129,14 @@ export class CalendarComponent {
 
       this.appointments.forEach((appointment) => {
 
-        this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
-
+        if (Number(appointment.hourStart.substring(0, 2)) === Number(appointment.hourEnd.substring(0, 2))) {
+          this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))].push(appointment);
+        }
+        else if (Number(appointment.hourStart.substring(0, 2)) < Number(appointment.hourEnd.substring(0, 2))) {
+          for (let i = Number(appointment.hourStart.substring(0, 2)); i < Number(appointment.hourEnd.substring(0, 2)); i++) {
+            this.calendar[getDay(appointment.date)][i].push(appointment);
+          }
+        }
       });
 
     }
@@ -144,8 +153,14 @@ export class CalendarComponent {
 
             this.appointments.forEach((appointment) => {
 
-              this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))] = appointment;
-
+              if (Number(appointment.hourStart.substring(0, 2)) === Number(appointment.hourEnd.substring(0, 2))) {
+                this.calendar[getDay(appointment.date)][Number(appointment.hourStart.substring(0, 2))].push(appointment);
+              }
+              else if (Number(appointment.hourStart.substring(0, 2)) < Number(appointment.hourEnd.substring(0, 2))) {
+                for (let i = Number(appointment.hourStart.substring(0, 2)); i < Number(appointment.hourEnd.substring(0, 2)); i++) {
+                  this.calendar[getDay(appointment.date)][i].push(appointment);
+                }
+              }
             });
           }
 
@@ -183,5 +198,36 @@ export class CalendarComponent {
     this.arrayOfWeek = this.arrayOfWeek.map(date => subDays(date, 7));
 
     this.getBetweenToDates(this.arrayOfWeek[0].toISOString(), this.arrayOfWeek[6].toISOString());
+  }
+
+  public showBox(event: MouseEvent, appointment: appointmentWithParticipants[]) {
+
+    this.boxVisible = true;
+
+    this.position = {
+      x: event.clientX + 10,
+      y: event.clientY + 10
+    };
+
+    this.selectedAppointments = appointment;
+  }
+
+  private closeBox() {
+    this.boxVisible = false;
+  }
+
+  @HostListener('window:click', ['$event'])
+  public outClick(event: MouseEvent) {
+    if (this.boxVisible && !this.el.nativeElement.contains(event.target)) {
+      this.closeBox();
+    }
+  }
+
+  @HostListener('window:scroll')
+  @HostListener('window:wheel')
+  public scrollClose() {
+    if (this.boxVisible) {
+      this.closeBox();
+    }
   }
 }

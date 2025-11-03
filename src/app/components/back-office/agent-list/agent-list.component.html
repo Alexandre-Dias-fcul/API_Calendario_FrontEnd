@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let agent of agents">
+        <tr *ngFor="let agent of pagination.items">
             <td>{{ agent.name.firstName }} {{ agent.name.lastName}}</td>
             <td>{{ agent.gender }}</td>
             @if(agent.role === 0) {

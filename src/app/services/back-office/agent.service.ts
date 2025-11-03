@@ -11,6 +11,7 @@ import { agentSupervisor } from '../../models/agentSupervisor';
 import { agentParticipant } from '../../models/agentParticipant';
 import { environment } from '../../environments/environment';
 import { agentPersonalContact } from '../../models/agentPersonalContact';
+import { pagination } from '../../models/pagination';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +27,15 @@ export class AgentService {
         return throwError(() => Error('Erro ao listar agents.'));
       }
       )
+    );
+  }
+
+  getAllAgentsPagination(pageNumber: number, pageSize: number, search: string): Observable<pagination<agent>> {
+    return this.http.get<pagination<agent>>(`${this.urlAgent}/GetAllPagination/${pageNumber}/${pageSize}?search=${search}`).pipe(
+      catchError((error) => {
+        console.error('Erro na chamada getGetAllPagination:', error);
+        return throwError(() => Error('Erro ao obter lista paginada de agents.'));
+      })
     );
   }
 
