@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { listing } from '../../models/listing';
 import { environment } from '../../environments/environment';
+import { pagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,15 @@ export class ListingService {
       catchError((error) => {
         console.error('Erro na chamada getAllListings:', error);
         return throwError(() => new Error('Erro ao listar listings.'));
+      })
+    );
+  }
+
+  getAllListingsPagination(pageNumber: number, pageSize: number, search: string): Observable<pagination<listing>> {
+    return this.http.get<pagination<listing>>(`${this.urlListing}/GetAllPagination/${pageNumber}/${pageSize}?search=${search}`).pipe(
+      catchError((error) => {
+        console.error('Erro na chamada getGetAllPagination:', error);
+        return throwError(() => Error('Erro ao obter lista paginada de listings.'));
       })
     );
   }

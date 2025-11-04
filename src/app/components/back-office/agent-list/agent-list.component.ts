@@ -17,7 +17,7 @@ export class AgentListComponent {
   pagination: pagination<agent> = {
     items: [],
     pageNumber: 1,
-    pageSize: 2,
+    pageSize: 5,
     totalCount: 0,
     totalPages: 0
   };
@@ -81,11 +81,7 @@ export class AgentListComponent {
     this.agentService.getAllAgentsPagination(pageNumber, pageSize, searchTerm).subscribe({
       next: (data) => {
 
-        this.pagination.items = data.items;
-        this.pagination.pageNumber = data.pageNumber;
-        this.pagination.pageSize = data.pageSize;
-        this.pagination.totalCount = data.totalCount;
-        this.pagination.totalPages = data.totalPages;
+        this.pagination = data;
 
         this.pagesArray = this.getPagesArray();
       },

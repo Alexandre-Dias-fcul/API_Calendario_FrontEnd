@@ -1,6 +1,6 @@
 <div class="table-header">
     <a [routerLink]="['/main-page','staff-new']" class="add-user-link">Novo Administrativo</a>
-    <input type="text" class="search-bar" placeholder="Pesquisar...">
+    <input type="text" class="search-bar" (input)="onSearch($event)" placeholder=" Pesquisar...">
 </div>
 <table class="user-table">
     <thead>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let staff of staffs">
+        <tr *ngFor="let staff of pagination.items">
             <td>{{ staff.name.firstName }} {{ staff.name.lastName}}</td>
             <td>{{ staff.gender }}</td>
             @if(staff.isActive)
@@ -44,9 +44,12 @@
 }
 
 <div class="pagination">
-    <button class="pagination-btn prev-btn" disabled>&laquo; Anterior</button>
-    <button class="pagination-btn">1</button>
-    <button class="pagination-btn">2</button>
-    <button class="pagination-btn">3</button>
-    <button class="pagination-btn next-btn">Próximo &raquo;</button>
+    <button class="pagination-btn prev-btn" [disabled]="pagination.pageNumber==1" (click)="decrement()">&laquo;
+        Anterior</button>
+    @for(page of pagesArray; track page)
+    {
+    <button class="pagination-btn" (click)="goToPage(page)">{{ page }}</button>
+    }
+    <button class="pagination-btn next-btn" [disabled]="pagination.pageNumber == pagination.totalPages"
+        (click)="increment()">Próximo &raquo;</button>
 </div>
