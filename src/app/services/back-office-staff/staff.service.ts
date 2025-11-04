@@ -9,6 +9,7 @@ import { staffAll } from '../../models/staffAll';
 import { staffParticipant } from '../../models/staffParticipant';
 import { environment } from '../../environments/environment';
 import { staffPersonalContact } from '../../models/staffPersonalContact';
+import { pagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,15 @@ export class StaffService {
       catchError((error) => {
         console.error('Erro na chamada getAllStaff:', error);
         return throwError(() => new Error('Erro ao listar staff.'));
+      })
+    );
+  }
+
+  getAllStaffPagination(pageNumber: number, pageSize: number, search: string): Observable<pagination<staff>> {
+    return this.http.get<pagination<staff>>(`${this.urlStaff}/GetAllPagination/${pageNumber}/${pageSize}?search=${search}`).pipe(
+      catchError((error) => {
+        console.error('Erro na chamada getGetAllPagination:', error);
+        return throwError(() => Error('Erro ao obter lista paginada de staff.'));
       })
     );
   }
