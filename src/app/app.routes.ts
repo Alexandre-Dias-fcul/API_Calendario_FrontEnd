@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/back-office/login/login.component';
 import { MainPageComponent } from './components/back-office/main-page/main-page.component';
 import { AgentListComponent } from './components/back-office/agent-list/agent-list.component';
 import { AgentNewComponent } from './components/back-office/agent-new/agent-new.component';
@@ -19,7 +18,6 @@ import { ListingReassignBetweenAgentsComponent } from './components/back-office-
 import { ListingReassignToAgentComponent } from './components/back-office-agent/listing-reassign-to-agent/listing-reassign-to-agent.component';
 import { FrontPageComponent } from './components/front-office/front-page/front-page.component';
 import { ViewListingsComponent } from './components/front-office/view-listings/view-listings.component';
-import { LoginUserComponent } from './components/front-office/login-user/login-user.component';
 import { RegisterComponent } from './components/front-office/register/register.component';
 import { UserProfileComponent } from './components/front-office/user-profile/user-profile.component';
 import { EditUserProfileComponent } from './components/front-office/edit-user-profile/edit-user-profile.component';
@@ -48,6 +46,7 @@ import { CalendarComponent } from './components/back-office-appointment/calendar
 import { PersonalContactDetailNewComponent } from './components/back-office-personal-contact/personal-contact-detail-new/personal-contact-detail-new.component';
 import { PersonalContactDetailListComponent } from './components/back-office-personal-contact/personal-contact-detail-list/personal-contact-detail-list.component';
 import { canActivateAdmin, canActivateAgent, canActivateEmployee, canActivateStaffSupervisor, canActivateSupervisor, canActivateUser } from './guards/auth.guard';
+import { LoginUserEmployee } from './components/front-office/login-user-employee/login-user-employee';
 
 export const routes: Routes = [
   {
@@ -58,8 +57,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'view-listings', pathMatch: 'full' },
       { path: 'view-listings', component: ViewListingsComponent },
       { path: 'detail-listing/:id', component: DetailListingComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'login-user', component: LoginUserComponent },
+      { path: 'login-user-employee', component: LoginUserEmployee },
       { path: 'register', component: RegisterComponent },
       { path: 'user-profile', component: UserProfileComponent, canActivate: [canActivateUser] },
       { path: 'edit-user-profile', component: EditUserProfileComponent, canActivate: [canActivateUser] },
