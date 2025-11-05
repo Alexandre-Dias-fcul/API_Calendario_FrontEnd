@@ -21,7 +21,6 @@ export class StaffListComponent {
     totalPages: 0
   };
 
-  staffs: staff[] = [];
   errorMessage: string | null = null;
 
   searchTerm: string = '';

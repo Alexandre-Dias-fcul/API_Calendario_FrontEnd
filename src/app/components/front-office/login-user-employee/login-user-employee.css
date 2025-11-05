@@ -110,3 +110,42 @@
     /* Ícone de alerta */
     font-size: 18px;
 }
+
+.account-toggle {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 6px 0 10px;
+}
+
+.account-toggle input[type="radio"] {
+    display: none;
+}
+
+.account-option {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #e6eef8;
+    background: #f7fbff;
+    color: #2d3e50;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.12s;
+    user-select: none;
+}
+
+/* input checked -> style the following label */
+.account-toggle input[type="radio"]:checked+label.account-option {
+    background: linear-gradient(90deg, #00b894 0%, #019170 100%);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 6px 18px rgba(1, 145, 112, 0.14);
+    transform: translateY(-1px);
+}
+
+/* hover/focus */
+.account-option:hover,
+.account-toggle input[type="radio"]:focus+label.account-option {
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.06);
+}

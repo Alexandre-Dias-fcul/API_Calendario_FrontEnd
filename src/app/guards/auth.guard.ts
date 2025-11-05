@@ -16,7 +16,7 @@ export const canActivateEmployee = () => {
         return true;
     }
     else {
-        router.navigate(['/front-page/login']);
+        router.navigate(['/front-page/login-user-employee']);
 
         return false;
     }
@@ -36,7 +36,7 @@ export const canActivateSupervisor = () => {
         return true;
     }
     else {
-        router.navigate(['/front-page/login']);
+        router.navigate(['/front-page/login-user-employee']);
 
         return false;
     }
@@ -56,7 +56,7 @@ export const canActivateAgent = () => {
         return true;
     }
     else {
-        router.navigate(['/front-page/login']);
+        router.navigate(['/front-page/login-user-employee']);
 
         return false;
     }
@@ -75,7 +75,7 @@ export const canActivateStaffSupervisor = () => {
         return true;
     }
     else {
-        router.navigate(['/front-page/login']);
+        router.navigate(['/front-page/login-user-employee']);
 
         return false;
     }
@@ -94,7 +94,7 @@ export const canActivateAdmin = () => {
         return true;
     }
     else {
-        router.navigate(['/front-page/login']);
+        router.navigate(['/front-page/login-user-employee']);
 
         return false;
     }
@@ -113,8 +113,7 @@ export const canActivateUser = () => {
         return true;
     }
     else {
-        router.navigate(['/front-page/login-user']);
-
+        router.navigate(['/front-page/login-user-employee']);
         return false;
     }
 }

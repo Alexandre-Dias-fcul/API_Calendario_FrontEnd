@@ -72,6 +72,6 @@ export class MainPageComponent {
 
   logout() {
     this.authorization.clearToken();
-    this.router.navigate(['/front-page', 'login']);
+    this.router.navigate(['/front-page', 'login-user-employee']);
   }
 }

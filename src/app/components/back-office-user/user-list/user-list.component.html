@@ -1,6 +1,6 @@
 <div class="table-header">
     <a [routerLink]="['/main-page','user-new']" class="add-user-link">Novo Utilizador</a>
-    <input type="text" class="search-bar" placeholder="Pesquisar...">
+    <input type="text" class="search-bar" (input)="onSearch($event)" placeholder=" Pesquisar...">
 </div>
 <table class="user-table">
     <thead>
@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users">
+        <tr *ngFor="let user of pagination.items">
             <td>{{ user.name.firstName }} {{ user.name.lastName}}</td>
             <td>{{ user.gender }}</td>
             @if(user.isActive)
@@ -35,10 +35,14 @@
 <div class="error-message" *ngIf="errorMessage != null">
     {{ errorMessage }}
 </div>
+
 <div class="pagination">
-    <button class="pagination-btn prev-btn" disabled>&laquo; Anterior</button>
-    <button class="pagination-btn">1</button>
-    <button class="pagination-btn">2</button>
-    <button class="pagination-btn">3</button>
-    <button class="pagination-btn next-btn">Próximo &raquo;</button>
+    <button class="pagination-btn prev-btn" [disabled]="pagination.pageNumber==1" (click)="decrement()">&laquo;
+        Anterior</button>
+    @for(page of pagesArray; track page)
+    {
+    <button class="pagination-btn" (click)="goToPage(page)">{{ page }}</button>
+    }
+    <button class="pagination-btn next-btn" [disabled]="pagination.pageNumber == pagination.totalPages"
+        (click)="increment()">Próximo &raquo;</button>
 </div>
