@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { RouterLink } from '@angular/router';
-import { AgentService } from '../../../services/back-office/agent.service';
-import { agentPersonalContact } from '../../../models/agentPersonalContact';
 import { CommonModule } from '@angular/common';
 import { PersonalContactService } from '../../../services/back-office-personal-contact/personal-contact.service';
-import { StaffService } from '../../../services/back-office-staff/staff.service';
-import { staffPersonalContact } from '../../../models/staffPersonalContact';
+import { personalContact } from '../../../models/personalContact';
+import { pagination } from '../../../models/pagination';
 
 @Component({
   selector: 'app-personal-contact-list',
@@ -16,70 +14,84 @@ import { staffPersonalContact } from '../../../models/staffPersonalContact';
 })
 export class PersonalContactListComponent {
 
-  employeePersonalContacts: agentPersonalContact | staffPersonalContact = {
-    id: 0,
-    name: {
-      firstName: '',
-      middleNames: [],
-      lastName: ''
-    },
-    dateOfBirth: null,
-    gender: '',
-    hiredDate: null,
-    dateOfTermination: null,
-    photoFileName: '',
-    role: 0,
-    supervisorId: null,
-    isActive: true,
-    personalContacts: []
+  employeeId: number;
 
-  }
+  pagination: pagination<personalContact> = {
+    items: [],
+    pageNumber: 1,
+    pageSize: 5,
+    totalCount: 0,
+    totalPages: 0
+  };
 
   errorMessage: string | null = null;
+
+  searchTerm: string = '';
+  pagesArray: number[] = [];
 
 
   constructor(
     private authorization: AuthorizationService,
-    private agentService: AgentService,
     private personalContactService: PersonalContactService,
-    private staffService: StaffService
 
   ) {
 
-    const role = this.authorization.getRole();
-    const id = Number(this.authorization.getId());
+    this.employeeId = Number(this.authorization.getId());
 
-    if (role === 'Staff') {
+    this.getPersonalContacts(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+  }
 
-      this.staffService.getByIdWithPersonalContacts(id).subscribe({
+  getPersonalContacts(employeeId: number, pageNumber: number, pageSize: number, searchTerm: string) {
+    this.personalContactService.getPersonalContactPaginationByEmployeeId(employeeId, pageNumber, pageSize, searchTerm).subscribe({
+      next: (response) => {
 
-        next: (response) => {
+        this.pagination = response;
+        this.pagesArray = this.getPagesArray();
+      },
+      error: (error) => {
+        console.error('Error fetching personal contacts', error);
+        this.errorMessage = error;
+      }
+    });
+  }
 
-          this.employeePersonalContacts = response;
-        },
-        error: (error) => {
-          console.error('Erro ao obter employeeWithPersonalContacts');
+  onSearch(event: Event) {
 
-          this.errorMessage = error;
-        }
-      })
-    }
-    else {
-      this.agentService.getByIdWithPersonalContacts(id).subscribe({
-
-        next: (response) => {
-
-          this.employeePersonalContacts = response;
-        },
-        error: (error) => {
-          console.error('Erro ao obter employeeWithPersonalContacts');
-
-          this.errorMessage = error;
-        }
-      });
-    }
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm = inputElement.value;
+    this.getPersonalContacts(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
 
   }
+
+  getPagesArray(): number[] {
+    let pages: number[] = [];
+
+    for (let i = 1; i <= this.pagination.totalPages; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  decrement() {
+    if (this.pagination.pageNumber > 1) {
+      this.pagination.pageNumber--;
+      this.getPersonalContacts(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+    }
+  }
+
+  goToPage(page: number) {
+    this.pagination.pageNumber = page;
+    this.getPersonalContacts(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+  }
+
+  increment() {
+    if (this.pagination.pageNumber < this.pagination.totalPages) {
+      this.pagination.pageNumber++;
+      this.getPersonalContacts(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+    }
+  }
+
 
   deletePersonalContact(idPersonalContact: number) {
     if (confirm('Tem a certeza que pretende apagar este contacto?')) {

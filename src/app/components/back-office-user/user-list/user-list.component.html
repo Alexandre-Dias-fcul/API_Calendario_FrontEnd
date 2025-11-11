@@ -37,12 +37,12 @@
 </div>
 
 <div class="pagination">
-    <button class="pagination-btn prev-btn" [disabled]="pagination.pageNumber==1" (click)="decrement()">&laquo;
+    <button class="pagination-btn" [disabled]="pagination.pageNumber==1" (click)="decrement()">&laquo;
         Anterior</button>
     @for(page of pagesArray; track page)
     {
     <button class="pagination-btn" (click)="goToPage(page)">{{ page }}</button>
     }
-    <button class="pagination-btn next-btn" [disabled]="pagination.pageNumber == pagination.totalPages"
+    <button class="pagination-btn" [disabled]="pagination.pageNumber == pagination.totalPages"
         (click)="increment()">Próximo &raquo;</button>
 </div>
