@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { agentParticipant } from '../../../models/agentParticipant';
-import { AgentService } from '../../../services/back-office/agent.service';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
-import { staffParticipant } from '../../../models/staffParticipant';
-import { StaffService } from '../../../services/back-office-staff/staff.service';
-
+import { appointmentWithParticipants } from '../../../models/appointmentWithParticipants';
+import { pagination } from '../../../models/pagination';
+import { participant } from '../../../models/participant';
+import { Console } from 'node:console';
 
 @Component({
   selector: 'app-appointment-list',
@@ -17,68 +16,99 @@ import { StaffService } from '../../../services/back-office-staff/staff.service'
 })
 export class AppointmentListComponent {
 
-  employeesParticipants: agentParticipant | staffParticipant = {
-    id: 0,
-    name: {
-      firstName: '',
-      middleNames: [],
-      lastName: ''
-    },
-    dateOfBirth: null,
-    gender: '',
-    hiredDate: null,
-    dateOfTermination: null,
-    photoFileName: '',
-    role: 0,
-    supervisorId: null,
-    isActive: true,
-    participants: []
-
-  }
+  employeeId: number;
+  pagination: pagination<appointmentWithParticipants> = {
+    items: [],
+    pageNumber: 1,
+    pageSize: 5,
+    totalCount: 0,
+    totalPages: 0
+  };
 
   errorMessage: string | null = null;
+  searchTerm: string = '';
+  pagesArray: number[] = [];
 
   constructor(
     private authorization: AuthorizationService,
-    private agentService: AgentService,
-    private staffService: StaffService,
     private appointmentService: AppointmentService) {
 
-    const id = Number(this.authorization.getId());
+    this.employeeId = Number(this.authorization.getId());
 
-    if (!id) {
-      return;
-    }
-
-    this.agentService.getByIdWithParticipants(id).subscribe(
-      {
-        next: (data) => {
-          if (data !== null) {
-            this.employeesParticipants = data;
-          }
-          else {
-            this.staffService.getByIdWithParticipants(id).subscribe(
-              {
-                next: (response) => {
-                  this.employeesParticipants = response;
-                }
-                , error: (error) => {
-                  console.error('Error fetching staffParticipants', error);
-                  this.errorMessage = error;
-                }
-              }
-            )
-          }
-
-        },
-        error: (error) => {
-          console.error('Error fetching agentWithParticipants:', error);
-          this.errorMessage = error;
-        }
-      }
-    );
+    this.getAppointments(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
   }
 
+  getAppointments(employeeId: number, pageNumber: number, pageSize: number, searchTerm: string) {
+    this.appointmentService.getAppointmentsPaginationByEmployeeId(employeeId, pageNumber, pageSize, searchTerm).subscribe({
+      next: (response) => {
+        this.pagination = response;
+        this.pagesArray = this.getPagesArray();
+      },
+      error: (error) => {
+        console.error('Error fetching appointments', error);
+        this.errorMessage = error;
+      }
+    });
+  }
+
+
+  onSearch(event: Event) {
+
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm = inputElement.value;
+    this.getAppointments(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+
+  }
+
+  getPagesArray(): number[] {
+    let pages: number[] = [];
+
+    for (let i = 1; i <= this.pagination.totalPages; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  decrement() {
+    if (this.pagination.pageNumber > 1) {
+      this.pagination.pageNumber--;
+      this.getAppointments(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+    }
+  }
+
+  goToPage(page: number) {
+    this.pagination.pageNumber = page;
+    this.getAppointments(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+  }
+
+  increment() {
+    if (this.pagination.pageNumber < this.pagination.totalPages) {
+      this.pagination.pageNumber++;
+      this.getAppointments(this.employeeId, this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+    }
+  }
+
+  isOrganizer(participant: participant[]) {
+    if (participant.some(p => p.role === 0 && p.employeeId === this.employeeId)) {
+      return true;
+    }
+    return false;
+  }
+
+  findParticipant(participant: participant[]): participant | null {
+    let foundParticipant = null;
+
+    participant.forEach(participant => {
+
+      if (participant.employeeId === this.employeeId && participant.role === 1) {
+
+        foundParticipant = participant;
+      }
+    });
+
+    return foundParticipant;
+  }
 
   deleteAppointment(idAppointment: number) {
     if (confirm('Tem a certeza que pretende apagar a reunião?')) {

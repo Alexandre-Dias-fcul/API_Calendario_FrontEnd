@@ -32,7 +32,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="rooms">Número de Quartos</label>
-                <input type="text" id="rooms" formControlName="numberOfRooms" placeholder="Digite o número">
+                <input type="number" id="rooms" formControlName="numberOfRooms" placeholder="Digite o número">
                 @if(listingForm.get('numberOfRooms')?.invalid &&
                 (listingForm.get('numberOfRooms')?.dirty || listingForm.get('numberOfRooms')?.touched))
                 {
@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label for="bathrooms">Número de WC(s)</label>
-                <input type="text" id="bathrooms" formControlName="numberOfBathrooms" placeholder="Digite o número">
+                <input type="number" id="bathrooms" formControlName="numberOfBathrooms" placeholder="Digite o número">
                 @if(listingForm.get('numberOfBathrooms')?.invalid &&
                 (listingForm.get('numberOfBathrooms')?.dirty || listingForm.get('numberOfBathrooms')?.touched))
                 {
@@ -53,7 +53,7 @@
 
             <div class="form-group">
                 <label for="kitchens">Número de Cozinhas</label>
-                <input type="text" id="kitchens" formControlName="numberOfKitchens" placeholder="Digite o número">
+                <input type="number" id="kitchens" formControlName="numberOfKitchens" placeholder="Digite o número">
                 @if(listingForm.get('numberOfKitchens')?.invalid &&
                 (listingForm.get('numberOfKitchens')?.dirty || listingForm.get('numberOfKitchens')?.touched))
                 {
@@ -66,7 +66,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="price">Preço</label>
-                <input type="text" id="price" formControlName="price" placeholder="Digite o preço" required>
+                <input type="number" id="price" formControlName="price" placeholder="Digite o preço" required>
                 @if(listingForm.get('price')?.invalid &&
                 (listingForm.get('price')?.dirty || listingForm.get('price')?.touched))
                 {
@@ -76,7 +76,7 @@
 
             <div class="form-group">
                 <label for="parking">Número de Garagens</label>
-                <input type="text" id="parking" formControlName="parking" placeholder="Digite o número de garagens"
+                <input type="number" id="parking" formControlName="parking" placeholder="Digite o número de garagens"
                     required>
                 @if(listingForm.get('parking')?.invalid &&
                 (listingForm.get('parking')?.dirty || listingForm.get('parking')?.touched))
@@ -88,7 +88,7 @@
 
             <div class="form-group">
                 <label for="area">Área</label>
-                <input type="text" id="area" formControlName="area" placeholder="Digite a area" required>
+                <input type="number" id="area" formControlName="area" placeholder="Digite a area" required>
                 @if(listingForm.get('area')?.invalid &&
                 (listingForm.get('area')?.dirty || listingForm.get('area')?.touched))
                 {

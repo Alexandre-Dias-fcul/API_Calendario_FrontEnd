@@ -3,7 +3,7 @@
         <a [routerLink]="['/main-page','appointment-new']" class="add-user-link">Nova Reunião</a>
         <a [routerLink]="['/main-page','calendar']" class="calendar-link">Calendário</a>
     </div>
-    <input type="text" class="search-bar" placeholder="Pesquisar...">
+    <input type="text" class="search-bar" (input)="onSearch($event)" placeholder=" Pesquisar...">
 </div>
 <table class="user-table">
     <thead>
@@ -18,36 +18,36 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let employeeParticipant of employeesParticipants.participants">
-            <td>{{ employeeParticipant.appointment.title }}</td>
-            <td>{{ employeeParticipant.appointment.description }}</td>
-            <td>{{ employeeParticipant.appointment.date}}</td>
-            <td>{{ employeeParticipant.appointment.hourStart }}</td>
-            <td>{{ employeeParticipant.appointment.hourEnd }}</td>
-            @if(employeeParticipant.appointment.status === 0)
+        <tr *ngFor="let appointment of pagination.items">
+            <td>{{ appointment.title }}</td>
+            <td>{{ appointment.description }}</td>
+            <td>{{ appointment.date}}</td>
+            <td>{{ appointment.hourStart }}</td>
+            <td>{{ appointment.hourEnd }}</td>
+            @if(appointment.status === 0)
             {
             <td>Confirmada</td>
             }
-            @else if(employeeParticipant.appointment.status === 1)
+            @else if(appointment.status === 1)
             {
             <td>Cancelada</td>
             }
-            @else if(employeeParticipant.appointment.status === 2)
+            @else if(appointment.status === 2)
             {
             <td>Concluída</td>
             }
             <td>
-                @if(employeeParticipant.role === 0)
+                @if(isOrganizer(appointment.participants))
                 {
-                <a [routerLink]="['/main-page','appointment-edit',employeeParticipant.appointment.id]">
+                <a [routerLink]="['/main-page','appointment-edit',appointment.id]">
                     <i class="fas fa-edit edit-icon"></i></a>
-                <a (click)="deleteAppointment(employeeParticipant.appointment.id)">
+                <a (click)="deleteAppointment(appointment.id)">
                     <i class="fas fa-trash delete-icon"></i></a>
-                <a [routerLink]="['/main-page','participant-list',employeeParticipant.appointment.id]">
+                <a [routerLink]="['/main-page','participant-list',appointment.id]">
                     <i class="fas fa-users participant-icon"></i></a>
-                }@else if(employeeParticipant.role === 1)
+                }@else if(findParticipant(appointment.participants) !== null)
                 {
-                <a (click)="deleteParticipant(employeeParticipant.appointment.id,employeeParticipant.id)">
+                <a (click)="deleteParticipant(appointment.id, findParticipant(appointment.participants)?.id!)">
                     <i class="fa-solid fa-xmark delete-icon"></i></a>
                 }
             </td>
@@ -61,9 +61,12 @@
 </div>
 }
 <div class="pagination">
-    <button class="pagination-btn prev-btn" disabled>&laquo; Anterior</button>
-    <button class="pagination-btn">1</button>
-    <button class="pagination-btn">2</button>
-    <button class="pagination-btn">3</button>
-    <button class="pagination-btn next-btn">Próximo &raquo;</button>
+    <button class="pagination-btn" [disabled]="pagination.pageNumber==1" (click)="decrement()">&laquo;
+        Anterior</button>
+    @for(page of pagesArray; track page)
+    {
+    <button class="pagination-btn" (click)="goToPage(page)">{{ page }}</button>
+    }
+    <button class="pagination-btn" [disabled]="pagination.pageNumber == pagination.totalPages"
+        (click)="increment()">Próximo &raquo;</button>
 </div>

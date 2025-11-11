@@ -5,6 +5,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { personalContact } from '../../models/personalContact';
 import { personalContactWithDetail } from '../../models/personalContactWithDetail';
 import { personalContactDetail } from '../../models/personalContactDetail';
+import { pagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,18 @@ export class PersonalContactService {
         catchError((error) => {
           console.error('Erro na chamada getAllPersonalContacts', error);
           return throwError(() => new Error('Erro ao listar personal contacts.'));
+        })
+      );
+  }
+
+  getPersonalContactPaginationByEmployeeId(employeeId: number, pageNumber: number, pageSize: number,
+    search: string): Observable<pagination<personalContact>> {
+    return this.http.get<pagination<personalContact>>
+      (`${this.urlPersonalContact}/GetPersonalContactPaginationByEmployeeId/${employeeId}/${pageNumber}/${pageSize}?search=${search}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada getPersonalContactPaginationByEmployeeId:', error);
+          return throwError(() => Error('Erro ao obter lista paginada de personal contacts.'));
         })
       );
   }

@@ -5,6 +5,7 @@ import { appointment } from '../../models/appointment';
 import { participant } from '../../models/participant';
 import { appointmentWithParticipants } from '../../models/appointmentWithParticipants';
 import { environment } from '../../environments/environment';
+import { pagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,18 @@ export class AppointmentService {
         return throwError(() => new Error('Erro ao listar appointments.'));
       })
     );
+  }
+
+  getAppointmentsPaginationByEmployeeId(employeeId: number, pageNumber: number, pageSize: number,
+    search: string): Observable<pagination<appointmentWithParticipants>> {
+    return this.http.get<pagination<appointmentWithParticipants>>
+      (`${this.urlAppointment}/GetAppointmentsPaginationByEmployeeId/${employeeId}/${pageNumber}/${pageSize}?search=${search}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada GetAppointmentsPaginationByEmployeeId:', error);
+          return throwError(() => Error('Erro ao obter lista paginada de appointments.'));
+        })
+      );
   }
 
   getAppointmentById(id: number): Observable<appointment> {
