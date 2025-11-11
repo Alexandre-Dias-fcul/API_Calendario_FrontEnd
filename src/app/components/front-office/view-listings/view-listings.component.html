@@ -1,7 +1,7 @@
 <div class="listings-container">
     <header>
         <h1>Imobiliária Sintra House</h1>
-        <input type="text" placeholder="Buscar imóveis...">
+        <input type="text" (input)="onSearch($event)" placeholder="Buscar imóveis...">
     </header>
     <section class="properties">
         <div *ngFor="let list of listings" class="property-card">
