@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { listing } from '../../models/listing';
 import { environment } from '../../environments/environment';
+import { pagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,35 @@ export class ListingService {
         return throwError(() => new Error('Erro ao listar listings.'));
       })
     );
+  }
+
+  getAllListingsSearch(search: string): Observable<listing[]> {
+    return this.http.get<listing[]>(`${this.urlListing}/GetAllSearch/?search=${search}`).pipe(
+      catchError((error) => {
+        console.error('Erro na chamada  getAllListingSearch:', error);
+        return throwError(() => new Error('Erro ao listar listings.'));
+      })
+    );
+  }
+
+  getAllListingsPagination(pageNumber: number, pageSize: number, search: string): Observable<pagination<listing>> {
+    return this.http.get<pagination<listing>>(`${this.urlListing}/GetAllPagination/${pageNumber}/${pageSize}?search=${search}`).pipe(
+      catchError((error) => {
+        console.error('Erro na chamada getGetAllPagination:', error);
+        return throwError(() => Error('Erro ao obter lista paginada de listings.'));
+      })
+    );
+  }
+
+  getListingsPaginationByAgentId(agentId: number, pageNumber: number, pageSize: number, search: string):
+    Observable<pagination<listing>> {
+    return this.http.get<pagination<listing>>
+      (`${this.urlListing}/GetListingsPaginationByAgentId/${agentId}/${pageNumber}/${pageSize}?search=${search}`).pipe(
+        catchError((error) => {
+          console.error('Erro na chamada getListingsPaginationByAgentId:', error);
+          return throwError(() => Error('Erro ao obter lista paginada de listings.'));
+        })
+      );
   }
 
   getListingById(id: number): Observable<listing> {

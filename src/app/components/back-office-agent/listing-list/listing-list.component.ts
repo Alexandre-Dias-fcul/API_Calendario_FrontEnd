@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { listing } from '../../../models/listing';
 import { ListingService } from '../../../services/back-office-agent/listing.service';
+import { pagination } from '../../../models/pagination';
 
 
 @Component({
@@ -14,13 +15,22 @@ import { ListingService } from '../../../services/back-office-agent/listing.serv
 })
 export class ListingListComponent {
 
-  listings: listing[] = [];
+  pagination: pagination<listing> = {
+    items: [],
+    pageNumber: 1,
+    pageSize: 5,
+    totalCount: 0,
+    totalPages: 0
+  };
 
   id: number = 0;
 
   role: string | null = null;
 
   errorMessage: string | null = null;
+
+  searchTerm: string = '';
+  pagesArray: number[] = [];
 
   constructor(private listingService: ListingService,
     private authorization: AuthorizationService) {
@@ -29,10 +39,17 @@ export class ListingListComponent {
 
     this.id = Number(this.authorization.getId());
 
-    this.listingService.getAllListings().subscribe(
+    this.getListings(this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+
+  }
+
+  getListings(pageNumber: number, pageSize: number, searchTerm: string) {
+    this.listingService.getAllListingsPagination(pageNumber, pageSize, searchTerm).subscribe(
       {
         next: (data) => {
-          this.listings = data;
+          this.pagination = data;
+          this.pagesArray = this.getPagesArray();
+
         },
         error: (error) => {
           console.error('Error fetching listings:', error);
@@ -41,6 +58,44 @@ export class ListingListComponent {
       }
     );
 
+  }
+
+  onSearch(event: Event) {
+
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm = inputElement.value;
+    this.getListings(this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+
+  }
+
+  getPagesArray(): number[] {
+    let pages: number[] = [];
+
+    for (let i = 1; i <= this.pagination.totalPages; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  decrement() {
+    if (this.pagination.pageNumber > 1) {
+      this.pagination.pageNumber--;
+      this.getListings(this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+    }
+  }
+
+
+  goToPage(page: number) {
+    this.pagination.pageNumber = page;
+    this.getListings(this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+  }
+
+  increment() {
+    if (this.pagination.pageNumber < this.pagination.totalPages) {
+      this.pagination.pageNumber++;
+      this.getListings(this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
+    }
   }
 
   deleteList(id: number) {

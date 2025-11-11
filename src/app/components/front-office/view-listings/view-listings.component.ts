@@ -16,9 +16,16 @@ export class ViewListingsComponent {
   listings: listing[] = [];
 
   errorMessage: string | null = null;
+  searchTerm: string = '';
 
   constructor(private listingService: ListingService) {
-    this.listingService.getAllListings().subscribe(
+
+    this.getListingsBySearch(this.searchTerm);
+  }
+
+  getListingsBySearch(searchTerm: string) {
+
+    this.listingService.getAllListingsSearch(this.searchTerm).subscribe(
       {
         next: (data) => {
           this.listings = data;
@@ -29,5 +36,13 @@ export class ViewListingsComponent {
         }
       }
     );
+  }
+
+  onSearch(event: Event) {
+
+    const inputElement = event.target as HTMLInputElement;
+    this.searchTerm = inputElement.value;
+    this.getListingsBySearch(this.searchTerm);
+
   }
 }

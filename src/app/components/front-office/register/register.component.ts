@@ -62,7 +62,7 @@ export class RegisterComponent {
             next: (accountResponse) => {
               console.log('Usuário registrado com sucesso:', accountResponse);
 
-              this.router.navigate(['/front-page', 'login-user']);
+              this.router.navigate(['/front-page', 'login-user-employee']);
 
             },
             error: (error) => {

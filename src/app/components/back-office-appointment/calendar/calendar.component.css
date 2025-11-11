@@ -177,6 +177,7 @@ td.appointment-cell:hover {
     transform: rotate(45deg);
 }
 
+
 @media (max-width: 900px) {
 
     th,

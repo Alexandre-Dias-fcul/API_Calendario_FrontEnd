@@ -1,6 +1,6 @@
 <div class="table-header">
     <a [routerLink]="['/main-page','agent-list']" class="return-link">Voltar</a>
-    <input type="text" class="search-bar" placeholder="Pesquisar...">
+    <input type="text" class="search-bar" (input)="onSearch($event)" placeholder=" Pesquisar...">
 </div>
 <table class="user-table">
     <thead>
@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let listing of agent.listings">
+        <tr *ngFor="let listing of pagination.items">
             <td>{{ listing.id }}</td>
             <td>{{ listing.type }}</td>
             @if(listing.status === 0)
@@ -32,9 +32,9 @@
             <td>{{ listing.price }}</td>
             <td>{{ listing.location }}</td>
             <td>
-                <a [routerLink]="['/main-page','listing-self-reassign',id,listing.id]">
+                <a [routerLink]="['/main-page','listing-self-reassign',agentId,listing.id]">
                     <i class="fa-solid fa-circle-down reassign-icon"></i></a>
-                <a [routerLink]="['/main-page','listing-reassign-between-agents',id,listing.id]">
+                <a [routerLink]="['/main-page','listing-reassign-between-agents',agentId,listing.id]">
                     <i class="fa-solid fa-people-arrows reassign-blue-icon"></i></a>
             </td>
         </tr>
@@ -49,9 +49,12 @@
 }
 
 <div class="pagination">
-    <button class="pagination-btn prev-btn" disabled>&laquo; Anterior</button>
-    <button class="pagination-btn">1</button>
-    <button class="pagination-btn">2</button>
-    <button class="pagination-btn">3</button>
-    <button class="pagination-btn next-btn">Próximo &raquo;</button>
+    <button class="pagination-btn" [disabled]="pagination.pageNumber==1" (click)="decrement()">&laquo;
+        Anterior</button>
+    @for(page of pagesArray; track page)
+    {
+    <button class="pagination-btn" (click)="goToPage(page)">{{ page }}</button>
+    }
+    <button class="pagination-btn" [disabled]="pagination.pageNumber == pagination.totalPages"
+        (click)="increment()">Próximo &raquo;</button>
 </div>

@@ -7,6 +7,7 @@ import { userAll } from '../../models/userAll';
 import { address } from '../../models/address';
 import { contact } from '../../models/contact';
 import { environment } from '../../environments/environment';
+import { pagination } from '../../models/pagination';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +24,15 @@ export class UserService {
       catchError((error) => {
         console.error('Erro em getAllUsers:', error);
         return throwError(() => new Error('Erro ao listar users.'));
+      })
+    );
+  }
+
+  getAllUsersPagination(pageNumber: number, pageSize: number, search: string): Observable<pagination<user>> {
+    return this.http.get<pagination<user>>(`${this.urlUser}/GetAllPagination/${pageNumber}/${pageSize}?search=${search}`).pipe(
+      catchError((error) => {
+        console.error('Erro na chamada getGetAllPagination:', error);
+        return throwError(() => Error('Erro ao obter lista paginada de users.'));
       })
     );
   }
