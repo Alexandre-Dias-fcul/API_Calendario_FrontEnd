@@ -1,6 +1,6 @@
 <div class="form-container">
     <h2 class="form-title">Novo Imóvel</h2>
-    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group">
                 <label for="type">Tipo de Imóvel</label>
@@ -114,8 +114,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="description">Descrição</label>
-                <textarea type="text" id="description" formControlName="description" placeholder="Digite a descrição"
-                    required>
+                <textarea id="description" formControlName="description" placeholder="Digite a descrição" required>
                 </textarea>
                 @if(listingForm.get('description')?.invalid &&
                 (listingForm.get('description')?.dirty || listingForm.get('description')?.touched))
@@ -128,10 +127,10 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="fileName">Imagem</label>
-                <input type="text" id="fileName" formControlName="mainImageFileName">
-                @if(listingForm.get('mainImageFileName')?.invalid &&
-                (listingForm.get('mainImageFileName')?.dirty || listingForm.get('mainImageFileName')?.touched))
+                <label for="image">Imagem</label>
+                <input type="file" id="image" (change)="uploadFile($event)" accept="image/*">
+                @if(listingForm.get('image')?.invalid &&
+                (listingForm.get('image')?.dirty || listingForm.get('image')?.touched))
                 {
                 <div class="error-message">Imagem inválida</div>
                 }

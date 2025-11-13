@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ListingService } from '../../../services/back-office-agent/listing.service';
-import { listing } from '../../../models/listing';
-
-
 @Component({
   selector: 'app-listing-new',
   imports: [ReactiveFormsModule, RouterLink],
@@ -32,22 +29,48 @@ export class ListingNewComponent {
         area: [null, [Validators.required]],
         parking: [null],
         description: ['', [Validators.required]],
-        mainImageFileName: [''],
+        image: [null, Validators.required],
         otherImagesFileNames: ['']
       }
     );
 
   }
 
+  uploadFile(event: any) {
+
+    const file = event.target.files[0];
+    console.log('Arquivo selecionado:', file);
+    this.listingForm.patchValue({ image: file });
+    this.listingForm.get('image')?.updateValueAndValidity();
+  }
+
   onSubmit() {
     if (this.listingForm.valid) {
 
-      const listingData: listing = this.listingForm.value as listing;
+      const formData = new FormData();
+      formData.append('Type', this.listingForm.get('type')?.value);
+      formData.append('Status', this.listingForm.get('status')?.value.toString());
+      formData.append('NumberOfRooms', this.listingForm.get('numberOfRooms')?.value?.toString() || '0');
+      formData.append('NumberOfBathrooms', this.listingForm.get('numberOfBathrooms')?.value?.toString() || '0');
+      formData.append('NumberOfKitchens', this.listingForm.get('numberOfKitchens')?.value?.toString() || '0');
+      formData.append('Price', this.listingForm.get('price')?.value.toString());
+      formData.append('Location', this.listingForm.get('location')?.value);
+      formData.append('Area', this.listingForm.get('area')?.value.toString());
+      formData.append('Parking', this.listingForm.get('parking')?.value?.toString() || '0');
+      formData.append('Description', this.listingForm.get('description')?.value);
+      formData.append('OtherImagesFileNames', this.listingForm.get('otherImagesFileNames')?.value);
 
-      listingData.status = Number(this.listingForm.get('status')?.value);
+      const file = this.listingForm.get('image')?.value;
+      if (file) {
+        formData.append('Image', file);
+      }
 
-      this.listingService.addListing(listingData).subscribe({
-        next: (response) => {
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+
+      this.listingService.addListing(formData).subscribe({
+        next: () => {
           this.listingForm.reset();
           this.router.navigate(['/main-page/listing-list']);
         },
