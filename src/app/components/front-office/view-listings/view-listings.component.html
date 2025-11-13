@@ -5,7 +5,11 @@
     </header>
     <section class="properties">
         <div *ngFor="let list of listings" class="property-card">
-            <img src="https://picsum.photos/300/200" alt="Imóvel">
+            @if(list.mainImageFileName)
+            {
+            <img src="http://localhost:5109/{{list.mainImageFileName}}" alt="Imóvel">
+            }
+
             <h3><a [routerLink]="['/front-page','detail-listing',list.id]">{{ list.type }}</a></h3>
             <p>{{ list.numberOfRooms }} quartos,
                 {{ list.numberOfBathrooms}} casa de banho, {{ list.area }}m²</p>
