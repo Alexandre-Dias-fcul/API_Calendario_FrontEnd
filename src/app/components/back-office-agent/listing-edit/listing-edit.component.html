@@ -1,6 +1,6 @@
 <div class="form-container">
     <h2 class="form-title">Novo Imóvel</h2>
-    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group">
                 <label for="type">Tipo de Imóvel</label>
@@ -125,22 +125,28 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="fileName">Imagem</label>
-                <input type="text" id="fileName" formControlName="mainImageFileName">
-                @if(listingForm.get('mainImageFileName')?.invalid &&
-                (listingForm.get('mainImageFileName')?.dirty || listingForm.get('mainImageFileName')?.touched))
+                <label for="image">Imagem Principal</label>
+                <input type="file" id="image" (change)="uploadFile($event)" accept="image/*">
+                <div style="color:white">
+                    {{ getFileName(listing.mainImageFileName) }}
+                </div>
+                @if(listingForm.get('image')?.invalid &&
+                (listingForm.get('image')?.dirty || listingForm.get('image')?.touched))
                 {
                 <div class="error-message">Imagem inválida</div>
                 }
             </div>
 
             <div class="form-group">
-                <label for="fileNames">Outras imagens</label>
-                <input type="text" id="fileNames" formControlName="otherImagesFileNames">
-                @if(listingForm.get('otherImagesFileNames')?.invalid &&
-                (listingForm.get('otherImagesFileNames')?.dirty || listingForm.get('otherImagesFileNames')?.touched))
+                <label for="secondaryImage">Imagem Secundária</label>
+                <input type="file" id="secondaryImage" (change)="uploadSecondaryFile($event)" accept="image/*">
+                <div style="color:white">
+                    {{ getFileName(listing.otherImagesFileNames) }}
+                </div>
+                @if(listingForm.get('secondaryImage')?.invalid &&
+                (listingForm.get('secondaryImage')?.dirty || listingForm.get('secondaryImage')?.touched))
                 {
-                <div class="error-message">Imagens inválidas</div>
+                <div class="error-message">Imagen inválida</div>
                 }
             </div>
         </div>

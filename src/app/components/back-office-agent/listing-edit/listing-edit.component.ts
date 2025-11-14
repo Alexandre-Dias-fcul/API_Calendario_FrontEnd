@@ -53,8 +53,8 @@ export class ListingEditComponent {
         area: [null, [Validators.required]],
         parking: [null],
         description: ['', [Validators.required]],
-        mainImageFileName: [''],
-        otherImagesFileNames: ['']
+        image: [null],
+        secondaryImage: [null]
       }
     );
 
@@ -80,9 +80,7 @@ export class ListingEditComponent {
           location: data.location,
           area: data.area,
           parking: data.parking,
-          description: data.description,
-          mainImageFileName: data.mainImageFileName,
-          otherImagesFileNames: data.otherImagesFileNames
+          description: data.description
         });
 
       },
@@ -93,15 +91,49 @@ export class ListingEditComponent {
     });
   }
 
+  uploadFile(event: any) {
+    const file = event.target.files[0];
+    this.listingForm.patchValue({ image: file });
+    this.listingForm.get('image')?.updateValueAndValidity();
+  }
+
+  uploadSecondaryFile(event: any) {
+    const file = event.target.files[0];
+    this.listingForm.patchValue({ secondaryImage: file });
+    this.listingForm.get('secondaryImage')?.updateValueAndValidity();
+  }
+
+  getFileName(path: string) {
+    return path ? path.split('/').pop() : '';
+  }
+
   onSubmit() {
     if (this.listingForm.valid) {
-      const listingData: listing = this.listingForm.value as listing;
 
-      listingData.status = Number(this.listingForm.get('status')?.value);
+      const formData = new FormData();
 
-      listingData.id = this.id;
+      formData.append('Type', this.listingForm.get('type')?.value);
+      formData.append('Status', this.listingForm.get('status')?.value.toString());
+      formData.append('NumberOfRooms', this.listingForm.get('numberOfRooms')?.value?.toString() || '0');
+      formData.append('NumberOfBathrooms', this.listingForm.get('numberOfBathrooms')?.value?.toString() || '0');
+      formData.append('NumberOfKitchens', this.listingForm.get('numberOfKitchens')?.value?.toString() || '0');
+      formData.append('Price', this.listingForm.get('price')?.value.toString());
+      formData.append('Location', this.listingForm.get('location')?.value);
+      formData.append('Area', this.listingForm.get('area')?.value.toString());
+      formData.append('Parking', this.listingForm.get('parking')?.value?.toString() || '0');
+      formData.append('Description', this.listingForm.get('description')?.value);
 
-      this.listingService.updateListing(listingData).subscribe({
+      const file = this.listingForm.get('image')?.value;
+      if (file) {
+        formData.append('Image', file);
+      }
+
+      const secondaryFile = this.listingForm.get('secondaryImage')?.value;
+      if (secondaryFile) {
+        formData.append('SecondaryImage', secondaryFile);
+      }
+
+      this.listingService.updateListing(this.id, formData).subscribe({
         next: (response) => {
           console.log('Listing atualizada com sucesso:', response);
 

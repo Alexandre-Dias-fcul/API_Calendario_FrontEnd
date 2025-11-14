@@ -1,7 +1,10 @@
 <div class="inside-container">
     <!-- Detalhes do Imóvel -->
     <div class="detail-card">
-        <img src="https://picsum.photos/1200/600?random=1" alt="Foto do imóvel">
+        @if(listing.otherImagesFileNames)
+        {
+        <img src="http://localhost:5109/{{listing.otherImagesFileNames}}" alt="Foto do imóvel">
+        }
         <div class="detail-info">
             <h2>{{ listing.type }}</h2>
             <p class="price">{{ listing.price }} €</p>
