@@ -127,7 +127,7 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="image">Imagem</label>
+                <label for="image">Imagem Principal</label>
                 <input type="file" id="image" (change)="uploadFile($event)" accept="image/*">
                 @if(listingForm.get('image')?.invalid &&
                 (listingForm.get('image')?.dirty || listingForm.get('image')?.touched))
@@ -137,12 +137,12 @@
             </div>
 
             <div class="form-group">
-                <label for="fileNames">Outras imagens</label>
-                <input type="text" id="fileNames" formControlName="otherImagesFileNames">
-                @if(listingForm.get('otherImagesFileNames')?.invalid &&
-                (listingForm.get('otherImagesFileNames')?.dirty || listingForm.get('otherImagesFileNames')?.touched))
+                <label for="secondaryImage">Imagem Secundária</label>
+                <input type="file" id="secondaryImage" (change)="uploadSecondaryFile($event)" accept="image/*">
+                @if(listingForm.get('secondaryImage')?.invalid &&
+                (listingForm.get('secondaryImage')?.dirty || listingForm.get('secondaryImage')?.touched))
                 {
-                <div class="error-message">Imagens inválidas</div>
+                <div class="error-message">Imagen inválida</div>
                 }
             </div>
         </div>

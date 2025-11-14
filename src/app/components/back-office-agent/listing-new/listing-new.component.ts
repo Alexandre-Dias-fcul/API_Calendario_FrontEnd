@@ -30,18 +30,22 @@ export class ListingNewComponent {
         parking: [null],
         description: ['', [Validators.required]],
         image: [null, Validators.required],
-        otherImagesFileNames: ['']
+        secondaryImage: [null, Validators.required]
       }
     );
 
   }
 
   uploadFile(event: any) {
-
     const file = event.target.files[0];
-    console.log('Arquivo selecionado:', file);
     this.listingForm.patchValue({ image: file });
     this.listingForm.get('image')?.updateValueAndValidity();
+  }
+
+  uploadSecondaryFile(event: any) {
+    const file = event.target.files[0];
+    this.listingForm.patchValue({ secondaryImage: file });
+    this.listingForm.get('secondaryImage')?.updateValueAndValidity();
   }
 
   onSubmit() {
@@ -58,16 +62,16 @@ export class ListingNewComponent {
       formData.append('Area', this.listingForm.get('area')?.value.toString());
       formData.append('Parking', this.listingForm.get('parking')?.value?.toString() || '0');
       formData.append('Description', this.listingForm.get('description')?.value);
-      formData.append('OtherImagesFileNames', this.listingForm.get('otherImagesFileNames')?.value);
 
       const file = this.listingForm.get('image')?.value;
       if (file) {
         formData.append('Image', file);
       }
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      const secondaryFile = this.listingForm.get('secondaryImage')?.value;
+      if (secondaryFile) {
+        formData.append('SecondaryImage', secondaryFile);
+      }
 
       this.listingService.addListing(formData).subscribe({
         next: () => {
@@ -79,7 +83,9 @@ export class ListingNewComponent {
           this.errorMessage = error;
         }
       });
-    } else {
+
+    }
+    else {
       console.log('Formulário inválido.');
       this.errorMessage = 'Formulário inválido.';
     }
