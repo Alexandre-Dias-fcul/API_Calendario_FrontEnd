@@ -163,9 +163,9 @@ export class StaffService {
       );
   }
 
-  staffUpdateAddress(address: address, staffId: number): Observable<address> {
+  staffUpdateAddress(address: address, staffId: number, addressId: number): Observable<address> {
 
-    return this.http.put<address>(` ${this.urlStaff}/UpdateAddress/${staffId}`,
+    return this.http.put<address>(` ${this.urlStaff}/UpdateAddress/${staffId}/${addressId}`,
       address, { headers: { 'Content-Type': 'application/json' } }
     ).pipe
       (
@@ -176,9 +176,9 @@ export class StaffService {
       )
   }
 
-  staffUpdateContact(contact: contact, staffId: number): Observable<contact> {
+  staffUpdateContact(contact: contact, staffId: number, contactId: number): Observable<contact> {
 
-    return this.http.put<contact>(`${this.urlStaff}/UpdateContact/${staffId}`,
+    return this.http.put<contact>(`${this.urlStaff}/UpdateContact/${staffId}/${contactId}`,
       contact, { headers: { 'Content-Type': 'application/json' } })
       .pipe(
         catchError((error) => {

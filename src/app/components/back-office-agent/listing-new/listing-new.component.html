@@ -128,9 +128,15 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="image">Imagem Principal</label>
-                <input type="file" id="image" (change)="uploadFile($event)" accept="image/*">
-                @if(listingForm.get('image')?.invalid &&
-                (listingForm.get('image')?.dirty || listingForm.get('image')?.touched))
+
+                <div class="file-upload">
+                    <input type="file" id="image" class="file-input" (change)="uploadFile($event)" accept="image/*" />
+                    <label class="file-label" for="image">Escolher ficheiro</label>
+                    <span class="file-name" id="imageName">Nenhum ficheiro escolhido</span>
+                </div>
+
+                @if(listingForm.get('image')?.invalid && (listingForm.get('image')?.dirty ||
+                listingForm.get('image')?.touched))
                 {
                 <div class="error-message">Imagem inválida</div>
                 }
@@ -138,10 +144,16 @@
 
             <div class="form-group">
                 <label for="secondaryImage">Imagem Secundária</label>
-                <input type="file" id="secondaryImage" (change)="uploadSecondaryFile($event)" accept="image/*">
-                @if(listingForm.get('secondaryImage')?.invalid &&
-                (listingForm.get('secondaryImage')?.dirty || listingForm.get('secondaryImage')?.touched))
-                {
+
+                <div class="file-upload">
+                    <input type="file" id="secondaryImage" (change)="uploadSecondaryFile($event)" class="file-input"
+                        accept="image/*" />
+                    <label class="file-label" for="secondaryImage">Escolher ficheiro</label>
+                    <span class="file-name" id="secondaryImageName">Nenhum ficheiro escolhido</span>
+                </div>
+
+                @if(listingForm.get('secondaryImage')?.invalid && (listingForm.get('secondaryImage')?.dirty ||
+                listingForm.get('secondaryImage')?.touched)) {
                 <div class="error-message">Imagen inválida</div>
                 }
             </div>

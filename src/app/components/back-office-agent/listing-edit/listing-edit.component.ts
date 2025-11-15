@@ -92,19 +92,39 @@ export class ListingEditComponent {
   }
 
   uploadFile(event: any) {
+
     const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('imageName')!.textContent = file.name;
+
     this.listingForm.patchValue({ image: file });
     this.listingForm.get('image')?.updateValueAndValidity();
   }
 
   uploadSecondaryFile(event: any) {
+
     const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('secondaryImageName')!.textContent = file.name;
+
     this.listingForm.patchValue({ secondaryImage: file });
     this.listingForm.get('secondaryImage')?.updateValueAndValidity();
   }
 
   getFileName(path: string) {
-    return path ? path.split('/').pop() : '';
+
+    let fileName = path.split('/').pop();
+
+    if (fileName) {
+      fileName = fileName.replace(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/g, "").replace(/__/g, "_").trim();
+    }
+
+    return fileName;
+
   }
 
   onSubmit() {
