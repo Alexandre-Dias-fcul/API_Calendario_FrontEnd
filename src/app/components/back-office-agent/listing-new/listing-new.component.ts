@@ -37,13 +37,24 @@ export class ListingNewComponent {
   }
 
   uploadFile(event: any) {
+
     const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('imageName')!.textContent = file.name;
+
     this.listingForm.patchValue({ image: file });
     this.listingForm.get('image')?.updateValueAndValidity();
   }
 
   uploadSecondaryFile(event: any) {
     const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('secondaryImageName')!.textContent = file.name;
+
     this.listingForm.patchValue({ secondaryImage: file });
     this.listingForm.get('secondaryImage')?.updateValueAndValidity();
   }

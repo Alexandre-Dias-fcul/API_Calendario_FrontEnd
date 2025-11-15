@@ -47,6 +47,8 @@ import { PersonalContactDetailNewComponent } from './components/back-office-pers
 import { PersonalContactDetailListComponent } from './components/back-office-personal-contact/personal-contact-detail-list/personal-contact-detail-list.component';
 import { canActivateAdmin, canActivateAgent, canActivateEmployee, canActivateStaffSupervisor, canActivateSupervisor, canActivateUser } from './guards/auth.guard';
 import { LoginUserEmployee } from './components/front-office/login-user-employee/login-user-employee';
+import { StaffContact } from './components/back-office-staff/staff-contact/staff-contact';
+import { StaffContactList } from './components/back-office-staff/staff-contact-list/staff-contact-list';
 
 export const routes: Routes = [
   {
@@ -102,6 +104,9 @@ export const routes: Routes = [
         { path: 'staff-new-account/:id/:continue', component: StaffNewAccountComponent, canActivate: [canActivateSupervisor] },
         { path: 'staff-edit/:id', component: StaffEditComponent, canActivate: [canActivateSupervisor] },
         { path: 'staff-edit-account/:id', component: StaffEditAccountComponent, canActivate: [canActivateSupervisor] },
+        { path: 'staff-contact/:idAgent', component: StaffContact, canActivate: [canActivateSupervisor] },
+        { path: 'staff-contact/:idAgent/:idContact', component: StaffContact, canActivate: [canActivateSupervisor] },
+        { path: 'staff-contact-list/:id', component: StaffContactList, canActivate: [canActivateSupervisor] },
         { path: 'user-list', component: UserListComponent, canActivate: [canActivateAdmin] },
         { path: 'user-new', component: UserNewComponent, canActivate: [canActivateAdmin] },
         { path: 'user-new/:id', component: UserNewComponent, canActivate: [canActivateAdmin] },

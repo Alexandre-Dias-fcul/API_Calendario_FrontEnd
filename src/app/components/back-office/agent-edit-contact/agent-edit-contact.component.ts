@@ -63,12 +63,7 @@ export class AgentEditContactComponent {
 
     this.contactId = Number(this.route.snapshot.paramMap.get('idContact'));
 
-    const role = this.authorization.getRole();
-
-    if (!role || (role !== 'Manager' && role !== 'Broker' && role !== 'Admin')) {
-
-      this.router.navigate(['/front-page', 'login']);
-
+    if (!agentId || !this.contactId) {
       return;
     }
 
@@ -119,7 +114,7 @@ export class AgentEditContactComponent {
           this.router.navigate(['/main-page/agent-contact-list', this.agent.id]);
         },
         error: (error) => {
-          console.error('Erro ao adicionar contacto:', error);
+          console.error('Erro ao alterar contacto:', error);
           this.errorMessage = error;
         }
       });

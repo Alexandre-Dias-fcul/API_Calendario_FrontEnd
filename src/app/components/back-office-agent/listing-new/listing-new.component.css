@@ -171,3 +171,50 @@
     /* Ícone de alerta */
     font-size: 18px;
 }
+
+/* Contém o input e o botão */
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Esconde o input nativo */
+.file-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Botão simples e moderno */
+.file-label {
+    background: #4f46e5;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.file-label:hover {
+    background: #4338ca;
+}
+
+.file-label:active {
+    transform: scale(0.97);
+}
+
+/* Nome do ficheiro */
+.file-name {
+    font-size: 14px;
+    color: white;
+    font-style: italic;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
