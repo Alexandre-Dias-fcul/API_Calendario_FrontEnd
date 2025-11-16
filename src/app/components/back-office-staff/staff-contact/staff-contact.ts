@@ -80,7 +80,7 @@ export class StaffContact {
 
         this.staffService.staffUpdateContact(contactData, this.staffId, this.contactId).subscribe({
           next: () => {
-            this.router.navigate(['/main-page/agent-contact-list', this.staffId]);
+            this.router.navigate(['/main-page/staff-contact-list', this.staffId]);
           },
           error: (error) => {
             console.error('Erro ao alterar contacto:', error);
@@ -91,7 +91,7 @@ export class StaffContact {
       } else {
         this.staffService.staffAddContact(contactData, this.staffId).subscribe({
           next: () => {
-            this.router.navigate(['/main-page/agent-contact-list', this.staffId]);
+            this.router.navigate(['/main-page/staff-contact-list', this.staffId]);
           },
           error: (error) => {
             console.error('Erro ao adicionar contacto:', error);

@@ -1,5 +1,5 @@
-.contact-table {
-    width: 60%;
+.address-table {
+    width: 80%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: #fff;
@@ -59,7 +59,7 @@
     display: inline-block;
 }
 
-.contact-table thead {
+.address-table thead {
     color: white;
     /* Texto branco */
     text-transform: uppercase;
@@ -72,7 +72,7 @@
     /* Espaçamento entre letras */
 }
 
-.contact-table th {
+.address-table th {
     padding: 1rem;
     /* Espaçamento interno */
     text-align: left;
@@ -88,29 +88,29 @@
     font-weight: bold;
 }
 
-.contact-table td {
+.address-table td {
     border: 1px solid #ddd;
     padding: 1rem;
     text-align: left;
     font-size: 0.9rem;
 }
 
-.contact-table tr {
+.address-table tr {
     transition: background-color 0.3s ease;
     /* Transição suave ao passar o mouse */
 }
 
-.contact-table tr:nth-child(even) {
+.address-table tr:nth-child(even) {
     background-color: #f9f9f9;
     /* Fundo alternado para linhas pares */
 }
 
-.contact-table tr:hover {
+.address-table tr:hover {
     background-color: #eaf2f8;
     /* Destaque ao passar o mouse */
 }
 
-.contact-table td {
+.address-table td {
     color: #555;
 }
 
@@ -140,7 +140,7 @@
     /* Leve aumento ao passar o mouse */
 }
 
-.new-contact-link {
+.new-address-link {
     display: inline-block;
     /* Para que o link se comporte como um botão */
     background-color: #3498db;
@@ -157,7 +157,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.new-contact-link:hover {
+.new-address-link:hover {
     background-color: #2980b9;
     /* Azul mais escuro ao passar o mouse */
     transform: scale(1.05);

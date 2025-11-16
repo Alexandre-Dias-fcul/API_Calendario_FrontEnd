@@ -1,0 +1,38 @@
+<div class="table-header">
+    <div class="header-links">
+        <a [routerLink]="['/main-page','staff-edit',staffId]" class="return-link">Voltar</a>
+        <a [routerLink]="['/main-page','staff-address',staffId]" class="new-address-link">Novo Endereço</a>
+    </div>
+    <input type="text" class="search-bar" placeholder="Pesquisar...">
+</div>
+<table class="address-table">
+    <thead>
+        <tr>
+            <th>Morada</th>
+            <th>Cidade</th>
+            <th>Código Postal</th>
+            <th>País</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let address of addresses">
+            <td>{{ address.street }}</td>
+            <td>{{ address.city }}</td>
+            <td>{{ address.postalCode}}</td>
+            <td>{{ address.country}}</td>
+            <td>
+                <a [routerLink]="['/main-page','staff-address',staffId,address.id]">
+                    <i class="fas fa-edit edit-icon"></i>
+                </a>
+                <a (click)="deleteAddress(address.id)"><i class="fas fa-trash delete-icon"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+@if(errorMessage != null)
+{
+<div class="error-message">
+    {{ errorMessage }}
+</div>
+}
