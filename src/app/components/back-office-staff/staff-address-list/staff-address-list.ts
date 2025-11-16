@@ -1,24 +1,23 @@
 import { Component } from '@angular/core';
-import { contact } from '../../../models/contact';
+import { address } from '../../../models/address';
 import { StaffService } from '../../../services/back-office-staff/staff.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-staff-contact-list',
+  selector: 'app-staff-address-list',
   imports: [RouterLink, CommonModule],
-  templateUrl: './staff-contact-list.html',
-  styleUrl: './staff-contact-list.css'
+  templateUrl: './staff-address-list.html',
+  styleUrl: './staff-address-list.css'
 })
-export class StaffContactList {
+export class StaffAddressList {
 
   staffId: number;
-  contacts: contact[] = [];
+  addresses: address[] = [];
   errorMessage: string | null = null;
 
   constructor(private staffService: StaffService,
-    private route: ActivatedRoute
-  ) {
+    private route: ActivatedRoute) {
     this.staffId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (!this.staffId) {
@@ -27,26 +26,26 @@ export class StaffContactList {
 
     this.staffService.getByIdWithAll(this.staffId).subscribe({
       next: (response) => {
+        if (response.entityLink?.addresses) {
 
-        if (response.entityLink?.contacts) {
-          this.contacts = response.entityLink.contacts;
+          this.addresses = response.entityLink.addresses;
         }
       },
       error: (error) => {
-        console.error('Erro ao obter contactos:', error);
+        console.error('Erro ao obter endereços:', error);
         this.errorMessage = error;
       }
     });
   }
 
-  deleteContact(idContact: number) {
-    if (confirm('Tem a certeza que pretende apagar o contacto?')) {
-      this.staffService.staffDeleteContact(this.staffId, idContact).subscribe({
+  deleteAddress(idAddress: number) {
+    if (confirm('Tem a certeza que pretende apagar o endereço?')) {
+      this.staffService.staffDeleteAddress(this.staffId, idAddress).subscribe({
         next: () => {
           window.location.reload();
         },
         error: (error) => {
-          console.error('Erro ao apagar contacto:', error);
+          console.error('Error deleting address:', error);
           this.errorMessage = error;
         }
       });

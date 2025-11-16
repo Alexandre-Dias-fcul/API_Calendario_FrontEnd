@@ -198,7 +198,7 @@ export class StaffService {
       );
   }
 
-  satffDeleteAddress(staffId: number, addressId: number): Observable<address> {
+  staffDeleteAddress(staffId: number, addressId: number): Observable<address> {
     return this.http.delete<address>(`${this.urlStaff}/DeleteAddress/${staffId}/${addressId}`)
       .pipe(
         catchError((error) => {
