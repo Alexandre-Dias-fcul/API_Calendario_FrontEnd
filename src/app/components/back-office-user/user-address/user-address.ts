@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { address } from '../../../models/address';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { StaffService } from '../../../services/back-office-staff/staff.service';
+import { UserService } from '../../../services/front-office/user.service';
+import { address } from '../../../models/address';
 
 @Component({
-  selector: 'app-staff-address',
+  selector: 'app-user-address',
   imports: [RouterLink, ReactiveFormsModule],
-  templateUrl: './staff-address.html',
-  styleUrl: './staff-address.css'
+  templateUrl: './user-address.html',
+  styleUrl: './user-address.css'
 })
-export class StaffAddress {
+export class UserAddress {
 
-  staffId: number;
+  userId: number;
   addressForm: FormGroup;
   errorMessage: string | null = null;
   addressId: number;
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
-    private staffService: StaffService,
+    private userService: UserService,
     private router: Router) {
 
     this.addressForm = this.fb.group({
@@ -29,17 +29,17 @@ export class StaffAddress {
       country: ['', [Validators.required]]
     });
 
-    this.staffId = Number(this.route.snapshot.paramMap.get('idStaff'));
+    this.userId = Number(this.route.snapshot.paramMap.get('idUser'));
 
     this.addressId = Number(this.route.snapshot.paramMap.get('idAddress'));
 
-    if (!this.staffId) {
+    if (!this.userId) {
       return;
     }
 
     if (this.addressId) {
 
-      this.staffService.getByIdWithAll(this.staffId).subscribe({
+      this.userService.getByIdWithAll(this.userId).subscribe({
 
         next: (response) => {
           const address = response.entityLink?.addresses?.find(addr => addr.id === this.addressId);
@@ -74,9 +74,9 @@ export class StaffAddress {
 
       if (this.addressId) {
 
-        this.staffService.staffUpdateAddress(addressData, this.staffId, this.addressId).subscribe({
+        this.userService.userUpdateAddress(addressData, this.userId, this.addressId).subscribe({
           next: () => {
-            this.router.navigate(['/main-page/staff-address-list', this.staffId]);
+            this.router.navigate(['/main-page/user-address-list', this.userId]);
           },
           error: (error) => {
             console.error('Erro ao editar endereço:', error);
@@ -85,9 +85,9 @@ export class StaffAddress {
         });
       }
       else {
-        this.staffService.staffAddAddress(addressData, this.staffId).subscribe({
+        this.userService.userAddAddress(addressData, this.userId).subscribe({
           next: () => {
-            this.router.navigate(['/main-page/staff-address-list', this.staffId]);
+            this.router.navigate(['/main-page/user-address-list', this.userId]);
           },
           error: (error) => {
             console.error('Erro ao adicionar endereço:', error);
@@ -102,5 +102,4 @@ export class StaffAddress {
       this.errorMessage = "Formulário inválido.";
     }
   }
-
 }
