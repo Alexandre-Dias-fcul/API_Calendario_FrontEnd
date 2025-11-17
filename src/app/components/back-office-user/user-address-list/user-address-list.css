@@ -1,0 +1,235 @@
+.address-table {
+    width: 80%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    /* Fundo branco para a tabela */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra para destacar a tabela */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    overflow: hidden;
+    /* Garante que o conteúdo respeite as bordas arredondadas */
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    /* Espaça os elementos horizontalmente */
+    align-items: center;
+    /* Alinha verticalmente */
+    margin-bottom: 1rem;
+    /* Espaço entre o cabeçalho e a tabela */
+}
+
+.header-links {
+    display: flex;
+    gap: 1rem;
+    /* Espaço entre os links */
+}
+
+.search-bar {
+    width: 250px;
+    /* Largura da barra de pesquisa */
+    padding: 0.5rem 1rem;
+    /* Espaçamento interno */
+    border: 1px solid #ddd;
+    /* Borda leve */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    font-size: 1rem;
+    /* Tamanho do texto */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Sombra leve */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-bar:focus {
+    outline: none;
+    /* Remove o contorno padrão */
+    border-color: #3498db;
+    /* Cor da borda ao focar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra mais forte ao focar */
+}
+
+.table-container button {
+    margin-bottom: 1rem;
+    /* Espaço entre o botão e a tabela */
+    display: inline-block;
+}
+
+.address-table thead {
+    color: white;
+    /* Texto branco */
+    text-transform: uppercase;
+    /* Texto em maiúsculas */
+    font-weight: bold;
+    /* Negrito */
+    font-size: 0.9rem;
+    /* Tamanho do texto */
+    letter-spacing: 0.05rem;
+    /* Espaçamento entre letras */
+}
+
+.address-table th {
+    padding: 1rem;
+    /* Espaçamento interno */
+    text-align: left;
+    /* Alinha o texto à esquerda */
+    border-bottom: 2px solid #2980b9;
+    /* Linha inferior para destaque */
+    background-color: #2c3e50;
+    /* Fundo escuro */
+    color: white;
+    /* Texto branco */
+    text-transform: uppercase;
+    /* Texto em maiúsculas */
+    font-weight: bold;
+}
+
+.address-table td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.address-table tr {
+    transition: background-color 0.3s ease;
+    /* Transição suave ao passar o mouse */
+}
+
+.address-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* Fundo alternado para linhas pares */
+}
+
+.address-table tr:hover {
+    background-color: #eaf2f8;
+    /* Destaque ao passar o mouse */
+}
+
+.address-table td {
+    color: #555;
+}
+
+/* Estilo do botão Delete */
+/* Botão Novo Usuário */
+.return-link {
+    display: inline-block;
+    /* Para que o link se comporte como um botão */
+    background-color: #2ecc71;
+    /* Azul */
+    color: white;
+    text-decoration: none;
+    /* Remove o sublinhado do link */
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    /* Espaço abaixo do link */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.return-link:hover {
+    background-color: #299f5a;
+    /* Azul mais escuro ao passar o mouse */
+    transform: scale(1.05);
+    /* Leve aumento ao passar o mouse */
+}
+
+.new-address-link {
+    display: inline-block;
+    /* Para que o link se comporte como um botão */
+    background-color: #3498db;
+    /* Azul */
+    color: white;
+    text-decoration: none;
+    /* Remove o sublinhado do link */
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    /* Espaço abaixo do link */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.new-address-link:hover {
+    background-color: #2980b9;
+    /* Azul mais escuro ao passar o mouse */
+    transform: scale(1.05);
+    /* Leve aumento ao passar o mouse */
+}
+
+.edit-icon {
+    color: #f1c40f;
+    /* Amarelo */
+    font-size: 1.2rem;
+    /* Tamanho do ícone */
+    cursor: pointer;
+    /* Mostra o cursor de clique */
+    margin-right: 0.5rem;
+    /* Espaço entre o ícone de edição e o ícone de deletar */
+    transition: color 0.3s ease, transform 0.2s ease;
+    /* Transição suave */
+}
+
+.edit-icon:hover {
+    color: #d4ac0d;
+    /* Amarelo mais escuro ao passar o mouse */
+    transform: scale(1.2);
+    /* Leve aumento ao passar o mouse */
+}
+
+
+.delete-icon {
+    color: #e74c3c;
+    /* Vermelho */
+    font-size: 1.2rem;
+    /* Tamanho do ícone */
+    cursor: pointer;
+    /* Mostra o cursor de clique */
+    margin-left: 0.5rem;
+    /* Espaço entre o ícone e o botão "Editar" */
+    transition: color 0.3s ease, transform 0.2s ease;
+    /* Transição suave */
+}
+
+.delete-icon:hover {
+    color: #c0392b;
+    /* Vermelho mais escuro ao passar o mouse */
+    transform: scale(1.2);
+    /* Leve aumento ao passar o mouse */
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 16px;
+    margin: 10px 0;
+
+    color: #b71c1c;
+    /* vermelho forte */
+    background-color: #fdecea;
+    /* vermelho bem clarinho */
+    border: 1px solid #f5c2c2;
+    /* borda suave */
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* leve sombra */
+}
+
+.error-message::before {
+    content: "⚠️";
+    /* Ícone de alerta */
+    font-size: 18px;
+}

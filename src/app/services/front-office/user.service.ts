@@ -118,7 +118,7 @@ export class UserService {
   }
 
   userAddContact(contact: contact, userId: number): Observable<contact> {
-    return this.http.post<contact>(`${this.urlUser}/AddCountact/${userId}`, contact,
+    return this.http.post<contact>(`${this.urlUser}/AddContact/${userId}`, contact,
       { headers: { 'Content-Type': 'application/json' } }).pipe(
         catchError((error) => {
           console.error('Erro na chamada userAddContact:', error);
