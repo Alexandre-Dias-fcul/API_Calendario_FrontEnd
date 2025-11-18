@@ -114,20 +114,19 @@ export class AgentService {
     );
   }
 
-  addAgent(agent: agent): Observable<agent> {
-    return this.http.post<agent>(this.urlAgent, agent, {
-      headers: { 'Content-Type': 'application/json' }
-    }).pipe(
-      catchError((error) => {
-        console.error('Erro na chamada addAgent:', error);
-        return throwError(() => new Error('Erro ao adicionar agente.'));
-      })
-    );
+  addAgent(agentData: FormData): Observable<agent> {
+    return this.http.post<agent>(this.urlAgent, agentData)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada addAgent:', error);
+          return throwError(() => new Error('Erro ao adicionar agente.'));
+        })
+      );
   }
 
-  updateAgent(agent: agent): Observable<agent> {
-    return this.http.put<agent>(`${this.urlAgent}/${agent.id}`, agent,
-      { headers: { 'Content-Type': 'application/json' } }).pipe(
+  updateAgent(id: number, agentData: FormData): Observable<agent> {
+    return this.http.put<agent>(`${this.urlAgent}/${id}`, agentData)
+      .pipe(
         catchError((error) => {
           console.error('Erro na chamada updateAgent:', error);
 

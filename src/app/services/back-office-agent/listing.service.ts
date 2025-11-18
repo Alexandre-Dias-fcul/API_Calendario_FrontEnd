@@ -62,26 +62,24 @@ export class ListingService {
     );
   }
 
-  addListing(listing: listing): Observable<listing> {
-    return this.http.post<listing>(this.urlListing, listing, {
-      headers: { 'Content-Type': 'application/json' }
-    }).pipe(
-      catchError((error) => {
-        console.error('Erro na chamada addListing:', error);
-        return throwError(() => new Error('Erro ao adicionar listing.'));
-      })
-    );
+  addListing(listingData: FormData): Observable<listing> {
+    return this.http.post<listing>(this.urlListing, listingData)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada addListing:', error);
+          return throwError(() => new Error(error.message || 'Erro ao adicionar listing.'));
+        })
+      );
   }
 
-  updateListing(listing: listing): Observable<listing> {
-    return this.http.put<listing>(`${this.urlListing}/${listing.id}`, listing, {
-      headers: { 'Content-Type': 'application/json' }
-    }).pipe(
-      catchError((error) => {
-        console.error('Erro na chamada updateListing:', error);
-        return throwError(() => new Error('Erro ao atualizar listing.'));
-      })
-    );
+  updateListing(id: number, listingData: FormData): Observable<listing> {
+    return this.http.put<listing>(`${this.urlListing}/${id}`, listingData)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro na chamada updateListing:', error);
+          return throwError(() => new Error('Erro ao atualizar listing.'));
+        })
+      );
   }
 
   deleteListing(id: number): Observable<listing> {

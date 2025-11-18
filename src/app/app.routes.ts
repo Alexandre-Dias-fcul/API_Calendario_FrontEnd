@@ -47,6 +47,14 @@ import { PersonalContactDetailNewComponent } from './components/back-office-pers
 import { PersonalContactDetailListComponent } from './components/back-office-personal-contact/personal-contact-detail-list/personal-contact-detail-list.component';
 import { canActivateAdmin, canActivateAgent, canActivateEmployee, canActivateStaffSupervisor, canActivateSupervisor, canActivateUser } from './guards/auth.guard';
 import { LoginUserEmployee } from './components/front-office/login-user-employee/login-user-employee';
+import { StaffContact } from './components/back-office-staff/staff-contact/staff-contact';
+import { StaffContactList } from './components/back-office-staff/staff-contact-list/staff-contact-list';
+import { StaffAddressList } from './components/back-office-staff/staff-address-list/staff-address-list';
+import { StaffAddress } from './components/back-office-staff/staff-address/staff-address';
+import { UserContact } from './components/back-office-user/user-contact/user-contact';
+import { UserContactList } from './components/back-office-user/user-contact-list/user-contact-list';
+import { UserAddress } from './components/back-office-user/user-address/user-address';
+import { UserAddressList } from './components/back-office-user/user-address-list/user-address-list';
 
 export const routes: Routes = [
   {
@@ -102,6 +110,12 @@ export const routes: Routes = [
         { path: 'staff-new-account/:id/:continue', component: StaffNewAccountComponent, canActivate: [canActivateSupervisor] },
         { path: 'staff-edit/:id', component: StaffEditComponent, canActivate: [canActivateSupervisor] },
         { path: 'staff-edit-account/:id', component: StaffEditAccountComponent, canActivate: [canActivateSupervisor] },
+        { path: 'staff-contact/:idStaff', component: StaffContact, canActivate: [canActivateSupervisor] },
+        { path: 'staff-contact/:idStaff/:idContact', component: StaffContact, canActivate: [canActivateSupervisor] },
+        { path: 'staff-contact-list/:id', component: StaffContactList, canActivate: [canActivateSupervisor] },
+        { path: 'staff-address/:idStaff', component: StaffAddress, canActivate: [canActivateSupervisor] },
+        { path: 'staff-address/:idStaff/:idAddress', component: StaffAddress, canActivate: [canActivateSupervisor] },
+        { path: 'staff-address-list/:id', component: StaffAddressList, canActivate: [canActivateSupervisor] },
         { path: 'user-list', component: UserListComponent, canActivate: [canActivateAdmin] },
         { path: 'user-new', component: UserNewComponent, canActivate: [canActivateAdmin] },
         { path: 'user-new/:id', component: UserNewComponent, canActivate: [canActivateAdmin] },
@@ -109,6 +123,12 @@ export const routes: Routes = [
         { path: 'user-new-account/:id', component: UserNewAccountComponent, canActivate: [canActivateAdmin] },
         { path: 'user-new-account/:id/:continue', component: UserNewAccountComponent, canActivate: [canActivateAdmin] },
         { path: 'user-edit-account/:id', component: UserEditAccountComponent, canActivate: [canActivateAdmin] },
+        { path: 'user-contact/:idUser', component: UserContact, canActivate: [canActivateAdmin] },
+        { path: 'user-contact/:idUser/:idContact', component: UserContact, canActivate: [canActivateAdmin] },
+        { path: 'user-contact-list/:id', component: UserContactList, canActivate: [canActivateAdmin] },
+        { path: 'user-address/:idUser', component: UserAddress, canActivate: [canActivateAdmin] },
+        { path: 'user-address/:idUser/:idAddress', component: UserAddress, canActivate: [canActivateAdmin] },
+        { path: 'user-address-list/:id', component: UserAddressList, canActivate: [canActivateAdmin] },
         { path: 'personal-contact-new', component: PersonalContactNewComponent, canActivate: [canActivateEmployee] },
         { path: 'personal-contact-new/:id', component: PersonalContactNewComponent, canActivate: [canActivateEmployee] },
         { path: 'personal-contact-list', component: PersonalContactListComponent, canActivate: [canActivateEmployee] },

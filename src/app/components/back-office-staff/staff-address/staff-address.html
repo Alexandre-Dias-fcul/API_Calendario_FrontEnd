@@ -1,0 +1,67 @@
+<div class="form-container">
+    @if(addressId)
+    {
+    <h2 class="form-title">Editar Endereço do Administrativo</h2>
+    }
+    @else
+    {
+    <h2 class="form-title">Novo Endereço do Administrativo</h2>
+    }
+    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="street">Morada</label>
+            <input type="text" id="street" formControlName="street" placeholder="Digite a morada">
+            @if(addressForm.get('street')?.invalid &&
+            (addressForm.get('street')?.dirty || addressForm.get('street')?.touched))
+            {
+            <div class="error-message">Morada inválida</div>
+            }
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="city">Cidade</label>
+                <input type="text" id="city" formControlName="city" placeholder="Digite a cidade">
+                @if(addressForm.get('city')?.invalid &&
+                (addressForm.get('city')?.dirty || addressForm.get('city')?.touched))
+                {
+                <div class="error-message">Cidade Inválida</div>
+                }
+            </div>
+
+
+            <div class="form-group">
+                <label for="postalCode">Código Postal</label>
+                <input type="text" id="postalCode" formControlName="postalCode" placeholder="Digite o código postal">
+                @if(addressForm.get('postalCode')?.invalid &&
+                (addressForm.get('postalCode')?.dirty || addressForm.get('postalCode')?.touched))
+                {
+                <div class="error-message">Código Postal inválido</div>
+                }
+            </div>
+
+
+            <div class="form-group">
+                <label for="country">País</label>
+                <input type="text" id="country" formControlName="country" placeholder="Digite o país">
+                @if(addressForm.get('country')?.invalid &&
+                (addressForm.get('country')?.dirty || addressForm.get('country')?.touched))
+                {
+                <div class="error-message">País inválido</div>
+                }
+            </div>
+        </div>
+        @if(errorMessage != null)
+        {
+        <div class="error-message">
+            {{ errorMessage }}
+        </div>
+        }
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Salvar</button>
+            <a [routerLink]="['/main-page/staff-address-list',staffId]" class="btn-reset">Cancelar</a>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,6 @@
 <div class="form-container">
     <h2 class="form-title">Novo Imóvel</h2>
-    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="listingForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group">
                 <label for="type">Tipo de Imóvel</label>
@@ -114,8 +114,7 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="description">Descrição</label>
-                <textarea type="text" id="description" formControlName="description" placeholder="Digite a descrição"
-                    required>
+                <textarea id="description" formControlName="description" placeholder="Digite a descrição" required>
                 </textarea>
                 @if(listingForm.get('description')?.invalid &&
                 (listingForm.get('description')?.dirty || listingForm.get('description')?.touched))
@@ -128,22 +127,34 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="fileName">Imagem</label>
-                <input type="text" id="fileName" formControlName="mainImageFileName">
-                @if(listingForm.get('mainImageFileName')?.invalid &&
-                (listingForm.get('mainImageFileName')?.dirty || listingForm.get('mainImageFileName')?.touched))
+                <label for="image">Imagem Principal</label>
+
+                <div class="file-upload">
+                    <input type="file" id="image" class="file-input" (change)="uploadFile($event)" accept="image/*" />
+                    <label class="file-label" for="image">Escolher ficheiro</label>
+                    <span class="file-name" id="imageName">Nenhum ficheiro escolhido</span>
+                </div>
+
+                @if(listingForm.get('image')?.invalid && (listingForm.get('image')?.dirty ||
+                listingForm.get('image')?.touched))
                 {
                 <div class="error-message">Imagem inválida</div>
                 }
             </div>
 
             <div class="form-group">
-                <label for="fileNames">Outras imagens</label>
-                <input type="text" id="fileNames" formControlName="otherImagesFileNames">
-                @if(listingForm.get('otherImagesFileNames')?.invalid &&
-                (listingForm.get('otherImagesFileNames')?.dirty || listingForm.get('otherImagesFileNames')?.touched))
-                {
-                <div class="error-message">Imagens inválidas</div>
+                <label for="secondaryImage">Imagem Secundária</label>
+
+                <div class="file-upload">
+                    <input type="file" id="secondaryImage" (change)="uploadSecondaryFile($event)" class="file-input"
+                        accept="image/*" />
+                    <label class="file-label" for="secondaryImage">Escolher ficheiro</label>
+                    <span class="file-name" id="secondaryImageName">Nenhum ficheiro escolhido</span>
+                </div>
+
+                @if(listingForm.get('secondaryImage')?.invalid && (listingForm.get('secondaryImage')?.dirty ||
+                listingForm.get('secondaryImage')?.touched)) {
+                <div class="error-message">Imagen inválida</div>
                 }
             </div>
         </div>

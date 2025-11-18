@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ListingService } from '../../../services/back-office-agent/listing.service';
-import { listing } from '../../../models/listing';
-
-
 @Component({
   selector: 'app-listing-new',
   imports: [ReactiveFormsModule, RouterLink],
@@ -32,22 +29,63 @@ export class ListingNewComponent {
         area: [null, [Validators.required]],
         parking: [null],
         description: ['', [Validators.required]],
-        mainImageFileName: [''],
-        otherImagesFileNames: ['']
+        image: [null, Validators.required],
+        secondaryImage: [null, Validators.required]
       }
     );
 
   }
 
+  uploadFile(event: any) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('imageName')!.textContent = file.name;
+
+    this.listingForm.patchValue({ image: file });
+    this.listingForm.get('image')?.updateValueAndValidity();
+  }
+
+  uploadSecondaryFile(event: any) {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('secondaryImageName')!.textContent = file.name;
+
+    this.listingForm.patchValue({ secondaryImage: file });
+    this.listingForm.get('secondaryImage')?.updateValueAndValidity();
+  }
+
   onSubmit() {
     if (this.listingForm.valid) {
 
-      const listingData: listing = this.listingForm.value as listing;
+      const formData = new FormData();
+      formData.append('Type', this.listingForm.get('type')?.value);
+      formData.append('Status', this.listingForm.get('status')?.value.toString());
+      formData.append('NumberOfRooms', this.listingForm.get('numberOfRooms')?.value?.toString() || '0');
+      formData.append('NumberOfBathrooms', this.listingForm.get('numberOfBathrooms')?.value?.toString() || '0');
+      formData.append('NumberOfKitchens', this.listingForm.get('numberOfKitchens')?.value?.toString() || '0');
+      formData.append('Price', this.listingForm.get('price')?.value.toString());
+      formData.append('Location', this.listingForm.get('location')?.value);
+      formData.append('Area', this.listingForm.get('area')?.value.toString());
+      formData.append('Parking', this.listingForm.get('parking')?.value?.toString() || '0');
+      formData.append('Description', this.listingForm.get('description')?.value);
 
-      listingData.status = Number(this.listingForm.get('status')?.value);
+      const file = this.listingForm.get('image')?.value;
+      if (file) {
+        formData.append('Image', file);
+      }
 
-      this.listingService.addListing(listingData).subscribe({
-        next: (response) => {
+      const secondaryFile = this.listingForm.get('secondaryImage')?.value;
+      if (secondaryFile) {
+        formData.append('SecondaryImage', secondaryFile);
+      }
+
+      this.listingService.addListing(formData).subscribe({
+        next: () => {
           this.listingForm.reset();
           this.router.navigate(['/main-page/listing-list']);
         },
@@ -56,7 +94,9 @@ export class ListingNewComponent {
           this.errorMessage = error;
         }
       });
-    } else {
+
+    }
+    else {
       console.log('Formulário inválido.');
       this.errorMessage = 'Formulário inválido.';
     }

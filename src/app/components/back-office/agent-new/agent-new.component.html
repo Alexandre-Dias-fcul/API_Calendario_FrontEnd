@@ -1,6 +1,6 @@
 <div class="form-container">
     <h2 class="form-title">Novo Agente</h2>
-    <form [formGroup]="agentForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="agentForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div formGroupName="name">
             <div class="form-row">
                 <div class="form-group">
@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <label for="role">Função</label>
-                <select id="role" formControlName="role" (change)="choseSupervisor($event)">
+                <select id="role" formControlName="role" (change)="changeSupervisor($event)">
                     <option value='0'>Agente</option>
                     <option value='1'>Gestor</option>
                     <option value='2'>Corretor</option>
@@ -129,13 +129,23 @@
 
         <div class="form-row">
             <div class="form-group">
-                <label for="photoFileName">Foto</label>
-                <input type="text" id="photoFileName" formControlName="photoFileName"
-                    placeholder="Digite o nome do arquivo da foto">
+                <label for="image">Foto</label>
+                <div class="file-upload">
+                    <input type="file" id="image" class="file-input" (change)="uploadFile($event)" accept="image/*" />
+                    <label class="file-label" for="image">Escolher ficheiro</label>
+                    <span class="file-name" id="imageName">Nenhum ficheiro escolhido</span>
+                </div>
+                @if(id)
+                {
+                <div class="file-name-old">
+                    {{ getFileName(photoFileName) }}
+                </div>
+                }
+
                 @if(agentForm.get('photoFileName')?.invalid &&
                 (agentForm.get('photoFileName')?.dirty || agentForm.get('photoFileName')?.touched))
                 {
-                <div class="error-message">Nome inválido</div>
+                <div class="error-message">Ficheiro inválido</div>
                 }
             </div>
 
