@@ -18,36 +18,65 @@ export class AgentNewComponent {
   id: number | null = null;
   errorMessage: string | null = null;
   possibleSupervisors: agentAll[] = [];
+  photoFileName: string = '';
 
   constructor(private fb: FormBuilder,
     private agentService: AgentService,
     private router: Router,
     private route: ActivatedRoute) {
 
-    this.agentForm = this.fb.group(
-      {
-        name: this.fb.group({
-          firstName: ['', [Validators.required]],
-          middleNames: [''],
-          lastName: ['', [Validators.required]],
-        }),
-        isActive: [null, [Validators.required]],
-        gender: ['', [Validators.required]],
-        dateOfBirth: [null],
-        hiredDate: [null],
-        dateOfTermination: [null],
-        photoFileName: [''],
-        supervisorEmail: [null],
-        role: [null, Validators.required],
-      }, {
-      validators: Validators.compose([
-        this.hireDateValidator('hiredDate', 'dateOfTermination'),
-        this.dateOfBirthValidator('dateOfBirth', 'hiredDate')
-      ])
-    }
-    );
-
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (this.id) {
+
+      this.agentForm = this.fb.group(
+        {
+          name: this.fb.group({
+            firstName: ['', [Validators.required]],
+            middleNames: [''],
+            lastName: ['', [Validators.required]],
+          }),
+          isActive: [null, [Validators.required]],
+          gender: ['', [Validators.required]],
+          dateOfBirth: [null],
+          hiredDate: [null],
+          dateOfTermination: [null],
+          image: [null],
+          supervisorEmail: [null],
+          role: [null, Validators.required],
+        }, {
+        validators: Validators.compose([
+          this.hireDateValidator('hiredDate', 'dateOfTermination'),
+          this.dateOfBirthValidator('dateOfBirth', 'hiredDate')
+        ])
+      }
+      );
+
+    }
+    else {
+      this.agentForm = this.fb.group(
+        {
+          name: this.fb.group({
+            firstName: ['', [Validators.required]],
+            middleNames: [''],
+            lastName: ['', [Validators.required]],
+          }),
+          isActive: [null, [Validators.required]],
+          gender: ['', [Validators.required]],
+          dateOfBirth: [null],
+          hiredDate: [null],
+          dateOfTermination: [null],
+          image: [null, Validators.required],
+          supervisorEmail: [null],
+          role: [null, Validators.required],
+        }, {
+        validators: Validators.compose([
+          this.hireDateValidator('hiredDate', 'dateOfTermination'),
+          this.dateOfBirthValidator('dateOfBirth', 'hiredDate')
+        ])
+      }
+      );
+    }
 
     if (this.id) {
       this.agentService.getAgentById(this.id).subscribe(agent => {
@@ -79,11 +108,11 @@ export class AgentNewComponent {
                   dateOfBirth: this.toDateInputString(agentData.dateOfBirth),
                   hiredDate: this.toDateInputString(agentData.hiredDate),
                   dateOfTermination: this.toDateInputString(agentData.dateOfTermination),
-                  photoFileName: agentData.photoFileName,
                   role: agentData.role,
                   supervisorEmail: supervisor.entityLink?.account?.email || null,
 
                 });
+                this.photoFileName = agent.photoFileName || '';
               }, error: (error) => {
                 console.error('Erro ao obter agent:', error);
                 this.errorMessage = error;
@@ -103,20 +132,53 @@ export class AgentNewComponent {
             dateOfBirth: this.toDateInputString(agentData.dateOfBirth),
             hiredDate: this.toDateInputString(agentData.hiredDate),
             dateOfTermination: this.toDateInputString(agentData.dateOfTermination),
-            photoFileName: agentData.photoFileName,
             role: agentData.role,
             supervisorEmail: null,
 
           });
+
+          this.photoFileName = agent.photoFileName || '';
         }
+
+        this.choseSupervisor(agentData.role);
       });
+
+
     }
 
   }
 
-  choseSupervisor(event: Event) {
+  getFileName(path: string) {
 
-    const value = Number((event.target as HTMLSelectElement).value);
+    let fileName = path.split('/').pop();
+
+    if (fileName) {
+      fileName = fileName.replace(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/g, "").replace(/__/g, "_").trim();
+    }
+
+    return fileName;
+
+  }
+
+  uploadFile(event: any) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    document.getElementById('imageName')!.textContent = file.name;
+
+    this.agentForm.patchValue({ image: file });
+    this.agentForm.get('image')?.updateValueAndValidity();
+  }
+
+  changeSupervisor(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    const role = Number(value);
+    this.choseSupervisor(role);
+  }
+
+  choseSupervisor(role: number) {
 
     let agents: agent[] = [];
 
@@ -128,7 +190,7 @@ export class AgentNewComponent {
         next: (response) => {
 
           agents = response;
-          agents = agents.filter((agent) => (agent.role > value));
+          agents = agents.filter((agent) => (agent.role > role && agent.id != this.id));
           agents.forEach((agent) => this.agentService.getByIdWithAll(agent.id).subscribe({
             next: (data) => {
               this.possibleSupervisors.push(data);
@@ -155,60 +217,49 @@ export class AgentNewComponent {
 
     if (this.agentForm.valid) {
 
-      const agentData: agent = {
-        id: 0,
-        name: {
-          firstName: '',
-          middleNames: [],
-          lastName: ''
-        },
-        isActive: false,
-        gender: '',
-        dateOfBirth: null,
-        hiredDate: null,
-        dateOfTermination: null,
-        photoFileName: '',
-        role: 0,
-        supervisorId: null,
+      const formData = new FormData();
 
-      } as agent;
-
-      agentData.name.firstName = this.agentForm.get('name.firstName')?.value;
+      formData.append('Name.FirstName', this.agentForm.get('name.firstName')?.value);
+      formData.append('Name.LastName', this.agentForm.get('name.lastName')?.value);
+      formData.append('DateOfBirth', this.agentForm.get('dateOfBirth')?.value || '');
+      formData.append('Gender', this.agentForm.get('gender')?.value);
+      formData.append('IsActive', Boolean(this.agentForm.get('isActive')?.value).toString());
+      formData.append('HiredDate', this.agentForm.get('hiredDate')?.value || '');
+      formData.append('DateOfTermination', this.agentForm.get('dateOfTermination')?.value || '');
+      formData.append('Role', Number(this.agentForm.get('role')?.value).toString());
 
       const middleNamesValue = this.agentForm.get('name.middleNames')?.value;
 
       if (middleNamesValue) {
-        agentData.name.middleNames = middleNamesValue
-          .split(' ')
-          .map((name: string) => name.trim());
+        const middleNamesArray: string[] = middleNamesValue.split(' ');
+
+        middleNamesArray.forEach(m => {
+          formData.append('Name.MiddleNames', m);
+        });
+      }
+
+      const file = this.agentForm.get('image')?.value;
+      if (file) {
+        formData.append('PhotoFileName', file);
+      }
+
+      console.log(file);
+
+      if (this.agentForm.get('supervisorEmail')?.value === null || this.agentForm.get('supervisorEmail')?.value === undefined
+        || this.agentForm.get('supervisorEmail')?.value === '') {
+
+        formData.append('SupervisorId', '');
+
+        this.saveAgent(formData);
       }
       else {
-        agentData.name.middleNames = [];
-      }
-
-      agentData.name.lastName = this.agentForm.get('name.lastName')?.value;
-
-      agentData.isActive = this.agentForm.get('isActive')?.value === 'true';
-      agentData.gender = this.agentForm.get('gender')?.value;
-      agentData.dateOfBirth = this.agentForm.get('dateOfBirth')?.value;
-      agentData.hiredDate = this.agentForm.get('hiredDate')?.value;
-      agentData.dateOfTermination = this.agentForm.get('dateOfTermination')?.value;
-      agentData.photoFileName = this.agentForm.get('photoFileName')?.value;
-      agentData.role = Number(this.agentForm.get('role')?.value);
-
-      const supervisorEmail = this.agentForm.get('supervisorEmail')?.value;
-
-      if (supervisorEmail === null || supervisorEmail === undefined || supervisorEmail === '') {
-
-        this.saveAgent(agentData);
-      }
-      else {
-        this.agentService.getAgentByEmail(supervisorEmail).subscribe(
+        this.agentService.getAgentByEmail(this.agentForm.get('supervisorEmail')?.value).subscribe(
           {
             next: (response) => {
-              agentData.supervisorId = response.id;
 
-              this.saveAgent(agentData);
+              formData.append('SupervisorId', response.id.toString());
+
+              this.saveAgent(formData);
             },
             error: (error) => {
               console.error('Erro ao buscar agent:', error);
@@ -226,11 +277,10 @@ export class AgentNewComponent {
     }
   }
 
-  private saveAgent(agentData: agent) {
+  private saveAgent(agentData: FormData) {
     if (this.id) {
-      agentData.id = this.id;
       // UPDATE
-      this.agentService.updateAgent(agentData).subscribe({
+      this.agentService.updateAgent(this.id, agentData).subscribe({
         next: (response) => {
           this.router.navigate(['/main-page/agent-new-account/', response.id, 1]);
         },
