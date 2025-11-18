@@ -18,7 +18,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let agent of pagination.items">
-            <td>{{ agent.name.firstName }} {{ agent.name.lastName}}</td>
+            <td>@if(agent.photoFileName)
+                {
+                <img src="http://localhost:5109/{{agent.photoFileName}}" alt="Agent Photo" class="agent-photo" />
+                }<span class="agent-name">{{ agent.name.firstName }} {{ agent.name.lastName}}</span>
+            </td>
             <td>{{ agent.gender }}</td>
             @if(agent.role === 0) {
             <td>{{ 'Agente' }}</td>

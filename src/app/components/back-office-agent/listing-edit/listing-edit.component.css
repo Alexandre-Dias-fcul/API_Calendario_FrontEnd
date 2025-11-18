@@ -181,11 +181,7 @@
 
 /* Esconde o input nativo */
 .file-input {
-    position: absolute;
-    width: 0;
-    height: 0;
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 /* Botão simples e moderno */

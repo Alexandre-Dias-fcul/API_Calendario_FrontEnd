@@ -87,7 +87,14 @@
                                                 === 'Admin')
                                                 {
                                                 <a class="user-info-link">
+                                                        @if(employee.photoFileName)
+                                                        {
+                                                        <img src="http://localhost:5109/{{employee.photoFileName}}"
+                                                                alt="User Photo" />
+                                                        }@else
+                                                        {
                                                         <i class="fas fa-user-circle"></i>
+                                                        }
                                                         <span class="user-info-name">{{ employee.name.firstName
                                                                 }}</span>
                                                 </a>
