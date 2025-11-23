@@ -30,7 +30,8 @@ export class ListingListComponent {
   errorMessage: string | null = null;
 
   searchTerm: string = '';
-  pagesArray: number[] = [];
+
+  pagesArray: (number | string)[] = [];
 
   constructor(private listingService: ListingService,
     private authorization: AuthorizationService) {
@@ -48,7 +49,7 @@ export class ListingListComponent {
       {
         next: (data) => {
           this.pagination = data;
-          this.pagesArray = this.getPagesArray();
+          this.pagesArray = this.getPagesArray(this.pagination.totalPages, this.pagination.pageNumber);
 
         },
         error: (error) => {
@@ -68,12 +69,31 @@ export class ListingListComponent {
 
   }
 
-  getPagesArray(): number[] {
-    let pages: number[] = [];
+  getPagesArray(totalPages: number, currentPage: number): (number | string)[] {
+    const pages: (number | string)[] = [];
 
-    for (let i = 1; i <= this.pagination.totalPages; i++) {
-      pages.push(i);
+    if (totalPages <= 1) {
+      return [1];
     }
+
+    pages.push(1);
+
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+
+    if (start > 2) {
+      pages.push("...");
+    }
+
+    for (let p = start; p <= end; p++) {
+      pages.push(p);
+    }
+
+    if (end < totalPages - 1) {
+      pages.push("...");
+    }
+
+    pages.push(totalPages);
 
     return pages;
   }
@@ -84,7 +104,6 @@ export class ListingListComponent {
       this.getListings(this.pagination.pageNumber, this.pagination.pageSize, this.searchTerm);
     }
   }
-
 
   goToPage(page: number) {
     this.pagination.pageNumber = page;
