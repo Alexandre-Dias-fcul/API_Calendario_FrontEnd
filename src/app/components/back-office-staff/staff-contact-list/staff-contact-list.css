@@ -14,7 +14,7 @@
 
 .table-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     /* Espaça os elementos horizontalmente */
     align-items: center;
     /* Alinha verticalmente */
