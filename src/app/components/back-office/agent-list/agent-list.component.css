@@ -249,6 +249,12 @@
     /* Leve aumento ao passar o mouse */
 }
 
+.pagination-btn.active {
+    background-color: #3498db;
+    /* Azul mais claro para o botão ativo */
+    font-weight: bold;
+}
+
 .pagination-btn:disabled {
     background-color: #bdc3c7;
     /* Cinza para botões desativados */
