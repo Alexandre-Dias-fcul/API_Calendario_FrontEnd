@@ -3,6 +3,9 @@
     @if(this.role === 'Manager' || this.role === 'Broker' || this.role === 'Admin')
     {
     <a [routerLink]="['/main-page','agent-new']" class="add-user-link">Novo Agente</a>
+    }@else if(this.role === 'Staff')
+    {
+    <div></div>
     }
 
     <input type="text" class="search-bar" (input)="onSearch($event)" placeholder=" Pesquisar...">

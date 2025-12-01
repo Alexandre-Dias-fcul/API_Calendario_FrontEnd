@@ -112,7 +112,7 @@ export class AgentListComponent {
   }
 
   deleteAgent(id: number) {
-    if (confirm("Tem a certeza que quer apagar este agent ?")) {
+    if (confirm("Tem a certeza que quer apagar este agente ?")) {
       this.agentService.deleteAgent(id).subscribe({
         next: () => {
           window.location.reload();

@@ -20,8 +20,8 @@
     <tbody>
         <tr *ngFor="let appointment of pagination.items">
             <td>{{ appointment.title }}</td>
-            <td>{{ appointment.description }}</td>
-            <td>{{ appointment.date}}</td>
+            <td>{{ appointment.description.substring(0,30)}}</td>
+            <td>{{ dateFormat(appointment.date) }} </td>
             <td>{{ appointment.hourStart }}</td>
             <td>{{ appointment.hourEnd }}</td>
             @if(appointment.status === 0)

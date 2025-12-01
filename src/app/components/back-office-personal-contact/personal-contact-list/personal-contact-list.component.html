@@ -14,7 +14,15 @@
     <tbody>
         <tr *ngFor="let personalContact of pagination.items">
             <td>{{ personalContact.name }}</td>
-            <td>{{ personalContact.isPrimary }}</td>
+            @if(personalContact.isPrimary)
+            {
+            <td>Sim</td>
+            }
+            @else
+            {
+            <td>Não</td>
+            }
+
             <td>{{ personalContact.notes}}</td>
             <td>
                 <a [routerLink]="['/main-page','personal-contact-new', personalContact.id]">

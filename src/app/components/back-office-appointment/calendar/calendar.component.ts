@@ -3,7 +3,7 @@ import { addDays, getDay, startOfISOWeek, subDays } from 'date-fns';
 import { appointmentWithParticipants } from '../../../models/appointmentWithParticipants';
 import { AppointmentService } from '../../../services/back-office-appointment/appointment.service';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AgentService } from '../../../services/back-office/agent.service';
 import { CalendarCell } from '../calendar-cell/calendar-cell';
 
