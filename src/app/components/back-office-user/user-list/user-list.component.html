@@ -24,7 +24,7 @@
             {
             <td>Não</td>
             }
-            <td>{{ user.dateOfBirth }}</td>
+            <td>{{ dateFormat(user.dateOfBirth) }}</td>
             <td>
                 <a [routerLink]="['/main-page','user-edit',user.id]"><i class="fas fa-edit edit-icon"></i></a>
                 <a (click)="deleteUser(user.id)"><i class="fas fa-trash delete-icon"></i></a>

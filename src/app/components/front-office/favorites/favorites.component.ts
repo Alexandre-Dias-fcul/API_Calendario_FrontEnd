@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthorizationService } from '../../../services/back-office/authorization.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FavoriteService } from '../../../services/front-office/favorite.service';
 import { CommonModule } from '@angular/common';
 import { ListingService } from '../../../services/back-office-agent/listing.service';
 
 @Component({
   selector: 'app-favorites',
-  imports: [CommonModule],
+  imports: [RouterLink, CommonModule],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
 })

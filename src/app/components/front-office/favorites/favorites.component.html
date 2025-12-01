@@ -1,7 +1,9 @@
 <h1 class="page-title">Meus Favoritos</h1>
 <div class="favorites-list">
     <div class="favorite-item" *ngFor='let favoriteListing of favoriteListings'>
-        <img src="https://picsum.photos/300/200">
+        <a [routerLink]="['/front-page','detail-listing', favoriteListing[0].id]">
+            <img src="http://localhost:5109/{{favoriteListing[0].mainImageFileName}}" alt="Foto do imóvel">
+        </a>
         <div class="item-info">
             <h2>{{ favoriteListing[0].type }}</h2>
             <p>{{favoriteListing[0].numberOfRooms}} Quartos •

@@ -26,9 +26,9 @@
             {
             <td>Não</td>
             }
-            <td>{{ staff.dateOfBirth }}</td>
-            <td>{{ staff.hiredDate }}</td>
-            <td>{{ staff.dateOfTermination}}</td>
+            <td>{{ dateFormat(staff.dateOfBirth) }}</td>
+            <td>{{ dateFormat(staff.hiredDate) }}</td>
+            <td>{{ dateFormat(staff.dateOfTermination)}}</td>
             <td>
                 <a [routerLink]="['/main-page','staff-edit',staff.id]"><i class="fas fa-edit edit-icon"></i></a>
                 <a (click)="deleteStaff(staff.id)"><i class="fas fa-trash delete-icon"></i></a>

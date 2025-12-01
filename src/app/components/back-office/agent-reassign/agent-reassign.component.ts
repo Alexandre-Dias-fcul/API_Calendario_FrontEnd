@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { agentListing } from '../../../models/agentListing';
-import { AgentService } from '../../../services/back-office/agent.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { agent } from '../../../models/agent';
 import { ListingService } from '../../../services/back-office-agent/listing.service';
 import { pagination } from '../../../models/pagination';
 import { listing } from '../../../models/listing';

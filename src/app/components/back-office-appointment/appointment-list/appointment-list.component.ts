@@ -6,7 +6,7 @@ import { AppointmentService } from '../../../services/back-office-appointment/ap
 import { appointmentWithParticipants } from '../../../models/appointmentWithParticipants';
 import { pagination } from '../../../models/pagination';
 import { participant } from '../../../models/participant';
-import { Console } from 'node:console';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-appointment-list',
@@ -127,6 +127,10 @@ export class AppointmentListComponent {
     });
 
     return foundParticipant;
+  }
+
+  dateFormat(date: Date) {
+    return format(date, 'dd-MM-yyyy');
   }
 
   deleteAppointment(idAppointment: number) {
