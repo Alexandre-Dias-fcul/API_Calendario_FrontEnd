@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StaffService } from '../../../services/back-office-staff/staff.service';
 import { pagination } from '../../../models/pagination';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-staff-list',
@@ -103,6 +104,14 @@ export class StaffListComponent {
     }
   }
 
+  dateFormat(date: Date | null) {
+
+    if (date === null) {
+      return '';
+    }
+
+    return format(date, 'dd-MM-yyyy');
+  }
 
   deleteStaff(id: number) {
     if (confirm("Tem a certeza que pretende apagar este administrativo ?")) {

@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { UserService } from '../../../services/front-office/user.service';
 import { CommonModule } from '@angular/common';
 import { pagination } from '../../../models/pagination';
+import { format } from 'date-fns';
 
 
 @Component({
@@ -83,6 +84,15 @@ export class UserListComponent {
     pages.push(totalPages);
 
     return pages;
+  }
+
+  dateFormat(date: Date | null) {
+
+    if (date === null) {
+      return '';
+    }
+
+    return format(date, 'dd-MM-yyyy');
   }
 
   decrement() {
